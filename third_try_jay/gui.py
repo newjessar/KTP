@@ -1,21 +1,17 @@
-from advisorySystem import Advisory
-from courses import Courses
+# from advisorySystem import Advisory
+# from courses import Courses
 import tkinter
 import tkinter.messagebox
 import customtkinter
+from advisorySystem import Advisory
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
-class GuiAdv(customtkinter.CTk):
-    def __init__(self, advisory : Advisory):
-        self.advisory = advisory
-        self.coursesList = self.advisory.yearTwoeC
-        self.titleList = []
-        
-        for item in range(len(self.coursesList)):
-            self.titleList.append(self.coursesList[item].getTitle())
+class App(customtkinter.CTk):
+    WIDTH = 780
+    HEIGHT = 520
 
     # Design pattern 2 - First window remains active
     def btxt(self, button_text):
@@ -24,16 +20,22 @@ class GuiAdv(customtkinter.CTk):
     # Design pattern 2 - First window remains active
     def ctxt(self, checkBox_text):
         return tkinter.Checkbox(checkBox_text, size=(5, 1), font=("Helvetica", 20))
-
-
-    WIDTH = 780
-    HEIGHT = 520
-
-    def __init__(self):
+    
+    def __init__(self, advisory : Advisory):
         super().__init__()
+        
+        self.advisory = advisory
+        self.coursesList = self.advisory.yearTwoeC
+        self.titleList = []
+        
+        for item in range(len(self.coursesList)):
+            self.titleList.append(self.coursesList[item].getTitle())
+
+
+
 
         self.title("Student Advisory Application.py")
-        self.geometry(f"{tkinter.App.WIDTH}x{tkinter.App.HEIGHT}")
+        self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
 
         # ============ create two frames ============
@@ -70,7 +72,7 @@ class GuiAdv(customtkinter.CTk):
 
         self.button_2 = customtkinter.CTkButton(master=self.frame_left,
                                                 text="Course Plan",
-                                                command=self.button_event)
+                                                command=self.button_event2)
         self.button_2.grid(row=3, column=0, pady=10, padx=20)
 
         self.button_3 = customtkinter.CTkButton(master=self.frame_left,
@@ -207,6 +209,8 @@ class GuiAdv(customtkinter.CTk):
 
     def button_event(self):
         print("Button pressed")
+    def button_event2(self):
+        print("Button pressed again")
 
     def change_appearance_mode(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -216,5 +220,3 @@ class GuiAdv(customtkinter.CTk):
 
 
 # if __name__ == "__main__":
-#     app = App()
-#     app.mainloop()

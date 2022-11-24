@@ -2,8 +2,13 @@
 import numpy as np
 from student import Student
 from advisorySystem import Advisory
-from gui import GuiAdv
+from gui import App
+import tkinter
+import tkinter.messagebox
+import customtkinter
 
+customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
 
@@ -22,14 +27,10 @@ def main():
     student.orientation     = 2
     
     advisory = Advisory(student)
-    guiADV = GuiAdv(advisory)
-    # advisory.Fourth_course()
-    # print(advisory.courList[1].getTitle())
-    # for item in range:
-        
+    app = App(advisory)
+    app.mainloop()
     
 
-    guiADV.makeLayout()
     
     
 

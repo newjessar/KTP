@@ -70,7 +70,7 @@ class App(customtkinter.CTk):
 
         self.button_2 = customtkinter.CTkButton(master=self.frame_left,
                                                 text="Course Plan",
-                                                command=self.button_event)
+                                                command=self.button_event2)
         self.button_2.grid(row=3, column=0, pady=10, padx=20)
 
         self.button_3 = customtkinter.CTkButton(master=self.frame_left,
@@ -207,6 +207,8 @@ class App(customtkinter.CTk):
 
     def button_event(self):
         print("Button pressed")
+    def button_event2(self):
+        print("Button pressed again")
 
     def change_appearance_mode(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
