@@ -1,4 +1,3 @@
-import PySimpleGUI as sg
 # from advisorySystem import Advisory
 # from courses import Courses
 import tkinter
