@@ -1,6 +1,5 @@
 # passed courses
 
-import PySimpleGUI as sg
 import numpy as np
 from course import Course
 from dbCourses import CoursesDB

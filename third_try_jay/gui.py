@@ -1,4 +1,3 @@
-import PySimpleGUI as sg
 from advisorySystem import Advisory
 from courses import Courses
 import tkinter
@@ -20,11 +19,11 @@ class GuiAdv(customtkinter.CTk):
 
     # Design pattern 2 - First window remains active
     def btxt(self, button_text):
-        return sg.Button(button_text, size=(5, 1), font=("Helvetica", 20))
+        return tkinter.Button(button_text, size=(5, 1), font=("Helvetica", 20))
     
     # Design pattern 2 - First window remains active
     def ctxt(self, checkBox_text):
-        return sg.Checkbox(checkBox_text, size=(5, 1), font=("Helvetica", 20))
+        return tkinter.Checkbox(checkBox_text, size=(5, 1), font=("Helvetica", 20))
 
 
     WIDTH = 780
@@ -34,7 +33,7 @@ class GuiAdv(customtkinter.CTk):
         super().__init__()
 
         self.title("Student Advisory Application.py")
-        self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
+        self.geometry(f"{tkinter.App.WIDTH}x{tkinter.App.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
 
         # ============ create two frames ============

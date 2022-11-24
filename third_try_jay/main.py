@@ -1,6 +1,5 @@
 # Gui trail
 import numpy as np
-import PySimpleGUI as sg
 from student import Student
 from advisorySystem import Advisory
 from gui import GuiAdv
@@ -30,7 +29,7 @@ def main():
         
     
 
-    sg.window = guiADV.makeLayout()
+    guiADV.makeLayout()
     
     
 
