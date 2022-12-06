@@ -3,12 +3,14 @@ import numpy as np
 from courses import Courses
 from student import Student
 from course import Course
+import rules as Rules
 
-class Advisory(object):
+class Advisory(object, Rules):
     
     def __init__(self, student : Student):
         self.courses = Courses()
         self.st = student
+
 
         self.courses.initiateCourses()
         self.courses.getAllYears()
@@ -20,19 +22,10 @@ class Advisory(object):
         self.achievement = int
         self.advise = False
         self.examCommittee = "Contact the exam Committee"
+        
+        
+        
     
-                   
-    def Fourth_course(self):
-        for wish in self.st.wishedCourses:
-            if self.courList[wish].getOrientation() == self.st.getOrientation():
-                if self.st.motivation > 7 :
-                    self.advise = True
-                    
-    def above_four_course(self):
-        for wish in self.st.wishedCourses:
-            if self.courList[wish].getOrientation() == self.st.getOrientation():
-                if self.st.motivation > 9 :
-                    self.advise = True
 
 
     

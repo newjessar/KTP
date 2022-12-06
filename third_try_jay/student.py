@@ -13,6 +13,7 @@ class Student:
         self.currentBlock       = int
         self.motivation         = int
         self.orientation        = int
+        self.dutchSpeaker       = False
     
     def firstYear(self):
         if self.currentYear == 1:
