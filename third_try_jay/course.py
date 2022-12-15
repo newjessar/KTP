@@ -34,7 +34,7 @@ class Course(object):
     def getYear(self):
         return self.year
     
-    def getBlockd(self):
+    def getBlock(self):
         return self.block
     
     def getStrength(self):

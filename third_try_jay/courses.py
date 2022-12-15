@@ -11,8 +11,7 @@ class Courses(object):
         self.allcourses    = []
         self.yearOneCour   = []
         self.yearTwoCour   = []
-        self.yearThreeCour = []
-        
+        self.yearThreeCour = []        
 
     def initiateCourses(self):
         loadcourses = np.load('courses_DB.npy', allow_pickle=True)

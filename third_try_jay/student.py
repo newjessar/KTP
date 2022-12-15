@@ -8,7 +8,7 @@ class Student:
         self.passedCourses      = []
         self.wishedCourses      = []
         self.passedElective     = int
-        self.passedPractices    = int
+        self.passedPracticals    = int
         self.currentYear        = int
         self.currentBlock       = int
         self.motivation         = int
@@ -21,7 +21,7 @@ class Student:
         return False
     
     def passPracticals(self):
-        if self.passedPractices >= 3:
+        if self.passedPracticals >= 3:
             return True
         return False
             
