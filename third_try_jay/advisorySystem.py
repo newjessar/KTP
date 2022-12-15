@@ -3,7 +3,7 @@ import numpy as np
 from courses import Courses
 from student import Student
 from course import Course
-import rules as Rules
+# import knowledge_Base as Knowledge_Base
 
 class Advisory():
     

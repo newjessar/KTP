@@ -1,8 +1,18 @@
 import numpy as np
 
 class CoursesDB:
-    # ID, title, orientation, pre-requisite, year, block, mandatory, elective, practical, pre_requisite, language
-    # orientation = Alpha(Theoretical): 1 -- Bet(Logical): 2
+    # ID, 
+    # title, 
+    # orientation, 
+    # pre-requisite, 
+    # year, 
+    # block, 
+    # mandatory, 
+    # elective, 
+    # practical, 
+    # pre_requisite, 
+    # language
+    # orientation = Alpha(Non-CS): 1 -- Bet(CS): 2
     #
     courses = np.array([    [0, "Improg" , 2, [], 1, 1, True, False, False, False, False],
                             [1, "Calculus", 2, [], 1, 2, True, False, False, False, False],

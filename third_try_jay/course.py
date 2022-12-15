@@ -2,18 +2,21 @@
 
 class Course(object):
     
-    def __init__(self, id, title, orientation, pre_requ_cour, year, block, mandatory, elective, practical, pre_requisite):
-        self.id            = id
-        self.title         = title
-        self.orientation   = orientation
-        self.pre_requ_cour = pre_requ_cour
-        self.year          = year
-        self.block         = block
-        self.strength      = int
-        self.mandatory     = mandatory
-        self.elective      = elective
-        self.practical     = practical
-        self.pre_requisite = pre_requisite
+    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective, practical, language, pre_requisite):
+        self.id            = id             # int
+        self.title         = title          # String
+        self.orientation   = orientation    # int
+        self.pre_requ_cour = pre_requ_cour  # Array
+        self.advised       = advised        # Array
+        self.year          = year           # int
+        self.block         = block          # int
+        self.strength      = int            # int
+        self.mandatory     = mandatory      # Binary
+        self.elective      = elective       # Binary
+        self.practical     = practical      # Binary
+        self.pre_requisite = pre_requisite  # Binary
+        self.language      = language       # Binary
+
         
         
     def setStrength(self, x):
