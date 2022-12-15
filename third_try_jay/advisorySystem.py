@@ -5,7 +5,7 @@ from student import Student
 from course import Course
 import rules as Rules
 
-class Advisory(object, Rules):
+class Advisory():
     
     def __init__(self, student : Student):
         self.courses = Courses()
