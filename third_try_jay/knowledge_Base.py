@@ -3,17 +3,28 @@ import numpy as np
 from courses import Courses
 from student import Student
 from course import Course
-from advisorySystem import Advisory
+import knowledge_Base as Knowledge_Base
 
-
-class Knowledge_Base(object):
+class Knowledge_Base():
     
-    def __init__(self):
+    def __init__(self, student : Student):
+        self.courses = Courses()
         self.courses = Courses()
         self.st = Student
-        self.advis = Advisory()
-    
-    ## Rule Model
+
+
+        self.courses.initiateCourses()
+        self.courses.getAllYears()
+        
+        self.courList = self.courses.getAllcourses()
+        self.yearOneC = self.courses.yearOneCour
+        self.yearTwoeC = self.courses.yearTwoCour
+        self.yearThreeC = self.courses.yearThreeCour
+        self.achievement = int
+        self.advise = False
+        self.examCommittee = "Contact the exam Committee"
+        
+     ## Rule Model
     def practicalOrPrerequisites(self):
         for wish in self.st.wishedCourses:
             course = self.advis.courList[wish]
@@ -41,7 +52,9 @@ class Knowledge_Base(object):
         for wish in self.st.wishedCourses:
             if self.adviscourList[wish].getOrientation() == self.st.getOrientation():
                 if self.st.motivation > 9 :
-                    self.advise = True
+                    self.advise = True       
+        
+    
 
-    ## Year
+
     

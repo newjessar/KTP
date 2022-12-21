@@ -1,7 +1,7 @@
 # Gui trail
 import numpy as np
 from student import Student
-from advisorySystem import Advisory
+from knowledge_Base import Knowledge_Base
 from gui import App
 import tkinter
 import tkinter.messagebox
@@ -26,8 +26,8 @@ def main():
     student.motivation       = 7
     student.orientation      = 2
     
-    advisory = Advisory(student)
-    app = App(advisory)
+    knowledge_Base = Knowledge_Base(student)
+    app = App(knowledge_Base)
     app.mainloop()
 
 if __name__ == "__main__":
