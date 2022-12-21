@@ -162,7 +162,7 @@ class Knowledge_Base():
             self.ap.finished = True
             return
 
-    # rule 14 - if the credits of the current scheduled courses are enough, then add other possible courses to the recommended electives, and present the advice to students
+    # rule 14 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
     def presentAdvice3(self):
         if self.ap.finishedElectives == True and self.ap.totalCredits() <= 15 and self.ap.recommended_Extra5ECTS == False:
             self.ap.showOtherCourses = True
@@ -171,7 +171,7 @@ class Knowledge_Base():
             self.ap.finished = True
             return
 
-    # rule 15 - if the 
+    # rule 15 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
     def presentAdvice4(self):
         if self.ap.finishedElectives == True and self.ap.totalCredits() <= 20 and self.ap.recommended_Extra5ECTS == True:
             self.ap.showOtherCourses = True
