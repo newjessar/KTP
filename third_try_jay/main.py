@@ -3,7 +3,6 @@ import numpy as np
 from student import Student
 from knowledge_Base import Knowledge_Base
 from gui import App
-import tkinter
 import tkinter.messagebox
 import customtkinter
 

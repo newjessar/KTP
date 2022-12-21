@@ -17,6 +17,7 @@ class Course(object):
         self.pre_requisite = pre_requisite  # Binary
         self.language      = language       # Binary
 
+
         
         
     def setStrength(self, x):
