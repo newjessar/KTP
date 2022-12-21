@@ -2,21 +2,23 @@
 
 class Course(object):
     
-    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective, practical, language, pre_requisite,grade):
+    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective,
+    practical, language, pre_requisite, credit,n_pre_req):
         self.id                     = id             # int
         self.title                  = title          # String
-        self.orientation            = orientation    # int
+        self.orientation            = orientation    # int - orientation, = Alpha(Non-CS): 1 -- Bet(CS): 2
         self.pre_requisite_courses  = pre_requ_cour  # Array
         self.advised_courses        = advised        # Array
         self.year                   = year           # int
         self.block                  = block          # int
-        self.grade                  = grade          # int  
-        # self.strength               = int            # int
+        self.grade                  = int            # int
+        self.credit                 = credit         # int  
         self.mandatory              = mandatory      # Binary
         self.elective               = elective       # Binary
         self.practical              = practical      # Binary
         self.pre_requisite          = pre_requisite  # Binary
         self.language               = language       # Binary
+        self.n_pre_req              = n_pre_req      # int
 
 
         
