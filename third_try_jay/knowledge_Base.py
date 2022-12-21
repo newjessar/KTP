@@ -8,6 +8,7 @@ import knowledge_Base as Knowledge_Base
 class Knowledge_Base():
     
     def __init__(self, student : Student):
+        ## Domian Model
         self.courses = Courses()
         self.courses = Courses()
         self.st = Student
