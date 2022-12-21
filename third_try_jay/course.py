@@ -2,26 +2,33 @@
 
 class Course(object):
     
-    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective, practical, language, pre_requisite):
-        self.id            = id             # int
-        self.title         = title          # String
-        self.orientation   = orientation    # int
-        self.pre_requ_cour = pre_requ_cour  # Array
-        self.advised       = advised        # Array
-        self.year          = year           # int
-        self.block         = block          # int
-        self.strength      = int            # int
-        self.mandatory     = mandatory      # Binary
-        self.elective      = elective       # Binary
-        self.practical     = practical      # Binary
-        self.pre_requisite = pre_requisite  # Binary
-        self.language      = language       # Binary
+    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective, practical, language, pre_requisite,grade):
+        self.id                     = id             # int
+        self.title                  = title          # String
+        self.orientation            = orientation    # int
+        self.pre_requisite_courses  = pre_requ_cour  # Array
+        self.advised_courses        = advised        # Array
+        self.year                   = year           # int
+        self.block                  = block          # int
+        self.grade                  = grade          # int  
+        # self.strength               = int            # int
+        self.mandatory              = mandatory      # Binary
+        self.elective               = elective       # Binary
+        self.practical              = practical      # Binary
+        self.pre_requisite          = pre_requisite  # Binary
+        self.language               = language       # Binary
 
 
         
         
     def setStrength(self, x):
         self.strength = x
+
+    def setPre_requisite(self, x):
+        self.pre_requisite = x
+
+    def setPre_requisite_courses(self, x):
+        self.pre_requisite_courses = x
     
     def getId(self):
         return self.id
@@ -33,7 +40,7 @@ class Course(object):
         return self.orientation
     
     def getpre_requ_cour(self):
-        return self.pre_requ_cour
+        return self.pre_requisite_courses
     
     def getYear(self):
         return self.year
