@@ -17,7 +17,7 @@ class Student:
         self.currentBlock       = int
         self.motivation         = int
         self.orientation        = int
-        self.dutchSpeaker       = False
+        self.language           = False # True = English, False = Dutch 
         self.propaedeuticPhasePassed = bool
         self.startedBachelorProject = bool
     

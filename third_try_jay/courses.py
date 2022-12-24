@@ -18,7 +18,8 @@ class Courses(object):
         for i in loadcourses:
             self.allcourses.append(Course(i[0], i[1], i[2], i[3], 
                                             i[4], i[5], i[6], i[7], 
-                                            i[8], i[9], i[10], i[11]))
+                                            i[8], i[9], i[10], i[11],
+                                            i[12], i[13]))
                 
     def getAllcourses(self):
         return self.allcourses

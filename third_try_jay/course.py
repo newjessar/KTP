@@ -6,7 +6,7 @@ class Course(object):
     practical, language, pre_requisite, credit,n_pre_req):
         self.id                     = id             # int
         self.title                  = title          # String
-        self.orientation            = orientation    # int - orientation, = Alpha(Non-CS): 1 -- Bet(CS): 2
+        self.orientation            = orientation    # int - orientation, = (Non-CS): 1 -- (CS): 2
         self.pre_requisite_courses  = pre_requ_cour  # Array
         self.advised_courses        = advised        # Array
         self.year                   = year           # int

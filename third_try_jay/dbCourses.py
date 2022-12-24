@@ -12,7 +12,7 @@ class CoursesDB:
     # mandatory, 
     # elective, 
     # practical, 
-    # Language
+    # Language, = English: 1 -- Dutch: 0
     # pre_requisite, Binary
     #  n_pre_req, integer
     courses = np.array([    [0, "Improg" , 2, [], [], 1, 1, 5, True, False, False, False, False,2],

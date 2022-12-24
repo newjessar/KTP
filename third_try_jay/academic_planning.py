@@ -48,3 +48,10 @@ class Academic_planning:
                 met = False
                 return met
         return met
+    
+    # claclulate the avrage grades of an array of courses
+    def averageGrade(self,courses):
+        total = 0
+        for course in courses:
+            total += course.grade
+        return total/len(courses)

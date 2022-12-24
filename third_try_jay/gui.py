@@ -24,12 +24,12 @@ class App(customtkinter.CTk):
     def __init__(self, knowledge_Base : Knowledge_Base):
         super().__init__()
         
-        self.knowledge_Base = knowledge_Base
-        self.coursesList = self.knowledge_Base.yearTwoeC
-        self.titleList = []
+        # self.knowledge_Base = knowledge_Base
+        # # self.coursesList = self.knowledge_Base.yearTwoeC
+        # self.titleList = []
         
-        for item in range(len(self.coursesList)):
-            self.titleList.append(self.coursesList[item].getTitle())
+        # for item in range(len(self.coursesList)):
+        #     self.titleList.append(self.coursesList[item].getTitle())
 
 
 

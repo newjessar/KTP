@@ -56,40 +56,117 @@ class Knowledge_Base():
         if not self.st.want5ECTS or not self.st.validReason() or self.st.failedCourses > 1:
             self.ap.recommended_Extra5ECTS = False
             return
-            
 
-    
-    
-    # def fourth_course(self):
-    #     for wish in self.st.wishedCourses:
-    #         if self.advis.courList[wish].getOrientation() == self.st.getOrientation() and self.st.motivation > 7:
-    #             self.advise = True
-                    
-    # def above_four_course(self):
-    #     for wish in self.st.wishedCourses:
-    #         if self.adviscourList[wish].getOrientation() == self.st.getOrientation():
-    #             if self.st.motivation > 9 :
-    #                 self.advise = True       
-        
-    
 
 ## 1st Year Students
 
-    
+# Rule 1 - set self.dvice to true if self.ap.planYear is true and recomended coursses is not empty and recomendedExtra5ECTS is false
+    def year1_isAdvised(self):
+        if self.ap.planYear == 1 and self.ap.recommended_courses != [] and not self.ap.recommended_Extra5ECTS:
+            self.advise = True
+            return
+        
+ #  Rule 2 - if self.ap.planYear is 1 and recomended courses is empty, itterate through self.yearOne and add mendatory courses with self.block same as planBlock
+ # recommend courses set from Ocasys (15 credits mandatory courses)
+    def year1_MandatoryRecomendation(self):
+        if self.ap.planYear == 1 and self.ap.recommended_courses == []:
+            for course in self.yearOneC:
+                if course.mandatory and course.block == self.ap.planBlock:
+                    self.ap.recommended_courses.append(course)
+                    return
+ ### Not very clear so I improvised               
+ # Rule 3 - if self.ap.planYear is 1 and RecommendExtra5Credits is true and planBlock is not 1, check the possible_courses and the courses with the highest pre-requisites value then add the 3 highest courses to the ap.recommended_courses
+    def year1_highestPossiblePreRequisites(self):
+        if self.ap.planYear == 1 and self.ap.recommended_Extra5ECTS and self.ap.planBlock != 1:
+            for i in range(3):
+                self.ap.recommended_courses.append(self.ap.highestPreReg())
+            return
+        
 
 
+ # Rule 3 - if self.ap.planYear is 1 and self.ap.recommended_Extra5ECTS is true: 
+    # then itterate through the courses in possible_courses to calculate the averageGrade of the courses with orientation: 1 
+    # delete the courses with orientation 2 from the possible_courses if they are lower than the avrage of the courses with orientation 1
+    def year1_deleteNonCSCoursesWithLowGrades(self):
+        if self.ap.planYear == 1 and self.ap.recommended_Extra5ECTS:
+
+            orientation1 = []
+            orientation2 = []
+            for course in self.ap.possible_courses:
+                if course.orientation == 1:
+                    orientation1.append(course.averageGrade)
+                else: 
+                    orientation2.append(course.averageGrade)
+            orientation1 = self.ap.averageGrade(orientation1)
+            orientation2 = self.ap.averageGrade(orientation2)
+          
+            if orientation2 > orientation1:
+                for course in self.ap.possible_courses:
+                    if course.orientation == 1:
+                        self.ap.possible_courses.remove(course)
+        return
 
 
+# Rule 4 - if self.ap.planYear is 1 and self.ap.recommended_Extra5ECTS is true:     
+   # Academic Planning year: recommendExtra5Credits is set to true &1st year & (averagegrade for cs courses < non cs courses)
+   # Delete cs courses from possible courses.
+    def year1_deleteCSCoursesWithLowGrades(self):
+        if self.ap.planYear == 1 and self.ap.recommended_Extra5ECTS:
+            orientation1 = []
+            orientation2 = []
+            for course in self.ap.possible_courses:
+                if course.orientation == 1:
+                    orientation1.append(course.averageGrade)
+                else: 
+                    orientation2.append(course.averageGrade)
+            orientation1 = self.ap.averageGrade(orientation1)
+            orientation2 = self.ap.averageGrade(orientation2)
+          
+            if orientation2 > orientation1:
+                for course in self.ap.possible_courses:
+                    if course.orientation == 1:
+                        self.ap.possible_courses.remove(course)
+        return
+   
+        
+# Rule 5 - Check if there are mandatory courses in (Academic planning possible courses) & and if self.ap.planYear is 1
+#  itterate through the possible courses and deelete the courses that are not mandatory
+    def year1_deleteNotMandatory(self):
+            if self.ap.planYear == 1:
+                for course in self.ap.possible_courses:
+                    if not course.mandatory:
+                        self.ap.possible_courses.remove(course)
+                return
 
-
-
-
-
-
-
-
-
-
+  
+# Rule 6 - not course.mandatory in (Academic planning possible courses) & and if self.ap.planYear is 1 and if the student speaks Dutch
+# itterate through the possible courses and check if the course language is false.
+# if the course language is false, add the course to the recommended courses
+    def year1_addDutchCourses(self): 
+        if self.ap.planYear == 1:
+            for course in self.ap.possible_courses:
+                if not course.mandatory and course.language == True:
+                    self.ap.recommended_courses.append(course)
+            return
+        
+        
+# Rule 7 - if there are no mandatory courses in (Academic planning possible courses) & does not speak Dutch
+    def year1_addEnglishCourses(self): 
+        if self.ap.planYear == 1:
+            for course in self.ap.possible_courses:
+                if not course.mandatory and course.language == False:
+                    self.ap.recommended_courses.append(course)
+            return           
+        
+        
+        
+# Rule 8 - if self.ap.planYear is 1 and student want5ECTS is true and recommend 5 extra credits is true:
+# make recommend 5 extra credits true
+    def year1_addExtra5ECTS(self):
+        if self.ap.planYear == 1 and self.ap.recommended_Extra5ECTS and self.ap.want5ECTS:
+            self.ap.recommended_Extra5ECTS = True
+            return
+        
 
 ## 2nd+ Year Students
     # rule 1 - set all mandatory first year courses as recomended and puit all mandatory second and third year courses as possible
