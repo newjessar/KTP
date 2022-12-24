@@ -1,9 +1,9 @@
-# from advisorySystem import Advisory
+
 # from courses import Courses
 import tkinter
 import tkinter.messagebox
 import customtkinter
-from advisorySystem import Advisory
+from knowledge_Base import Knowledge_Base
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -21,11 +21,11 @@ class App(customtkinter.CTk):
     def ctxt(self, checkBox_text):
         return tkinter.Checkbox(checkBox_text, size=(5, 1), font=("Helvetica", 20))
     
-    def __init__(self, advisory : Advisory):
+    def __init__(self, knowledge_Base : Knowledge_Base):
         super().__init__()
         
-        self.advisory = advisory
-        self.coursesList = self.advisory.yearTwoeC
+        self.knowledge_Base = knowledge_Base
+        self.coursesList = self.knowledge_Base.yearTwoeC
         self.titleList = []
         
         for item in range(len(self.coursesList)):
