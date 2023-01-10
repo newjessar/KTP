@@ -5,7 +5,7 @@ from knowledge_Base import Knowledge_Base
 from gui import App
 import tkinter.messagebox
 import customtkinter
-from student import Student
+from courses import Courses
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -16,18 +16,37 @@ def main():
     student = Student()
     
     student.studentName      = "Jay Kay"
-    student.studentNumber    = 302
-    student.passedCourses    = [1, 3]
+    #student.studentNumber    = 302
+    passedString = ["Imperative Programming (for AI)", "Autonomous Systems", "Introduction to Artificial Intelligence"]
+    courses = Courses()
+    courses.initiateCourses()
+    courses.getAllYears()
+    courList = courses.getAllcourses()
+    student.passedCourses    = []
+    for i in courList:
+        if i.title in passedString:
+            student.passedCourses.append(i)
+    for course in student.passedCourses:
+        course.grade = 8
     student.passedElective   = 0
     student.passedPracticals = 0
-    student.currentYear      = 2
+    student.currentYear      = 1
     student.currentBlock     = 2
-    student.motivation       = 7
-    student.orientation      = 2
-    
+    student.failedCourses    = 0
+    student.reason5ECTS = "bored"
+    student.want5ECTS = True
+    #student.motivation       = 7
+    student.orientation      = None
     knowledge_Base = Knowledge_Base(student)
-    app = App(knowledge_Base)
-    app.mainloop()
+    # for course in knowledge_Base.courses:
+    #     if course in student.passedCourses:
+    #         course.grade=8
+    knowledge_Base.doInference()
+    for i in knowledge_Base.ap.recommended_courses:
+        print(i.title)
+    
+    #app = App(knowledge_Base)
+    #app.mainloop()
 
 if __name__ == "__main__":
     main()

@@ -2,8 +2,8 @@
 
 class Course(object):
     
-    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block, mandatory, elective,
-    practical, language, pre_requisite, credit,n_pre_req):
+    def __init__(self, id, title, orientation, pre_requ_cour, advised, year, block,credit, mandatory, elective,
+    practical, language, pre_requisite, n_pre_req):
         self.id                     = id             # int
         self.title                  = title          # String
         self.orientation            = orientation    # int - orientation, = (Non-CS): 1 -- (CS): 2
@@ -11,7 +11,7 @@ class Course(object):
         self.advised_courses        = advised        # Array
         self.year                   = year           # int
         self.block                  = block          # int
-        self.grade                  = int            # int
+        self.grade                  = -1            # int
         self.credit                 = credit         # int  
         self.mandatory              = mandatory      # Binary
         self.elective               = elective       # Binary

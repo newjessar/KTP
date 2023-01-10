@@ -4,22 +4,22 @@ import statistics
 class Student:
     def __init__(self):
         self.studentName        = ""
-        self.studentNumber      = int
+        self.studentNumber      = None
         self.passedCourses      = []
         self.advisedCourses     = []
-        self.want5ECTS          = bool
-        self.reason5ECTS        = str
-        self.failedCourses      = int
-        self.averageGrade       = int
-        self.passedElective     = int
-        self.passedPracticals   = int
-        self.currentYear        = int
-        self.currentBlock       = int
-        self.motivation         = int
-        self.orientation        = int
-        self.language           = False # True = English, False = Dutch 
-        self.propaedeuticPhasePassed = bool
-        self.startedBachelorProject = bool
+        self.want5ECTS          = None
+        self.reason5ECTS        = None
+        self.failedCourses      = None
+        self.averageGrade       = None
+        self.passedElective     = None
+        self.passedPracticals   = None
+        self.currentYear        = None
+        self.currentBlock       = None
+        self.motivation         = None
+        self.orientation        = None
+        self.language           = True # True = English, False = Dutch 
+        self.propaedeuticPhasePassed = None
+        self.startedBachelorProject = None
     
     def determinePropaedeuticPhasePassed(self):
         firstYearCourses = [course for course in self.passedCourses if course.year == 1]

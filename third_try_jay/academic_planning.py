@@ -8,31 +8,60 @@ class Academic_planning:
         self.possible_courses = []
         self.recommended_electives = []
         self.other_available_electives = []
-        self.recommended_Extra5ECTS = bool
+        self.recommended_Extra5ECTS = None
         self.finished = False
-        self.finishedElectives = bool
-        self.planYear = int
-        self.planBlock = int
-        self.showOtherCourses = bool
-        self.checkedElectiveCourses = bool
-        self.checkedMandatoryCourses = bool
-        self.checkedPracticalCourses = bool
+        self.finishedElectives = None
+        self.planYear = None
+        self.planBlock = None
+        self.showOtherCourses = None
+        self.checkedOrientation = False
+        self.checkedElectiveCourses = None
+        self.checkedMandatoryCourses = None
+        self.checkedPracticalCourses = None
+        self.checkedLanguages = None
 
 
     def highestPreReg(self):
         preReq = -1
         coursePre = None
-        for course in self.possible_courses:
-            if (course.n_pre_req > preReq):
+        for course in range(len(self.possible_courses)):
+            if (self.possible_courses[course].n_pre_req > preReq):
                  coursePre = course
-                 preReq = course.n_pre_req               
-        return coursePre
+                 preReq = course.n_pre_req
+        highest_course = self.possible_courses.pop(coursePre)
+        return highest_course
+
+    def avgGradePreReq(course):
+        grade = 0
+        if (len(course.pre_requisite_courses)==0):
+            return 0
+        for pre in course.pre_requisite_courses:
+            grade += pre.grade
+        return grade/len(course.pre_requisite_courses)
+
+    def highestPreReqGrade(self):
+        preReq = -1
+        coursePre = None
+        for course in range(len(self.possible_courses)):
+            avgGrade = self.avgGradePreReq(self.possible_courses[course])
+            if (avgGrade > preReq):
+                 coursePre = course
+                 preReq = avgGrade
+        highest_course = self.possible_courses.pop(coursePre)
+        return highest_course
 
     def creditsRecomendedCourses(self):
         self.recommended_courses_ECTS = 0
         for course in self.recommended_courses:
             self.recommended_courses_ECTS += course.credit
         return self.recommended_courses_ECTS
+
+    def creditsPossibleCourses(self):
+        possCredits = 0
+        for course in self.possible_courses:
+            print(course.credit)
+            possCredits += course.credit
+        return possCredits
 
     def totalCredits(self):
         self.recommended_courses_ECTS = 0
@@ -54,5 +83,7 @@ class Academic_planning:
     def averageGrade(self,courses):
         total = 0
         for course in courses:
-            total += course.grade
+            total += course
+        if len(courses)==0:
+            return 0
         return total/len(courses)
