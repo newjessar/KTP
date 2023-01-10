@@ -13,30 +13,15 @@ class App(customtkinter.CTk):
     WIDTH = 780
     HEIGHT = 520
 
-    # Design pattern 2 - First window remains active
-    def btxt(self, button_text):
-        return tkinter.Button(button_text, size=(5, 1), font=("Helvetica", 20))
-    
-    # Design pattern 2 - First window remains active
-    def ctxt(self, checkBox_text):
-        return tkinter.Checkbox(checkBox_text, size=(5, 1), font=("Helvetica", 20))
-    
     def __init__(self, knowledge_Base : Knowledge_Base):
         super().__init__()
+        self.kb = knowledge_Base
         
-        # self.knowledge_Base = knowledge_Base
-        # # self.coursesList = self.knowledge_Base.yearTwoeC
-        # self.titleList = []
-        
-        # for item in range(len(self.coursesList)):
-        #     self.titleList.append(self.coursesList[item].getTitle())
-
-
-
 
         self.title("Student Advisory Application.py")
         self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
+        self.seButtons = []
 
         # ============ create two frames ============
 
@@ -206,15 +191,65 @@ class App(customtkinter.CTk):
         # self.radio_button_3.configure(state=tkinter.DISABLED)
         # self.check_box_1.configure(state=tkinter.DISABLED, text="CheckBox disabled")
         # self.check_box_2.select()
+        
+        # ============ create Academic Prograss frames ============
+        # Create a grid2 for the academic progress that will have two frames. One on top will desplay Three buttons: Year one, Year two, Year three. And One below will display titles of from self.year_one_titles
+        
+    def academic_progress_Window(self):
+        second_window = tkinter.Toplevel()
+        second_window.geometry(f"{App.WIDTH}x{App.HEIGHT}")
+        second_window.protocol("WM_DELETE_WINDOW", second_window.destroy)  # call .on_closing() when app gets closed
+        
+        # configure grid layout (2x1)
+        second_window.grid_columnconfigure(1, weight=1)
+        second_window.grid_rowconfigure(0, weight=1)
 
+        # create frames
+        second_window.se_frame_left = customtkinter.CTkFrame(master=second_window, width=180, corner_radius=0)
+        second_window.se_frame_left.grid(row=0, column=0, sticky="nswe")
+
+        second_window.se_frame_right = customtkinter.CTkFrame(master=second_window)
+        second_window.se_frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
+        
+        # Create a label for the academic years
+        second_window.label_1 = customtkinter.CTkLabel(master=second_window.se_frame_left,
+                                              text="Academic Years",
+                                              text_font=("Roboto Medium", -16))  # font name and size in px
+        second_window.label_1.grid(row=1, column=0, pady=10, padx=10)
+        
+        # Create a buttons for the academic years
+        
+        second_window.se_button_1 = customtkinter.CTkButton(master=second_window.se_frame_left, 
+                                                            text="Year One",
+                                                            command=self.se_button_event(second_window, row=2))
+        second_window.se_button_1.grid(row=2, column=0, pady=10, padx=20)
+        
+            
+        
+        
+    def se_button_event(self, second_window, row):        
+        for course in self.kb.yearOneC:
+            second_window.button_course = customtkinter.CTkButton(master=second_window.se_frame_right,
+                                                        text=course.getTitle(),
+                                                        command= print(1))        
+            second_window.button_course.grid(row=row, column=0, pady=10, padx=20)
+            row += 1
+        
+    def button_print_event(self, idx):   
+        print(idx)   
+        print(self.kb.yearOneC[idx].getTitle())
+
+    def button_event2(self):      
+        self.academic_progress_Window()
+    
+        
     def button_event(self):
-        print("Button pressed")
-    def button_event2(self):
         print("Button pressed again")
 
     def change_appearance_mode(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
+        
     def on_closing(self, event=0):
         self.destroy()
 
