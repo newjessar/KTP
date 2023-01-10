@@ -43,6 +43,12 @@ class Student:
         else:
             return False
 
+    def notInPassed(self,name):
+        for course in self.passedCourses:
+            if course.title == name:
+                return False
+        return True
+
     def firstYear(self):
         if self.currentYear == 1:
             return True

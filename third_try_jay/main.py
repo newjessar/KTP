@@ -17,22 +17,29 @@ def main():
     
     student.studentName      = "Jay Kay"
     #student.studentNumber    = 302
-    passedString = ["Imperative Programming (for AI)", "Autonomous Systems", "Introduction to Artificial Intelligence"]
+    passedString = ["Imperative Programming (for AI)", "Autonomous Systems", "Introduction to Artificial Intelligence", \
+        "Introduction to Logic (AI)"]
     courses = Courses()
     courses.initiateCourses()
     courses.getAllYears()
     courList = courses.getAllcourses()
-    student.passedCourses    = []
+    student.passedCourses = []
     for i in courList:
         if i.title in passedString:
             student.passedCourses.append(i)
     for course in student.passedCourses:
-        course.grade = 8
+        if course.orientation == 1:
+            course.grade = 9
+        else:
+            course.grade = 8
+            
     student.passedElective   = 0
     student.passedPracticals = 0
-    student.currentYear      = 1
-    student.currentBlock     = 2
+
+    student.currentYear      = 2
+    student.currentBlock     = 1
     student.failedCourses    = 0
+    student.language = True
     student.reason5ECTS = "bored"
     student.want5ECTS = True
     #student.motivation       = 7
@@ -42,7 +49,12 @@ def main():
     #     if course in student.passedCourses:
     #         course.grade=8
     knowledge_Base.doInference()
+    print("recomended courses:")
     for i in knowledge_Base.ap.recommended_courses:
+        print(i.title)
+
+    print("\nrecomended electives:")
+    for i in knowledge_Base.ap.recommended_electives:
         print(i.title)
     
     #app = App(knowledge_Base)

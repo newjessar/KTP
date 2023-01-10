@@ -16,9 +16,16 @@ class Academic_planning:
         self.showOtherCourses = None
         self.checkedOrientation = False
         self.checkedElectiveCourses = None
-        self.checkedMandatoryCourses = None
+        self.checkedMandatoryCourses = False
         self.checkedPracticalCourses = None
         self.checkedLanguages = None
+
+
+    def noMandatoryCourseInPossibleCourses(self):
+        for course in self.possible_courses:
+            if course.mandatory:
+                return False
+        return True
 
 
     def highestPreReg(self):
@@ -59,9 +66,20 @@ class Academic_planning:
     def creditsPossibleCourses(self):
         possCredits = 0
         for course in self.possible_courses:
-            print(course.credit)
             possCredits += course.credit
         return possCredits
+
+    def notInRecommended(self,name):
+        for course in self.recommended_courses:
+            if course.title == name:
+                return False
+        return True
+
+    def notInPassed(self,name):
+        for course in self.recommended_courses:
+            if course.title == name:
+                return False
+        return True
 
     def totalCredits(self):
         self.recommended_courses_ECTS = 0

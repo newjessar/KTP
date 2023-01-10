@@ -23,6 +23,18 @@ class Courses(object):
                 
     def getAllcourses(self):
         return self.allcourses
+
+    def convertToCourses(self):
+        for course in self.allcourses:
+            pre = course.pre_requisite_courses
+            new_pre = []
+            for pre_course in pre:
+                for course2 in self.allcourses:
+                    if pre_course == course2.title:
+                        new_pre.append(course2)
+            course.pre_requisite_courses = new_pre
+
+
     
     def getMandatoryBlockCourses(self,Block):
         year1 = []
