@@ -12,24 +12,23 @@ class Student:
         self.failedCourses      = None
         self.averageGrade       = None
         self.passedElective     = None
-        self.passedPracticals   = None
         self.currentYear        = None
         self.currentBlock       = None
         self.motivation         = None
         self.orientation        = None
         self.language           = True # True = English, False = Dutch 
         self.propaedeuticPhasePassed = None
-        self.startedBachelorProject = None
+        self.startedBachelorProject = False
     
     def determinePropaedeuticPhasePassed(self):
         firstYearCourses = [course for course in self.passedCourses if course.year == 1]
-        if len(firstYearCourses == 12):
+        if len(firstYearCourses) == 12:
             return True
         else:
             return False
 
     def calculateAverageGrade(self):
-        return statistics.mean(self.passedCourses)
+        return statistics.mean([course.grade for course in self.passedCourses])
 
     def calculateCurrentECTS(self):
         total = 0
@@ -51,11 +50,6 @@ class Student:
 
     def firstYear(self):
         if self.currentYear == 1:
-            return True
-        return False
-    
-    def passPracticals(self):
-        if self.passedPracticals >= 3:
             return True
         return False
     

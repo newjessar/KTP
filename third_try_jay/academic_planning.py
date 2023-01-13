@@ -18,6 +18,7 @@ class Academic_planning:
         self.checkedElectiveCourses = None
         self.checkedMandatoryCourses = False
         self.checkedPracticalCourses = None
+        self.changedPracticals = None
         self.checkedLanguages = None
 
 
@@ -34,11 +35,11 @@ class Academic_planning:
         for course in range(len(self.possible_courses)):
             if (self.possible_courses[course].n_pre_req > preReq):
                  coursePre = course
-                 preReq = course.n_pre_req
+                 preReq = self.possible_courses[course].n_pre_req
         highest_course = self.possible_courses.pop(coursePre)
         return highest_course
 
-    def avgGradePreReq(course):
+    def avgGradePreReq(self,course):
         grade = 0
         if (len(course.pre_requisite_courses)==0):
             return 0
@@ -51,6 +52,7 @@ class Academic_planning:
         coursePre = None
         for course in range(len(self.possible_courses)):
             avgGrade = self.avgGradePreReq(self.possible_courses[course])
+            #print(self.possible_courses[course].title,avgGrade)
             if (avgGrade > preReq):
                  coursePre = course
                  preReq = avgGrade
@@ -81,18 +83,34 @@ class Academic_planning:
                 return False
         return True
 
+    def passedPracticals(self,passed):
+        #print("recomended",[course.title for course in self.recommended_courses])
+        passedPracticals = 0
+        for course in self.recommended_courses:
+            if course.practical:
+                passedPracticals += 1
+        for course in passed:
+            if course.practical:
+                passedPracticals += 1     
+        if passedPracticals >= 3:
+            return True
+        else:
+            return False   
+
     def totalCredits(self):
         self.recommended_courses_ECTS = 0
+        print([course.title for course in self.recommended_courses])
+        print([course.title for course in self.possible_courses])
         for course in self.recommended_courses:
             self.recommended_courses_ECTS += course.credit
-        for course in self.recommended_electives:
+        for course in self.possible_courses:
             self.recommended_courses_ECTS += course.credit
         return self.recommended_courses_ECTS
 
     def preReqMet(self,course,passed_course):
         met = True
         for preReq in course.pre_requisite_courses:
-            if not (preReq in passed_course):
+            if not (preReq.title in [course.title for course in passed_course]):
                 met = False
                 return met
         return met

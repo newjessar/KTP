@@ -26,13 +26,13 @@ class CoursesDB:
                             [6, "Algorithms and Data Structures (AI)", 2, [], ["Imperative Programming (for AI)"], 1, 3, 5, True, False, False, True, False, 0],
                             [7, "Cognitive Psychology", 1, [], [], 1, 3, 5, True, False, False, True, False, 2],
                             [8, "General Linguistics", 1, [], [], 1, 3, 5, True, False, False, True, False, 2],
-                            [9, "Artificial Intelligence 1", 2,  [], ["Imperative Programming (for AI)", "Introduction to Logic (AI)", "Algorithms and Data Structures (AI)"], 1, 4, 5, True, False, False, False, False, 1],
+                            [9, "Artificial Intelligence 1", 2,  [], ["Imperative Programming (for AI)", "Introduction to Logic (AI)", "Algorithms and Data Structures (AI)"], 1, 4, 5, True, False, False, True, False, 1],
                             [10, "Introduction to the Brain", 1, [], [], 1, 4, 5, True, False, False, True, False, 0],
                             [11, "Linear Algebra and Multivariable Calculus", 2, [], ["Calculus for Artificial Intelligence"], 1, 4, 5, True, False, False, True, False, 4],
                             
                             [12, "Language and Speech Technology", 2, ["General Linguistics","Calculus for Artificial Intelligence"], [], 2, 1, 5, True, False, False, True, True,1],
                             [13, "Knowledge and Agent Technology", 2, [], [], 2, 1, 5, True, False, False, True, False,0],
-                            [14, "Statistics", 2, [], [], 2, 1, 5, True, False, False, True, False, 0],
+                            [14, "Statistics", 2, [], [], 2, 1, 5, True, False, False, True, False, 2],
                             
                             [15, "Architectures of Intelligence", 2, [], ["Cognitive Psychology"], 2, 2, 5, True, False, False, True, True, 1],
                             [16, "Signals and Systems (for AI)", 2, ["Calculus for Artificial Intelligence", "Linear Algebra and Multivariable Calculus"], ["Imperative Programming (for AI)"], 2, 2, 5, True, False, False, True, True, 1],
@@ -44,7 +44,7 @@ class CoursesDB:
                             [21, "Computer Graphics" , 2, ["Calculus for Artificial Intelligence", "Linear Algebra and Multivariable Calculus"], [], 2, 3, 5, False, True, False, True, True, 0],
                             [22, "Introduction to Information Systems", 2, [], ["Introduction to Logic (AI)"], 2, 3, 5, False, True, False, True, False, 0],
                             [23, "Agent Technology Practical" , 2, [], ["Object-Oriented Programming (for AI)"], 2, 3, 5, False, False, True, True, False, 0],
-                            [24, "Cogntivive Modelling Practical" , 1, ["Cognitive Psychology","Statistics","Architectures of Intelligence"], [], 2, 3, 5, False, False, True, True, True, 0],
+                            [24, "Cognitive Modelling Practical" , 1, ["Cognitive Psychology","Statistics","Architectures of Intelligence"], [], 2, 3, 5, False, False, True, True, True, 0],
                             [25, "Robotics Practical 1" , 2, ["Calculus for Artificial Intelligence","Linear Algebra and Multivariable Calculus"], ["Statistics","Imperative Programming (for AI)","Autonomous Systems","Signals and Systems (for AI)","Neural Networks"], 2, 3, 5, False, False, True, True, True, 0],
 
                             [26, "Ethics in Artificial Intelligence" , 1, [], [], 2, 4, 5, True, False, False, True, False, 0],
@@ -85,11 +85,11 @@ class CoursesDB:
                             [57, "Languages and Machines" , 2, [], ["Introduction to Logic (AI)"], 3, 4, 5, False, True, False, True, False, 0],
                             [58, "Parallel Computing" , 2, [], ["Imperative Programming (for AI)","Algorithms and Data Structures (AI)"], 3, 4, 5, False, True, False, True, False, 0],
                             [59, "Uncetainty in Machine Learning" , 2, [], ["Statistics"], 3, 4, 5, False, True, False, True, False, 0],
-                            [60, "Language Speech Technology Practical", 2, ["Language and Speech Technology"], [], 3, 4, 5, False, False, True, True, True, 0],
+                            [60, "Language Technology Practical", 2, ["Language and Speech Technology"], [], 3, 4, 5, False, False, True, True, True, 0],
                             [61, "Robotics Practical 2" , 2, ["Calculus for Artificial Intelligence","Linear Algebra and Multivariable Calculus"],  ["Statistics","Imperative Programming (for AI)","Autonomous Systems","Signals and Systems (for AI)","Neural Networks","Robotics Practical 1"], 3, 4, 5, False, False, True, True, True, 0],
 
-                            [62, "Bachelor's Project A" , 1, ["Data Analytics and Communication","Statistics"], [], 3, 4, 5, True, False, False, True, False, 0],
-                            [63, "Bachelor's Project B", 1, ["Data Analytics and Communication","Statistics"], [], 3, 4, 10, True, False, False, True, False, 0]
+                            [62, "Bachelor's Project A" , 1, ["Data Analytics and Communication","Statistics"], [], 3, 5, 5, True, False, False, True, False, 0],
+                            [63, "Bachelor's Project B", 1, ["Data Analytics and Communication","Statistics"], [], 3, 5, 10, True, False, False, True, False, 0]
                             
 
 
