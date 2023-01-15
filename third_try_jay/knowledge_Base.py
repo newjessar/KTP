@@ -21,6 +21,11 @@ class Knowledge_Base():
             for course2 in self.st.passedCourses:
                 if course.title == course2.title:
                     course.grade = course2.grade
+        for course in self.courses.allcourses:
+            for course2 in self.st.failedCourses:
+                if course.title == course2.title:
+                    course.grade = course2.grade
+
         self.courses.convertToCourses()
         self.courses.getAllYears()
         
@@ -47,7 +52,7 @@ class Knowledge_Base():
 
     # rule 2 - table 1 - all years
     def allrule2_recommend5ECTS1(self):
-        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 0 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and len(self.st.failedCourses) == 0 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -57,7 +62,7 @@ class Knowledge_Base():
     # rule 3 - table 1 - all years
     def allrule3_recommend5ECTS2(self):
         #print(self.st.calculateAverageGrade())
-        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and len(self.st.failedCourses) == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -65,7 +70,7 @@ class Knowledge_Base():
     
     # rule 4 - table 1 - all years
     def allrule4_notRecommend5ECTS(self):
-        if (not self.st.want5ECTS or not self.st.validReason() or self.st.failedCourses > 1) and self.ap.recommended_Extra5ECTS == None:
+        if (not self.st.want5ECTS or not self.st.validReason() or len(self.st.failedCourses) > 1) and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = False
             return True
         else:
@@ -115,6 +120,11 @@ class Knowledge_Base():
                     orientation1_courses.append(course.grade)
                 else: 
                     orientation2_courses.append(course.grade)
+            for course in self.st.failedCourses:
+                if course.orientation == 1:
+                    orientation1_courses.append(course.grade)
+                else: 
+                    orientation2_courses.append(course.grade)
             orientation1 = self.ap.averageGrade(orientation1_courses)
             orientation2 = self.ap.averageGrade(orientation2_courses)
             if orientation2 > orientation1:
@@ -127,16 +137,7 @@ class Knowledge_Base():
 
 
 # ============ 1st Year Students ============
-
-# Rule 1 - set self.dvice to true if self.ap.planYear is true and recomended coursses is not empty and recomendedExtra5ECTS is false
-    def year1rule1_isAdvised(self):
-        return False
-    #     if self.ap.planYear == 1 and self.ap.recommended_courses != [] and not self.ap.recommended_Extra5ECTS:
-    #         self.ap.finished = True
-    #         return True
-    #     else:
-    #         return False
-        
+       
  #  Rule 2 - if self.ap.planYear is 1 and recomended courses is empty, itterate through 
  # self.yearOne and add mendatory courses with self.block same as planBlock
  # recommend courses set from Ocasys (15 credits mandatory courses)
@@ -533,7 +534,7 @@ class Knowledge_Base():
         infer = True
         fList = [self.allrule1_practicalNoPreReq,self.allrule2_recommend5ECTS1\
             ,self.allrule3_recommend5ECTS2,self.allrule4_notRecommend5ECTS,self.allrule5_recommend5ECTSAndFinish,self.allrule6_notRecommend5ECTSAndFinish\
-            ,self.allrule7_passed3Practicals,self.allrule8,self.year1rule1_isAdvised,self.year1rule2_MandatoryRecomendation,self.year1rule3_highestPossiblePreRequisites,self.year1rule4_deleteNonCSCoursesWithLowGrades\
+            ,self.allrule7_passed3Practicals,self.allrule8,self.year1rule2_MandatoryRecomendation,self.year1rule3_highestPossiblePreRequisites,self.year1rule4_deleteNonCSCoursesWithLowGrades\
             ,self.year1rule5_deleteCSCoursesWithLowGrades,self.year1rule6_deleteNotMandatory,self.year1rule7_addDutchCourses,self.year1rule8_addEnglishCourses\
             ,self.year1rule9_addExtra5ECTS,self.year2hrule1_year2mandatory,self.year2hrule2_deleteNotPossible,self.year2hrule3_transferHighestPreReq_15ECT\
             ,self.year2hrule4_transferHighestPreReq_20ECT,self.year2hrule5_checkedPracticals15,self.year2hrule6_checkedPracticals20,self.year2hrule7,self.year2hrule7b\

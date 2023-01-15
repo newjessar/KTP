@@ -41,37 +41,37 @@ class Courses(object):
         year2 = []
         year3 = []
         for course in self.yearOneCour:
-            if course.mandatory and course.block == Block and course.grade==-1:
+            if course.mandatory and course.block == Block and course.grade>=5.5:
                 year1.append(course)
 
         for course in self.yearTwoCour:
-            if course.mandatory and course.block == Block and course.grade==-1:
+            if course.mandatory and course.block == Block and course.grade>=5.5:
                 year2.append(course)
 
         for course in self.yearThreeCour:
-            if course.mandatory and course.block == Block and course.grade==-1:
+            if course.mandatory and course.block == Block and course.grade>=5.5:
                 year3.append(course)
         return year1,year2,year3
 
     def getPracticalCourses(self,Block):
         practicals = []
         for course in self.yearTwoCour:
-            if course.practical and course.block == Block and course.grade==-1:
+            if course.practical and course.block == Block and course.grade>=5.5:
                 practicals.append(course)
 
         for course in self.yearThreeCour:
-            if course.practical and course.block == Block and course.grade==-1:
+            if course.practical and course.block == Block and course.grade>=5.5:
                 practicals.append(course)
         return practicals
 
     def getElectiveCourses(self,Block):
         practicals = []
         for course in self.yearTwoCour:
-            if course.elective and course.block == Block and course.grade==-1:
+            if course.elective and course.block == Block and course.grade>=5.5:
                 practicals.append(course)
 
         for course in self.yearThreeCour:
-            if course.elective and course.block == Block and course.grade==-1:
+            if course.elective and course.block == Block and course.grade>=5.5:
                 practicals.append(course)
         return practicals
 

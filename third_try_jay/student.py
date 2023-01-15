@@ -9,7 +9,7 @@ class Student:
         self.advisedCourses     = []
         self.want5ECTS          = None
         self.reason5ECTS        = None
-        self.failedCourses      = None
+        self.failedCourses      = []
         self.averageGrade       = None
         self.passedElective     = None
         self.currentYear        = None
@@ -28,7 +28,7 @@ class Student:
             return False
 
     def calculateAverageGrade(self):
-        return statistics.mean([course.grade for course in self.passedCourses])
+        return statistics.mean([course.grade for course in self.passedCourses]+[course.grade for course in self.failedCourses])
 
     def calculateCurrentECTS(self):
         total = 0
