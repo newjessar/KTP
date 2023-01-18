@@ -52,7 +52,7 @@ class CoursesDB:
                             [28, "Object-Oriented Programming (for AI)" , 2, [], ["Imperative Programming (for AI)"], 2, 4, 5, True, False, False, True, False, 0],
                             
                             [29, "Artificial Intelligence 2" , 2 , [], ["Artificial Intelligence 1","Statistics"], 3, 1, 5, True, False, False, True, False, 0],
-                            [30, "Advanced Object Oriented Programming" , 1, [], ["Object-Oriented Programming (for AI)"], 3, 1, 5, False, True, False, True, False, 0],
+                            [30, "Advanced Object Oriented Programming" , 2, [], ["Object-Oriented Programming (for AI)"], 3, 1, 5, False, True, False, True, False, 0],
                             [31, "C++ fundamentals" , 2, ["Imperative Programming (for AI)","Object-Oriented Programming (for AI)"], [], 3, 1, 5, False, True, False, True, True, 0],
                             [32, "Computational Complexity" , 2, [], [], 3, 1, 5, False, True, False, True, False, 0],
                             [33, "Functional Programming" , 2, [], [], 3, 1, 5, False, True, False, True, False, 0],

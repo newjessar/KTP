@@ -6,15 +6,11 @@ class Student:
         self.studentName        = ""
         self.studentNumber      = None
         self.passedCourses      = []
-        self.advisedCourses     = []
         self.want5ECTS          = None
         self.reason5ECTS        = None
-        self.failedCourses      = []
-        self.averageGrade       = None
-        self.passedElective     = None
-        self.currentYear        = None
+        self.failedCourses      = None
         self.currentBlock       = None
-        self.motivation         = None
+        self.currentYear        = None
         self.orientation        = None
         self.language           = True # True = English, False = Dutch 
         self.propaedeuticPhasePassed = None

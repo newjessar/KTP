@@ -52,7 +52,6 @@ class Academic_planning:
         coursePre = None
         for course in range(len(self.possible_courses)):
             avgGrade = self.avgGradePreReq(self.possible_courses[course])
-            #print(self.possible_courses[course].title,avgGrade)
             if (avgGrade > preReq):
                  coursePre = course
                  preReq = avgGrade
@@ -99,8 +98,6 @@ class Academic_planning:
 
     def totalCredits(self):
         self.recommended_courses_ECTS = 0
-        print([course.title for course in self.recommended_courses])
-        print([course.title for course in self.possible_courses])
         for course in self.recommended_courses:
             self.recommended_courses_ECTS += course.credit
         for course in self.possible_courses:

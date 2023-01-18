@@ -21,11 +21,6 @@ class Knowledge_Base():
             for course2 in self.st.passedCourses:
                 if course.title == course2.title:
                     course.grade = course2.grade
-        for course in self.courses.allcourses:
-            for course2 in self.st.failedCourses:
-                if course.title == course2.title:
-                    course.grade = course2.grade
-
         self.courses.convertToCourses()
         self.courses.getAllYears()
         
@@ -38,21 +33,9 @@ class Knowledge_Base():
         
     ## Rule Model
 
-    # Rule 1 - table 1 - all years
-    # This functiuon checks for if there are no pre-requisites for a courses
-    # then it adds the advised courses in pre-requisites
-    def allrule1_practicalNoPreReq(self):
-        infer = False
-        for course in self.ap.possible_courses:
-            if course.getPractical() and not course.getPre_requisite():
-                course.pre_requisite_courses = course.advised_courses
-                course.pre_requisite = True
-                infer = True
-        return infer
-
     # rule 2 - table 1 - all years
     def allrule2_recommend5ECTS1(self):
-        if self.st.want5ECTS and self.st.validReason() and len(self.st.failedCourses) == 0 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 0 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -62,7 +45,7 @@ class Knowledge_Base():
     # rule 3 - table 1 - all years
     def allrule3_recommend5ECTS2(self):
         #print(self.st.calculateAverageGrade())
-        if self.st.want5ECTS and self.st.validReason() and len(self.st.failedCourses) == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -70,7 +53,7 @@ class Knowledge_Base():
     
     # rule 4 - table 1 - all years
     def allrule4_notRecommend5ECTS(self):
-        if (not self.st.want5ECTS or not self.st.validReason() or len(self.st.failedCourses) > 1) and self.ap.recommended_Extra5ECTS == None:
+        if (not self.st.want5ECTS or not self.st.validReason() or self.st.failedCourses > 1) and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = False
             return True
         else:
@@ -120,11 +103,6 @@ class Knowledge_Base():
                     orientation1_courses.append(course.grade)
                 else: 
                     orientation2_courses.append(course.grade)
-            for course in self.st.failedCourses:
-                if course.orientation == 1:
-                    orientation1_courses.append(course.grade)
-                else: 
-                    orientation2_courses.append(course.grade)
             orientation1 = self.ap.averageGrade(orientation1_courses)
             orientation2 = self.ap.averageGrade(orientation2_courses)
             if orientation2 > orientation1:
@@ -137,7 +115,7 @@ class Knowledge_Base():
 
 
 # ============ 1st Year Students ============
-       
+        
  #  Rule 2 - if self.ap.planYear is 1 and recomended courses is empty, itterate through 
  # self.yearOne and add mendatory courses with self.block same as planBlock
  # recommend courses set from Ocasys (15 credits mandatory courses)
@@ -289,6 +267,20 @@ class Knowledge_Base():
             else:
                 infer = True
         self.ap.possible_courses = new_possible_courses
+        new_recommended_courses = []
+        for course in self.ap.recommended_courses:
+            if self.ap.preReqMet(course,self.st.passedCourses):
+                new_recommended_courses.append(course)
+            else:
+                infer = True
+        self.ap.recommended_courses = new_recommended_courses
+        new_recommended_courses = []
+        for course in self.ap.recommended_electives:
+            if self.ap.preReqMet(course,self.st.passedCourses):
+                new_recommended_courses.append(course)
+            else:
+                infer = True
+        self.ap.recommended_electives = new_recommended_courses
         return infer
 
     # rule 3 - add the course with the most prerequisites to recomended courses
@@ -304,6 +296,7 @@ class Knowledge_Base():
     def year2hrule4_transferHighestPreReq_20ECT(self):
         if self.ap.planYear!= 1 and self.ap.possible_courses != [] and self.ap.creditsRecomendedCourses() < 20 and \
             self.ap.recommended_Extra5ECTS and not self.ap.checkedPracticalCourses:
+            print([course.title for course in self.ap.possible_courses])
             self.ap.recommended_courses.append(self.ap.highestPreReg())
             return True
         else:
@@ -407,7 +400,7 @@ class Knowledge_Base():
             for course in self.ap.possible_courses:
                 #print(course.title)
                 if course.language or not self.st.language:
-                    if course.orientation == 2 and course.block == self.ap.planBlock:
+                    if course.orientation == 2:
                         self.ap.other_available_electives.append(course)
                     else:
                         new_possible.append(course)
@@ -532,7 +525,7 @@ class Knowledge_Base():
         
     def doInference(self):
         infer = True
-        fList = [self.allrule1_practicalNoPreReq,self.allrule2_recommend5ECTS1\
+        fList = [self.allrule2_recommend5ECTS1\
             ,self.allrule3_recommend5ECTS2,self.allrule4_notRecommend5ECTS,self.allrule5_recommend5ECTSAndFinish,self.allrule6_notRecommend5ECTSAndFinish\
             ,self.allrule7_passed3Practicals,self.allrule8,self.year1rule2_MandatoryRecomendation,self.year1rule3_highestPossiblePreRequisites,self.year1rule4_deleteNonCSCoursesWithLowGrades\
             ,self.year1rule5_deleteCSCoursesWithLowGrades,self.year1rule6_deleteNotMandatory,self.year1rule7_addDutchCourses,self.year1rule8_addEnglishCourses\
@@ -546,6 +539,6 @@ class Knowledge_Base():
             infer = False
             for f in fList:
                 if f():
-                    #print(f)
+                    print(f)
                     infer = True
         return

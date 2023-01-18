@@ -20,10 +20,10 @@ def main():
     passedString = ["Imperative Programming (for AI)", "Introduction to Artificial Intelligence", \
         "Autonomous Systems", "Introduction to Logic (AI)", "General Linguistics", "Calculus for Artificial Intelligence", \
         "Basic Scientific Skills", "Linear Algebra and Multivariable Calculus", "Algorithms and Data Structures (AI)", "Cognitive Psychology", \
-        "Statistics","Architectures of Intelligence", "Knowledge Technology Practical", "Artificial Intelligence 1",\
-        "Introduction to the Brain", "Language and Speech Technology","Data Analytics and Communication","Knowledge and Agent Technology", "Signals and Systems (for AI)",\
-        "Philosophy of AI and Cognition","Neural Networks","Object-Oriented Programming (for AI)", "Ethics in Artificial Intelligence", "Advanced Logic",\
-        "Neurophysics (Physics for Artifician Intelligence)", "Robotics Practical 1","Robotics Practical 2", "Cognitive Modelling Practical"]
+        "Statistics","Architectures of Intelligence", "Artificial Intelligence 1",\
+        "Introduction to the Brain", "Language and Speech Technology","Data Analytics and Communication",\
+            "Knowledge and Agent Technology", "Signals and Systems (for AI)"\
+        ]
     print(len(passedString))
     courses = Courses()
     courses.initiateCourses()
@@ -42,7 +42,7 @@ def main():
             course.grade = 8
 
     student.currentYear      = 3
-    student.currentBlock     = 1
+    student.currentBlock   = 1
     student.failedCourses    = 0
     student.language = True
     student.reason5ECTS = "bored"
