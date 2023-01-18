@@ -328,31 +328,51 @@ class Knowledge_Base():
 
     # rule 7 - add practical with highest grade for pre reqs
     def year2hrule7(self):
+        course = self.ap.highestPreReqGradeNoPop()
         if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 15 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
-            and self.ap.possible_courses != [] and not self.ap.recommended_Extra5ECTS:
+            and self.ap.possible_courses != [] and not self.ap.recommended_Extra5ECTS and\
+            course.orientation == self.st.orientation:
             course = self.ap.highestPreReqGrade()
-            if course.orientation == self.st.orientation:
-                self.ap.recommended_courses.append(course)
-            else:
-                self.ap.recommended_electives.append(course)
+            self.ap.recommended_courses.append(course)
             return True
         else:
             return False
-
-    def year2hrule7b(self):
-        if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 20 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
-            and self.ap.possible_courses != [] and self.ap.recommended_Extra5ECTS:
-            course = self.ap.highestPreReqGrade()
-            if course.orientation == self.st.orientation:
-                self.ap.recommended_courses.append(course)
-            else:
-                self.ap.recommended_electives.append(course)
-            return True
-        else:
-            return False
-
-    # rule 8 - put electives in possible courses if still lower than 15 credits
+        
     def year2hrule8(self):
+        course = self.ap.highestPreReqGradeNoPop()
+        if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 15 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
+            and self.ap.possible_courses != [] and not self.ap.recommended_Extra5ECTS and\
+            course.orientation != self.st.orientation:
+            course = self.ap.highestPreReqGrade()
+            self.ap.recommended_electives.append(course)
+            return True
+        else:
+            return False
+
+    def year2hrule9(self):
+        course = self.ap.highestPreReqGradeNoPop()
+        if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 20 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
+            and self.ap.possible_courses != [] and self.ap.recommended_Extra5ECTS and\
+            course.orientation == self.st.orientation:
+            course = self.ap.highestPreReqGrade()
+            self.ap.recommended_courses.append(course)
+            return True
+        else:
+            return False
+        
+    def year2hrule10(self):
+        course = self.ap.highestPreReqGradeNoPop()
+        if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 20 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
+            and self.ap.possible_courses != [] and self.ap.recommended_Extra5ECTS and\
+            course.orientation != self.st.orientation:
+            course = self.ap.highestPreReqGrade()
+            self.ap.recommended_electives.append(course)
+            return True
+        else:
+            return False
+
+    # rule 9 - put electives in possible courses if still lower than 15 credits
+    def year2hrule11(self):
         if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 15 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
             and self.ap.possible_courses == [] and not self.ap.recommended_Extra5ECTS:
             electives  = self.courses.getElectiveCourses(self.ap.planBlock)
@@ -363,8 +383,8 @@ class Knowledge_Base():
         else:
             return False
         
-    # rule 9 - put electives in possible courses if still lower than 20 credits given that we recomend 5 extra credits
-    def year2hrule9(self):
+    # rule 10 - put electives in possible courses if still lower than 20 credits given that we recomend 5 extra credits
+    def year2hrule12(self):
         if self.ap.planYear !=1 and self.ap.creditsRecomendedCourses() < 20 and self.ap.checkedPracticalCourses and not self.ap.checkedElectiveCourses\
             and self.ap.possible_courses == [] and self.ap.recommended_Extra5ECTS:
             electives  = self.courses.getElectiveCourses(self.ap.planBlock)
@@ -375,8 +395,8 @@ class Knowledge_Base():
         else:
             return False
         
-    # rule 10 - if the student's orientation is cs, move the non-cs courses from the possible courses to other available electives
-    def year2hrule10_moveNONCSCourses(self):
+    # rule 11 - if the student's orientation is cs, move the non-cs courses from the possible courses to other available electives
+    def year2hrule13_moveNONCSCourses(self):
         if self.ap.checkedElectiveCourses and self.ap.planYear != 1 and self.st.getOrientation() == 2 and not self.ap.finishedElectives:
             new_possible = []
             for course in self.ap.possible_courses:
@@ -391,8 +411,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 11 - if the student's orientation is non-cs, move the cs courses from the possible courses to other available electives
-    def year2hrule11_moveCSCourses(self):
+    # rule 12 - if the student's orientation is non-cs, move the cs courses from the possible courses to other available electives
+    def year2hrule14_moveCSCourses(self):
         if self.ap.checkedElectiveCourses and self.ap.planYear != 1 and self.st.getOrientation() == 1 and not self.ap.finishedElectives:
             #print([course.title for course in self.ap.possible_courses])
 
@@ -412,8 +432,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 12 - if the credits of the current scheduled courses are enough, then add other possible courses to the recommended electives, and present the advice to students
-    def year2hrule12_presentAdvice1(self):
+    # rule 13 - if the credits of the current scheduled courses are enough, then add other possible courses to the recommended electives, and present the advice to students
+    def year2hrule15_presentAdvice1(self):
         if self.ap.finishedElectives and self.ap.totalCredits() >= 15 and not self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.recommended_electives += self.ap.possible_courses
             self.ap.showOtherCourses = False
@@ -423,8 +443,8 @@ class Knowledge_Base():
             return False
 
 
-    # rule 13 - if the credits of the current scheduled courses are enough, then add other possible courses to the recommended electives, and present the advice to students
-    def year2hrule13_presentAdvice2(self):
+    # rule 14 - if the credits of the current scheduled courses are enough, then add other possible courses to the recommended electives, and present the advice to students
+    def year2hrule16_presentAdvice2(self):
         if self.ap.finishedElectives and self.ap.totalCredits() >= 20 and self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.recommended_electives += self.ap.possible_courses
             self.ap.showOtherCourses = False
@@ -433,8 +453,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 14 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
-    def year2hrule14_presentAdvice3(self):
+    # rule 15 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
+    def year2hrule17_presentAdvice3(self):
         if self.ap.finishedElectives and self.ap.totalCredits() <= 15 and not self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.showOtherCourses = True
             self.ap.recommended_electives += self.ap.possible_courses
@@ -443,8 +463,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 15 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
-    def year2hrule15_presentAdvice4(self):
+    # rule 16 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
+    def year2hrule18_presentAdvice4(self):
         if self.ap.finishedElectives and self.ap.totalCredits() <= 20 and self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.showOtherCourses = True
             self.ap.recommended_electives += self.ap.possible_courses
@@ -453,8 +473,8 @@ class Knowledge_Base():
         else:
             return False
     
-    # rule 16 - if the planning is for the first block of the third or higher year and requirements to start the Bachelor Project are met, recommend it  
-    def year2hrule16_addBachelorProjectAIn1A(self):
+    # rule 17 - if the planning is for the first block of the third or higher year and requirements to start the Bachelor Project are met, recommend it  
+    def year2hrule19_addBachelorProjectAIn1A(self):
         passedCourses = self.st.getPassedCourses()
         if self.ap.planYear >= 3 and self.ap.planBlock == 1 and self.st.calculateCurrentECTS() >= 135 and \
         self.st.determinePropaedeuticPhasePassed() == True and "Statistics" in [course.title for course in passedCourses] and \
@@ -467,8 +487,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 17 - if the planning is for the second block and the Bachelor Project is already started, recommend it  
-    def year2hrule17_addBachelorProjectBIn1B(self):
+    # rule 18 - if the planning is for the second block and the Bachelor Project is already started, recommend it  
+    def year2hrule20_addBachelorProjectBIn1B(self):
         if self.ap.planYear >= 3 and self.ap.planBlock == 2 and self.st.startedBachelorProject == True and \
             self.ap.notInRecommended("Bachelor's Project B"):
             for course in self.courses.allcourses:
@@ -479,8 +499,8 @@ class Knowledge_Base():
             return False
     
 
-    # rule 18 - if the planning is for the third block and requirements to start the Bachelor Project are met, recommend it  
-    def year2hrule18_addBachelorProjectAIn2A(self):
+    # rule 19 - if the planning is for the third block and requirements to start the Bachelor Project are met, recommend it  
+    def year2hrule21_addBachelorProjectAIn2A(self):
         passedCourses = self.st.getPassedCourses()
         if self.ap.planBlock >= 3 and self.st.calculateCurrentECTS() >= 135 and \
         self.st.determinePropaedeuticPhasePassed() == True and "Statistics" in [course.title for course in passedCourses] and \
@@ -493,8 +513,8 @@ class Knowledge_Base():
         else:
             return False
 
-    # rule 19 - if the planning is for the fourth block and the Bachelor Project is already started, recommend it  
-    def year2hrule19_addBachelorProjectBIn2B(self):
+    # rule 20 - if the planning is for the fourth block and the Bachelor Project is already started, recommend it  
+    def year2hrule22_addBachelorProjectBIn2B(self):
         if self.ap.planYear >= 3 and self.ap.planBlock == 4 and self.st.startedBachelorProject == True and \
             self.ap.notInRecommended("Bachelor's Project B"):
             for course in self.courses.allcourses:
@@ -504,7 +524,7 @@ class Knowledge_Base():
         else:
             return False
 
-    def year2hrule20_noDutch(self):
+    def year2hrule23_noDutch(self):
         infer = False
         if self.ap.planYear != 1 and self.st.language:
             new_poss = []
@@ -530,10 +550,11 @@ class Knowledge_Base():
             ,self.allrule7_passed3Practicals,self.allrule8,self.year1rule2_MandatoryRecomendation,self.year1rule3_highestPossiblePreRequisites,self.year1rule4_deleteNonCSCoursesWithLowGrades\
             ,self.year1rule5_deleteCSCoursesWithLowGrades,self.year1rule6_deleteNotMandatory,self.year1rule7_addDutchCourses,self.year1rule8_addEnglishCourses\
             ,self.year1rule9_addExtra5ECTS,self.year2hrule1_year2mandatory,self.year2hrule2_deleteNotPossible,self.year2hrule3_transferHighestPreReq_15ECT\
-            ,self.year2hrule4_transferHighestPreReq_20ECT,self.year2hrule5_checkedPracticals15,self.year2hrule6_checkedPracticals20,self.year2hrule7,self.year2hrule7b\
-            ,self.year2hrule8,self.year2hrule9,self.year2hrule10_moveNONCSCourses,self.year2hrule11_moveCSCourses,self.year2hrule12_presentAdvice1,self.year2hrule13_presentAdvice2\
-            ,self.year2hrule14_presentAdvice3,self.year2hrule15_presentAdvice4,self.year2hrule16_addBachelorProjectAIn1A,self.year2hrule17_addBachelorProjectBIn1B\
-            ,self.year2hrule18_addBachelorProjectAIn2A,self.year2hrule19_addBachelorProjectBIn2B,self.year1rule10_addExtra5ECTS,self.year2hrule20_noDutch]
+            ,self.year2hrule4_transferHighestPreReq_20ECT,self.year2hrule5_checkedPracticals15,self.year2hrule6_checkedPracticals20,self.year2hrule7\
+            ,self.year2hrule8,self.year2hrule9,self.year2hrule10,self.year2hrule11,self.year2hrule12,self.year2hrule13_moveNONCSCourses,\
+            self.year2hrule14_moveCSCourses,self.year2hrule15_presentAdvice1,self.year2hrule16_presentAdvice2\
+            ,self.year2hrule17_presentAdvice3,self.year2hrule18_presentAdvice4,self.year2hrule19_addBachelorProjectAIn1A,self.year2hrule20_addBachelorProjectBIn1B\
+            ,self.year2hrule21_addBachelorProjectAIn2A,self.year2hrule22_addBachelorProjectBIn2B,self.year1rule10_addExtra5ECTS,self.year2hrule23_noDutch]
 
         while infer:
             infer = False

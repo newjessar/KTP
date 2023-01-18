@@ -47,6 +47,19 @@ class Academic_planning:
             grade += pre.grade
         return grade/len(course.pre_requisite_courses)
 
+    def highestPreReqGradeNoPop(self):
+        preReq = -1
+        coursePre = None
+        for course in range(len(self.possible_courses)):
+            avgGrade = self.avgGradePreReq(self.possible_courses[course])
+            if (avgGrade > preReq):
+                 coursePre = course
+                 preReq = avgGrade
+        if coursePre==None:
+            return None
+        highest_course = self.possible_courses[coursePre]
+        return highest_course
+
     def highestPreReqGrade(self):
         preReq = -1
         coursePre = None
