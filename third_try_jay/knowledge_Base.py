@@ -77,18 +77,16 @@ class Knowledge_Base():
 
     # rule 7 - table 1 - all years
     def allrule7_passed3Practicals(self):
-        if self.ap.passedPracticals(self.st.passedCourses) and self.ap.changedPracticals==None:
+        if self.ap.passedPracticals(self.st.passedCourses):
             for course in self.courses.allcourses:
                 if not (course.title in [passed.title for passed in self.st.passedCourses]) and course.practical == True\
                     and not (course.title in [passed.title for passed in self.ap.recommended_courses]):
                     course.practical = False
                     course.elective = True
-                    self.ap.changedPracticals = True
             for course in self.ap.possible_courses:
                 if course.practical == True:
                     course.practical = False
                     course.elective = True
-                    self.ap.changedPracticals = True
                 self.ap.possible_courses = []
             return True
         else:
@@ -414,11 +412,8 @@ class Knowledge_Base():
     # rule 12 - if the student's orientation is non-cs, move the cs courses from the possible courses to other available electives
     def year2hrule14_moveCSCourses(self):
         if self.ap.checkedElectiveCourses and self.ap.planYear != 1 and self.st.getOrientation() == 1 and not self.ap.finishedElectives:
-            #print([course.title for course in self.ap.possible_courses])
-
             new_possible = []
             for course in self.ap.possible_courses:
-                #print(course.title)
                 if course.language or not self.st.language:
                     if course.orientation == 2:
                         self.ap.other_available_electives.append(course)
@@ -426,8 +421,6 @@ class Knowledge_Base():
                         new_possible.append(course)
             self.ap.possible_courses = new_possible
             self.ap.finishedElectives = True
-            #print([course.title for course in self.ap.possible_courses])
-            #print([course.title for course in self.ap.other_available_electives])
             return True
         else:
             return False
@@ -455,7 +448,7 @@ class Knowledge_Base():
 
     # rule 15 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
     def year2hrule17_presentAdvice3(self):
-        if self.ap.finishedElectives and self.ap.totalCredits() <= 15 and not self.ap.recommended_Extra5ECTS and not self.ap.finished:
+        if self.ap.finishedElectives and self.ap.totalCredits() < 15 and not self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.showOtherCourses = True
             self.ap.recommended_electives += self.ap.possible_courses
             self.ap.finished = True
@@ -465,7 +458,7 @@ class Knowledge_Base():
 
     # rule 16 - if the credits of the current scheduled courses are not enough, then add other possible courses to the recommended electives, and present the advice to students
     def year2hrule18_presentAdvice4(self):
-        if self.ap.finishedElectives and self.ap.totalCredits() <= 20 and self.ap.recommended_Extra5ECTS and not self.ap.finished:
+        if self.ap.finishedElectives and self.ap.totalCredits() < 20 and self.ap.recommended_Extra5ECTS and not self.ap.finished:
             self.ap.showOtherCourses = True
             self.ap.recommended_electives += self.ap.possible_courses
             self.ap.finished = True
@@ -502,7 +495,7 @@ class Knowledge_Base():
     # rule 19 - if the planning is for the third block and requirements to start the Bachelor Project are met, recommend it  
     def year2hrule21_addBachelorProjectAIn2A(self):
         passedCourses = self.st.getPassedCourses()
-        if self.ap.planBlock >= 3 and self.st.calculateCurrentECTS() >= 135 and \
+        if self.ap.planYear >= 3 and self.ap.planBlock == 3 and self.st.calculateCurrentECTS() >= 135 and \
         self.st.determinePropaedeuticPhasePassed() == True and "Statistics" in [course.title for course in passedCourses] and \
         "Data Analytics and Communication" in [course.title for course in passedCourses] and self.ap.checkedMandatoryCourses == True and \
         self.ap.checkedPracticalCourses == True and self.st.startedBachelorProject == False  and self.ap.notInRecommended("Bachelor's Project A"):

@@ -41,8 +41,8 @@ def main():
         else:
             course.grade = 8
 
-    student.currentYear      = 3
-    student.currentBlock   = 1
+    student.currentYear      = 1
+    student.currentBlock   = 3
     student.failedCourses    = 0
     student.language = True
     student.reason5ECTS = "bored"
