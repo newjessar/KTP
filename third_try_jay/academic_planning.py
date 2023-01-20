@@ -18,7 +18,6 @@ class Academic_planning:
         self.checkedElectiveCourses = None
         self.checkedMandatoryCourses = False
         self.checkedPracticalCourses = None
-        self.changedPracticals = None
         self.checkedLanguages = None
 
 
@@ -96,7 +95,6 @@ class Academic_planning:
         return True
 
     def passedPracticals(self,passed):
-        #print("recomended",[course.title for course in self.recommended_courses])
         passedPracticals = 0
         for course in self.recommended_courses:
             if course.practical:
