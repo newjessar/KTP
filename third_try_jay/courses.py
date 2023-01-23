@@ -77,6 +77,9 @@ class Courses(object):
 
     # Clustering the courses base on years
     def getAllYears(self):
+        self.yearOneCour = []
+        self.yearTwoCour = []
+        self.yearThreeCour = []
         for idx in range(len(self.allcourses)):   
             if self.allcourses[idx].getYear() == 1:
                 self.yearOneCour.append(self.allcourses[idx])

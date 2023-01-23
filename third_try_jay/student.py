@@ -12,6 +12,7 @@ class Student:
         self.currentBlock       = None
         self.currentYear        = None
         self.orientation        = None
+        self.averageGrade       = 8
         self.language           = True # True = English, False = Dutch 
         self.propaedeuticPhasePassed = None
         self.startedBachelorProject = False
@@ -56,10 +57,6 @@ class Student:
     # Get orientation of the student
     def getOrientation(self):
         return self.orientation
-    
-    # Get the wished courses of the student
-    def wishedCoursess(self):
-        return self.wishedCourses
 
     
         

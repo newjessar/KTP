@@ -11,7 +11,7 @@ class Course(object):
         self.advised_courses        = advised        # Array
         self.year                   = year           # int
         self.block                  = block          # int
-        self.grade                  = -1            # int
+        self.grade                  = -1.0            # int
         self.credit                 = credit         # int  
         self.mandatory              = mandatory      # Binary
         self.elective               = elective       # Binary

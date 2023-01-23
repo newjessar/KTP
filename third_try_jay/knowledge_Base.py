@@ -17,11 +17,6 @@ class Knowledge_Base():
         self.ap.planBlock = self.st.currentBlock
 
         self.courses.initiateCourses()
-        for course in self.courses.allcourses:
-            for course2 in self.st.passedCourses:
-                if course.title == course2.title:
-                    course.grade = course2.grade
-        self.courses.convertToCourses()
         self.courses.getAllYears()
         
         self.courList = self.courses.getAllcourses()
@@ -117,6 +112,7 @@ class Knowledge_Base():
     def year1rule1_MandatoryRecomendation(self):
         infer = False
         if self.ap.planYear == 1 and self.ap.recommended_courses == []:
+            print([course.title for course in self.yearOneC])
             for course in self.yearOneC:
                 if course.mandatory and course.block == self.ap.planBlock:
                     self.ap.recommended_courses.append(course)
@@ -538,7 +534,7 @@ class Knowledge_Base():
             ,self.allrule2_recommend5ECTS2,self.allrule3_notRecommend5ECTS,self.allrule4_recommend5ECTSAndFinish,self.allrule5_notRecommend5ECTSAndFinish\
             ,self.allrule6_passed3Practicals,self.allrule7,self.year1rule1_MandatoryRecomendation,self.year1rule2_highestPossiblePreRequisites,self.year1rule3_deleteNonCSCoursesWithLowGrades\
             ,self.year1rule4_deleteCSCoursesWithLowGrades,self.year1rule5_deleteNotMandatory,self.year1rule6_addDutchCourses,self.year1rule7_addEnglishCourses\
-            ,self.year1rule9_addExtra5ECTS,self.year2hrule1_year2mandatory,self.year2hrule2_deleteNotPossible,self.year2hrule3_transferHighestPreReq_15ECT\
+            ,self.year1rule8_addExtra5ECTS,self.year2hrule1_year2mandatory,self.year2hrule2_deleteNotPossible,self.year2hrule3_transferHighestPreReq_15ECT\
             ,self.year2hrule4_transferHighestPreReq_20ECT,self.year2hrule5_checkedPracticals15,self.year2hrule6_checkedPracticals20,self.year2hrule7\
             ,self.year2hrule8,self.year2hrule9,self.year2hrule10,self.year2hrule11,self.year2hrule12,self.year2hrule13_moveNONCSCourses,\
             self.year2hrule14_moveCSCourses,self.year2hrule15_presentAdvice1,self.year2hrule16_presentAdvice2\
