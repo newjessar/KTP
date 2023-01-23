@@ -54,11 +54,13 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.frame_left = customtkinter.CTkFrame(master=self, width=240, corner_radius=0)
+        self.frame_left = customtkinter.CTkFrame(master=self, width=240, corner_radius=5)
         self.frame_left.grid(row=0, column=0, sticky="nswe")
 
         self.frame_right = customtkinter.CTkFrame(master=self)
-        self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
+        self.frame_right.grid(row=0, column=1, padx=20, pady=20, sticky="NSWE")
+        self.frame_right.grid_columnconfigure(0, weight=1)
+        self.frame_right.grid_rowconfigure(0, weight=1)
 
         # ============ frame_left ============
         # configure grid layout (1x11)
@@ -119,57 +121,100 @@ class App(customtkinter.CTk):
         
         # ============ frame_right Layout ============
         # configure grid layout (3x7)
-        for i in range(1, 30):
-            self.frame_right.rowconfigure(i, weight=1)
-        self.frame_right.columnconfigure((0, 1, 2, 3), weight=1)
+        # for i in range(1, 30):
+        #     self.frame_right.rowconfigure(i, weight=1)
+        # self.frame_right.columnconfigure((0, 1, 2, 3), weight=1)
         
         #++++++++++++ Frames ++++++++++++++++
-        self.frame_advise = customtkinter.CTkFrame(master=self.frame_right, width=240, corner_radius=10)
-        self.frame_advise.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
-        self.frame_advise.columnconfigure((0, 1), weight=1)
+        self.frame_dash_Titel = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_dash_Titel.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(0, weight=0) # set weight of third row to be 5
+        self.frame_dash_Titel.grid_columnconfigure(1, weight=1)
+        self.frame_dash_Titel.rowconfigure(0, weight=1) # set weight of third row to be 1
 
-        self.frame_progress = customtkinter.CTkFrame(master=self.frame_right, width=240, corner_radius=10)
-        self.frame_progress.grid(row=1, column=2, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
-        self.frame_progress.columnconfigure((0, 1), weight=1)
-        
+
+        self.frame_advise = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_advise.grid(row=1, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(1, weight=5) # set weight of second row to be 5
+        self.frame_advise.grid_columnconfigure(1, weight=1)
+
+        self.frame_progress = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_progress.grid(row=2, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(2, weight=7) # set weight of third row to be 5
+        self.frame_progress.grid_columnconfigure(0, weight=1)
+        self.frame_progress.grid_rowconfigure(1, weight=1)
+
+
+
         self.frame_Tree = customtkinter.CTkFrame(master=self.frame_progress)
-        self.frame_Tree.grid(row=1, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
-        self.frame_Tree.columnconfigure(0, weight=1)
-        self.frame_Tree.rowconfigure(0, weight=1)
+        self.frame_Tree.grid(row=1, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_Tree.grid_columnconfigure(0, weight=1)
+        self.frame_Tree.grid_rowconfigure(0, weight=1)
+        self.frame_Tree.rowconfigure(1, minsize=100)
         
-        self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, height=260, corner_radius=10)
-        self.frame_explanation.grid(row=11, column=0, columnspan=4, pady=20, padx=20, sticky="NSWE")
-        self.frame_explanation.columnconfigure((0, 1), weight=1)
+
+        self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_explanation.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(3, weight=1) # set weight of fourth row to be 1 
+        self.frame_explanation.columnconfigure(0, weight=1)
+        self.frame_explanation.rowconfigure(1, weight=1)
         
         
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Widgets 
         
         # --------- Main Frame right ---------      
-        self.sd_StudentDashboard_label_right = customtkinter.CTkLabel(master=self.frame_right,
+        self.sd_StudentDashboard_label_right = customtkinter.CTkLabel(master=self.frame_dash_Titel,
                                               text="Student's Dashboard",
                                               font=customtkinter.CTkFont(size=30, weight="bold"))  # font name and size in px
-        self.sd_StudentDashboard_label_right.grid(row=0, column=0, columnspan=4, pady=5, padx=5, sticky="EW")
+        self.sd_StudentDashboard_label_right.grid(row=0, column=1, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
         # --------- frame_advise in frame_right ---------  
         self.ad_advise_label_right = customtkinter.CTkLabel(master=self.frame_advise,
                                               text="Advise",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="EW")
+        self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
 
         # --------- frame_Prograss in frame_right ---------
 
         self.pr_YourProgress_label_right = customtkinter.CTkLabel(master=self.frame_progress,
-                                              text="Your Progress",
+                                              text="Student's Progress",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
         self.pr_YourProgress_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
     
-        # --------- frame_Tree in frame_Prograss ---------
+        # # --------- frame_Tree in frame_Prograss ---------
+        # # create the tree and scrollbars
+        # self.columnsCourses = ('Course', 'Grades')        
+        # self.tree = ttk.Treeview(columns=self.columnsCourses, show = 'headings')
+    
+        # self.tree.heading('Course', text='Course')
+        # self.tree.heading('Grades', text='Grades')
+                                 
+        # ysb = ttk.Scrollbar(orient=VERTICAL, command= self.tree.yview)
+        # xsb = ttk.Scrollbar(orient=HORIZONTAL, command= self.tree.xview)
+        # self.tree['yscroll'] = ysb.set
+        # self.tree['xscroll'] = xsb.set
+        
+        # # add tree and scrollbars to frame
+        # self.tree.grid(in_=self.frame_Tree, row=0, column=0, sticky=NSEW)
+        # ysb.grid(in_=self.frame_Tree, row=0, column=1, sticky='NS')
+        # xsb.grid(in_=self.frame_Tree, row=1, column=0, sticky='EW')
+        
+        # # set frame resize priorities
+
+        # # configure the columns for the tree
+        # self.tree.column('Course', width=300, minwidth=100, anchor='center')
+        # self.tree.column('Grades', width=50, minwidth=50, anchor='center')
+        
+        
+                # --------- frame_Tree in frame_Prograss ---------
         # create the tree and scrollbars
         self.columnsCourses = ('Course', 'Grades')        
         self.tree = ttk.Treeview(columns=self.columnsCourses, show = 'headings')
-    
+        self.frame_canvas = tkinter.Canvas(master=self.frame_Tree)
+        self.frame_canvas.grid(row=0, column=0, sticky='NSWE')
+
         self.tree.heading('Course', text='Course')
         self.tree.heading('Grades', text='Grades')
                                  
@@ -179,22 +224,24 @@ class App(customtkinter.CTk):
         self.tree['xscroll'] = xsb.set
         
         # add tree and scrollbars to frame
-        self.tree.grid(in_=self.frame_Tree, row=0, column=0, sticky=NSEW)
-        ysb.grid(in_=self.frame_Tree, row=0, column=1, sticky=NS)
-        xsb.grid(in_=self.frame_Tree, row=1, column=0, sticky=EW)
+        self.frame_canvas.create_window((0, 0), window=self.tree, anchor='nw')
+        self.frame_canvas.configure(yscrollcommand=ysb.set, xscrollcommand=xsb.set)
+        self.frame_canvas.update()
+        ysb.grid(in_=self.frame_Tree, row=0, column=1, sticky='NS')
+        xsb.grid(in_=self.frame_Tree, row=1, column=0, sticky='EW')
         
-        # set frame resize priorities
-
-        # configure the columns for the tree
-        self.tree.column('Course', width=300, minwidth=300, anchor='center')
+        self.tree.column('Course', width=300, minwidth=100, anchor='center')
         self.tree.column('Grades', width=50, minwidth=50, anchor='center')
+
+
+
         
     
         # ~~~~~~~~~~~~ Student Info 
         self.pr_studentInfo_label_left = customtkinter.CTkLabel(master=self.frame_progress,
                                               text="student Info",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.pr_studentInfo_label_left.grid(row=8, column=0, pady=5, columnspan=2, padx=10, sticky="EW")
+        self.pr_studentInfo_label_left.grid(row=8, column=0, pady=5, padx=10, sticky="EW")
         
         # Name
         self.pr_SInfoName_label_left = customtkinter.CTkLabel(master=self.frame_progress,
@@ -229,12 +276,12 @@ class App(customtkinter.CTk):
         self.pr_adviceExplanation_label_down = customtkinter.CTkLabel(master=self.frame_explanation,
                                               text="Reasons behind the advise:",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.pr_adviceExplanation_label_down.grid(row=0, column=0, columnspan=4, pady=5, padx=15, sticky="W")
+        self.pr_adviceExplanation_label_down.grid(row=0, column=0, pady=5, padx=15, sticky="NSEW")
         
         self.pr_textExplanation_textBox_down = customtkinter.CTkTextbox(master=self.frame_explanation, wrap=tkinter.WORD)
-        self.pr_textExplanation_textBox_down.grid(row=1, column=0, columnspan=4, pady=10, padx=10, sticky="NSEW")
+        self.pr_textExplanation_textBox_down.grid(row=1, column=0, pady=10, padx=10, sticky="NSEW")
         
-        self.pr_textExplanation_textBox_down.insert(tkinter.END, "Reasons behind the advise is that you are not the right fit for the progrqam so we advise you to change your program or perhaps you can take a break and come back later, maybe try to take an internship at Macdonalds.")
+        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for honers or motivated, but no other reasons \n")
 
 
         # columnconfiguration of the text_explanation
@@ -266,7 +313,7 @@ class App(customtkinter.CTk):
         
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Widgets
 
-        self.showCourses2(self.grade_windowFrameUp)    
+        self.grade_chosen_courses(self.grade_windowFrameUp)    
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Danial's work ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
@@ -312,18 +359,18 @@ class App(customtkinter.CTk):
         # ++++++++++++++++ frames ++++++++++++++++
         self.frame_acWindow_left = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
         self.frame_acWindow_left.grid(row=1, column=0, padx=(10, 10), columnspan=1,pady=(10, 10), sticky="NSEW")
-        self.frame_acWindow_left.columnconfigure(0, weight=1)
+        self.frame_acWindow_left.columnconfigure(0, weight=0)
         # self.frame_acWindow_left.rowconfigure(1, weight=1)
         
         self.frame_acWindow_right = customtkinter.CTkFrame(master=self.ap_window, width= 700, height=850,corner_radius=5)
-        self.frame_acWindow_right.grid(row=1, column=1, padx=(10, 10), columnspan=2, rowspan=2, pady=(10, 10), sticky="NSEW")
-        self.frame_acWindow_right.columnconfigure((1,2), weight=1)
+        self.frame_acWindow_right.grid(row=1, column=1, padx=(10, 10), columnspan=3, rowspan=2, pady=(10, 10), sticky="NSEW")
+        self.frame_acWindow_right.columnconfigure((1,2), weight=0)
         # self.frame_acWindow_right.rowconfigure((1,2), weight=1)
 
         
         self.frame_acwindow_down = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
         self.frame_acwindow_down.grid(row=2, column=0, padx=(10, 10), columnspan=1, pady=(10, 10), sticky="NSEW")
-        self.frame_acwindow_down.columnconfigure(0, weight=1)
+        self.frame_acwindow_down.columnconfigure(0, weight=0)
         # self.frame_acwindow_down.rowconfigure(2, weight=1)
         
         self.frame_endButtons_last = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
@@ -355,7 +402,7 @@ class App(customtkinter.CTk):
         
         # Create the student name entery
         self.ap_stName_entry_left = customtkinter.CTkEntry(master=self.frame_acWindow_left,
-                                                          width=200,
+                                                          width=140,
                                                           border_width=2,
                                                           corner_radius=10)
         self.ap_stName_entry_left.grid(row=1, column=1, pady=10, padx=20, sticky="w")
@@ -379,7 +426,7 @@ class App(customtkinter.CTk):
         self.ap_stNo_entry_left = customtkinter.CTkEntry(master=self.frame_acWindow_left,
                                                         border_width=2,
                                                         corner_radius=10,
-                                                        width=200)
+                                                        width=140)
         self.ap_stNo_entry_left.grid(row=2, column=1, pady=10, padx=20, sticky="w")
         self.ap_stNo_entry_left.insert(0, "Ex: s1234567, etc...")
         self.ap_stNo_entry_left.configure(state='disabled')
@@ -397,7 +444,7 @@ class App(customtkinter.CTk):
         self.ap_acadiYear_Option_left = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left,
                                                                 values=["1st Year", "2ed Year", "3ed Year", "3ed plus"],
                                                                 corner_radius=10,
-                                                                width=200,
+                                                                width=140,
                                                                 command=self.academicYear_event,
                                                                 variable=self.academicYear_var)
         self.ap_acadiYear_Option_left.grid(row=3, column=1, pady=10, padx=20, sticky="w")
@@ -411,7 +458,7 @@ class App(customtkinter.CTk):
         self.ap_acadiBlock_Option_left = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left,
                                                                 values=["1st Block", "2ed Block", "3ed Block", "4th Block"],
                                                                 corner_radius=10,
-                                                                width=200,
+                                                                width=140,
                                                                 command=self.academicBlock_event,
                                                                 variable=self.academicBlock_var)
         self.ap_acadiBlock_Option_left.grid(row=4, column=1, pady=10, padx=20, sticky="w")
@@ -448,7 +495,7 @@ class App(customtkinter.CTk):
         self.ap_5ecReason_Option_down = customtkinter.CTkOptionMenu(master=self.frame_acwindow_down,
                                                                 values=["Applying honours", "Bored", "Quick Graduation", "Catch up"],
                                                                 corner_radius=10,
-                                                                width=200,
+                                                                width=140,
                                                                 # state="disabled",
                                                                 command=self.ap_5ecReason_Option_down_event,
                                                                 variable=self.reason5ects_var)
@@ -501,10 +548,10 @@ class App(customtkinter.CTk):
         
         # ++++++++++++++++ A tab View sitructure for pass and fail courses
         # Create a tab structure to display the passed in one tab and the faild in other tab
-        self.ap_pass_tabview_right = customtkinter.CTkFrame(master=self.frame_acWindow_right, corner_radius=5)
-        self.ap_pass_tabview_right.grid(row=1, column=1, columnspan=2, pady=10, padx=20, sticky="NSEW")
+        # self.ap_pass_tabview_right = customtkinter.CTkFrame(master=self.frame_acWindow_right, corner_radius=5)
+        # self.ap_pass_tabview_right.grid(row=1, column=0, columnspan=3, pady=10, padx=20, sticky="W")
 
-        tabPass = self.chooseCoursesTab(self.ap_pass_tabview_right)
+        tabPass = self.chooseCoursesTab(self.frame_acWindow_right)
 
         self.grades_button = customtkinter.CTkButton(master=self.frame_acWindow_right,
                                                 text="Add the grads",
@@ -554,7 +601,7 @@ class App(customtkinter.CTk):
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     
     # ============ Frame Show the courses that the user has chosen ============   
-    def showCourses2(self, frame):
+    def grade_chosen_courses(self, frame):
         for var, course in self.check_varsCourses:
             if var.get() == 1:
                 if course.title not in [checkCourse.title for checkCourse in self.kb.st.passedCourses]:
@@ -608,7 +655,7 @@ class App(customtkinter.CTk):
         # ----------------- A tab View sitructure for fail courses
         # Create another tab structure to display the years in each parents tab 
         yearTab = customtkinter.CTkTabview(master=frame)
-        yearTab.grid(row=0, column=0, columnspan=2, pady=10, padx=20, sticky="NSEW")
+        yearTab.grid(row=0, column=0, columnspan=3, pady=10, padx=20, sticky="NSEW")
         yearTab.grid_columnconfigure(0, weight=0)
         yearTab.grid_rowconfigure(0, weight=0)
         
@@ -621,8 +668,8 @@ class App(customtkinter.CTk):
         self.makeTabs(yearTab.tab("Year 3"), self.kb.yearThreeC)
                     
     def makeTabs(self, frame, year):
-        col  = 0
-        raww = 0
+        col = 0
+        row = 0
 
         for idxCourse, course in enumerate(year): 
             var = tkinter.IntVar()
@@ -636,12 +683,13 @@ class App(customtkinter.CTk):
                                                 variable=var,
                                                 onvalue=1,
                                                 offvalue=0)
-            check2.grid(row = raww, column = col, padx=10, pady=10, sticky = "NSEW")
-            if idxCourse %3 ==1:
-                raww = idxCourse
-                col =0
+            check2.grid(row = row, column = col, padx=10, pady=10, sticky = "NSEW")
+            if (idxCourse + 1) % 3 == 0: 
+                row += 1
+                col = 0
             else:
-                col +=1
+                col += 1
+
 
     
     ###############################################################################
