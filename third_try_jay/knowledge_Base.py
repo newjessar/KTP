@@ -28,7 +28,7 @@ class Knowledge_Base():
     
     # rule 1 - table 1 - all years
     def allrule1_recommend5ECTS1(self):
-        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 0 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and int(self.st.failedCourses) == 0 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -36,7 +36,7 @@ class Knowledge_Base():
 
     # rule 2 - table 1 - all years
     def allrule2_recommend5ECTS2(self):
-        if self.st.want5ECTS and self.st.validReason() and self.st.failedCourses == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
+        if self.st.want5ECTS and self.st.validReason() and int(self.st.failedCourses) == 1 and self.st.calculateAverageGrade() >= 7 and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = True
             return True
         else:
@@ -44,7 +44,7 @@ class Knowledge_Base():
     
     # rule 3 - table 1 - all years
     def allrule3_notRecommend5ECTS(self):
-        if (not self.st.want5ECTS or not self.st.validReason() or self.st.failedCourses > 1) and self.ap.recommended_Extra5ECTS == None:
+        if (not self.st.want5ECTS or not self.st.validReason() or int(self.st.failedCourses) > 1) and self.ap.recommended_Extra5ECTS == None:
             self.ap.recommended_Extra5ECTS = False
             return True
         else:

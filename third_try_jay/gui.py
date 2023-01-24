@@ -214,11 +214,7 @@ class App(customtkinter.CTk):
 
 
         
-        self.frame_OtherCourses = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
-        self.frame_OtherCourses.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_right.rowconfigure(3, weight=7) # set weight of third row to be 5
-        self.frame_OtherCourses.grid_columnconfigure(0, weight=1)
-        self.frame_OtherCourses.grid_rowconfigure(1, weight=1)
+
 
         self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
         self.frame_explanation.grid(row=4, column=0, pady=5, padx=5, sticky="NSWE")
@@ -241,16 +237,6 @@ class App(customtkinter.CTk):
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
         self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
-
- 
-        
-        # --------- frame_OtherCourses in frame_right ---------
-
-        self.pr_otherCourses_label_right = customtkinter.CTkLabel(master=self.frame_OtherCourses,
-                                              text="Other courses",
-                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")    
-    
 
         # ============ frame Advise explanation  ============   
         
@@ -932,14 +918,36 @@ class App(customtkinter.CTk):
         
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
-            frame2 = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
-            frame2.grid(row=2, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
-            self.showCourses(frame2,self.kb.ap.recommended_electives)
+        # --------- frame_Prograss in frame_right ---------
+
+            self.frame_elective = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+            self.frame_elective.grid(row=2, column=0, pady=5, padx=5, sticky="NSWE")
+
+            self.frame_elective_label_right = customtkinter.CTkLabel(master=self.frame_elective,
+                                              text="Elective courses",
+                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
+            self.frame_elective_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
+            self.frame_right.rowconfigure(2, weight=7) # set weight of third row to be 5
+            self.frame_elective.grid_columnconfigure(0, weight=1)
+            self.frame_elective.grid_rowconfigure(1, weight=1)
+            self.showCourses(self.frame_elective,self.kb.ap.recommended_electives)
+            
         # third the electives with a different orientation if there are not enough electives with the same orientation
         if self.kb.ap.showOtherCourses:
-            frame3 = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
-            frame3.grid(row=3, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
-            self.showCourses(frame3,self.kb.ap.other_available_electives)
+            # --------- frame_OtherCourses in frame_right ---------
+            self.frame_OtherCourses = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+            self.frame_OtherCourses.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
+            self.frame_right.rowconfigure(3, weight=7) # set weight of third row to be 5
+            self.frame_OtherCourses.grid_columnconfigure(0, weight=1)
+            self.frame_OtherCourses.grid_rowconfigure(1, weight=1)
+            
+
+            self.pr_otherCourses_label_right = customtkinter.CTkLabel(master=self.frame_OtherCourses,
+                                                text="Other courses",
+                                                font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
+            self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")   
+
+            self.showCourses(self.frame_OtherCourses, self.kb.ap.other_available_electives)
             
             
         self.courseGrade_inserting_event()
