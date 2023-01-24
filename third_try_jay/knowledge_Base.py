@@ -74,11 +74,19 @@ class Knowledge_Base():
                     and not (course.title in [passed.title for passed in self.ap.recommended_courses]):
                     course.practical = False
                     course.elective = True
+            for course in self.st.passedCourses:
+                if course.practical == True:
+                    course.practical = False
+                    course.elective = True
+            for course in self.ap.recommended_courses:
+                if course.practical == True:
+                    course.practical = False
+                    course.elective = True
             for course in self.ap.possible_courses:
                 if course.practical == True:
                     course.practical = False
                     course.elective = True
-                self.ap.possible_courses = []
+            self.ap.possible_courses = []
             return True
         else:
             return False

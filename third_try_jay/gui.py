@@ -212,15 +212,17 @@ class App(customtkinter.CTk):
         self.frame_right.rowconfigure(1, weight=5) # set weight of second row to be 5
         self.frame_advise.grid_columnconfigure(1, weight=1)
 
-        self.frame_progress = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
-        self.frame_progress.grid(row=2, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_right.rowconfigure(2, weight=7) # set weight of third row to be 5
-        self.frame_progress.grid_columnconfigure(0, weight=1)
-        self.frame_progress.grid_rowconfigure(1, weight=1)
+
+        
+        self.frame_OtherCourses = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_OtherCourses.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(3, weight=7) # set weight of third row to be 5
+        self.frame_OtherCourses.grid_columnconfigure(0, weight=1)
+        self.frame_OtherCourses.grid_rowconfigure(1, weight=1)
 
         self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
-        self.frame_explanation.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_right.rowconfigure(3, weight=1) # set weight of fourth row to be 1 
+        self.frame_explanation.grid(row=4, column=0, pady=5, padx=5, sticky="NSWE")
+        self.frame_right.rowconfigure(1, weight=1) # set weight of fourth row to be 1 
         self.frame_explanation.columnconfigure(0, weight=1)
         self.frame_explanation.rowconfigure(1, weight=1)
 
@@ -229,7 +231,7 @@ class App(customtkinter.CTk):
         
         # --------- Main Frame right ---------      
         self.sd_StudentDashboard_label_right = customtkinter.CTkLabel(master=self.frame_dash_Titel,
-                                              text="Student's Dashboard",
+                                              text="Student's Advisor",
                                               font=customtkinter.CTkFont(size=30, weight="bold"))  # font name and size in px
         self.sd_StudentDashboard_label_right.grid(row=0, column=1, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
@@ -240,12 +242,14 @@ class App(customtkinter.CTk):
         self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
         
 
-        # --------- frame_Prograss in frame_right ---------
+ 
+        
+        # --------- frame_OtherCourses in frame_right ---------
 
-        self.pr_YourProgress_label_right = customtkinter.CTkLabel(master=self.frame_progress,
-                                              text="Student's Progress",
+        self.pr_otherCourses_label_right = customtkinter.CTkLabel(master=self.frame_OtherCourses,
+                                              text="Other courses",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.pr_YourProgress_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
+        self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")    
     
 
         # ============ frame Advise explanation  ============   
