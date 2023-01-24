@@ -56,6 +56,8 @@ class App(customtkinter.CTk):
 
         self.frame_left = customtkinter.CTkFrame(master=self, width=240, corner_radius=5)
         self.frame_left.grid(row=0, column=0, sticky="nswe")
+        self.frame_left.grid_columnconfigure(0, weight=1)
+        self.frame_left.grid_rowconfigure(0, weight=1)
 
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, padx=20, pady=20, sticky="NSWE")
@@ -64,56 +66,128 @@ class App(customtkinter.CTk):
 
         # ============ frame_left ============
         # configure grid layout (1x11)
-        self.frame_left.grid_rowconfigure(0, minsize=10)   # empty row with minsize as spacing
-        self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
-        self.frame_left.grid_rowconfigure(8, minsize=1)    # empty row with minsize as spacing
-        self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(0, minsize=0)   # empty row with minsize as spacing
+        # self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
+        # self.frame_left.grid_rowconfigure(8, minsize=1)    # empty row with minsize as spacing
+        # self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure((0,1,2,4,5,6,7), weight=0)
+        self.frame_left.grid_rowconfigure((4,5,6,7,8), weight=0)
+        self.frame_left.grid_rowconfigure((2), weight=1)
+        self.frame_left.grid_rowconfigure((9), weight=3)
+        self.frame_left.grid_rowconfigure((10,11,12,13,14), weight=0)
 
         self.si_StudentINFO_label_left = customtkinter.CTkLabel(master=self.frame_left,
                                               text="Student INFO",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.si_StudentINFO_label_left.grid(row=2, column=0, pady=(20, 10), padx=10, sticky="ew") # pady=(20, 10)
+        self.si_StudentINFO_label_left.grid(row=0, column=0, pady=(20, 10), padx=10, sticky="n") # pady=(20, 10)
 
         self.si_Academic_Progress_button_left = customtkinter.CTkButton(master=self.frame_left,
                                                 text="Academic Progress",
                                                 command= lambda: self.academic_progress_Window(self.si_Academic_Progress_button_left))
-        self.si_Academic_Progress_button_left.grid(row=3, column=0, pady=10, padx=20, sticky="ew")
+        self.si_Academic_Progress_button_left.grid(row=1, column=0, pady=5, padx=5, sticky="n")
 
         
+        # Name
+        self.pr_SInfoName_label_left = customtkinter.CTkLabel(master=self.frame_left,
+                                              text= "",
+                                              font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pr_SInfoName_label_left.grid(row=4, column=0, pady=5, padx=5, sticky="s")
+        
+        # Number
+        self.pr_SInfoNumber_label_left = customtkinter.CTkLabel(master=self.frame_left,
+                                                                text="",
+                                                                font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pr_SInfoNumber_label_left.grid(row=5, column=0, pady=5, padx=5, sticky="s")
+        # Year
+        self.pr_SInfoYear_label_left = customtkinter.CTkLabel(master=self.frame_left,
+                                                              text="",
+                                                              font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pr_SInfoYear_label_left.grid(row=6, column=0, pady=5, padx=5, sticky="s")      
+        # Block
+        self.pr_SInfoBlock_label_left = customtkinter.CTkLabel(master=self.frame_left,
+                                                               text="",
+                                                               font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pr_SInfoBlock_label_left.grid(row=7, column=0, pady=5, padx=5, sticky="s")       
+        # Average Grade
+        self.pr_SInfoAverageGrade_label_left = customtkinter.CTkLabel(master=self.frame_left,
+                                                                        text="",
+                                                                        font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.pr_SInfoAverageGrade_label_left.grid(row=8, column=0, pady=5, padx=5, sticky="s")
+        
+        ########################################################
+        ####################### Tree View ######################
+        ########################################################
+        self.treeView = customtkinter.CTkFrame(master=self.frame_left)
+        self.treeView.grid_columnconfigure(0, weight=1)
+        
+        self.gradingTree = ttk.Treeview(self.treeView, columns=("c1", "c2"), show="headings", height=20)
+        
+        self.gradingTree.heading("c1", text="Course")
+        self.gradingTree.heading("c2", text="Grade")
+        self.gradingTree.column("c1", width=200, anchor="center")
+        self.gradingTree.column("c2", width=25, anchor="center")
+        self.gradingTree.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
+        
+        # Inserting data into the treeview
+        # gradingTree.insert("", "end", values=("Calculus", "7.5"))
+        # gradingTree.insert("", "end", values=("Programming", "8.5"))
+        # gradingTree.insert("", "end", values=("English", "9.5"))
+        # gradingTree.insert("", "end", values=("Physics", "6.5"))
+        # gradingTree.insert("", "end", values=("Chemistry", "7.5"))
+        # gradingTree.insert("", "end", values=("Biology", "8.5"))
+        # gradingTree.insert("", "end", values=("History", "9.5"))
+        # gradingTree.insert("", "end", values=("Geography", "6.5"))
+        # gradingTree.insert("", "end", values=("Math", "7.5"))
+        # gradingTree.insert("", "end", values=("Art", "8.5"))
+        # gradingTree.insert("", "end", values=("Music", "9.5"))
+        
+        # add a vertical scrollbar to the treeview
+        scrY = ttk.Scrollbar(self.treeView, orient="vertical", command=self.gradingTree.yview)
+        self.gradingTree.configure(yscrollcommand=scrY.set)
+        
+        scrX = ttk.Scrollbar(self.treeView, orient="horizontal", command=self.gradingTree.xview)
+        self.gradingTree.configure(xscrollcommand=scrX.set)
+        
+        self.treeView.grid(row=9, column=0, pady=0, padx=0, sticky="NSWE")
+        scrY.grid(row=0, column=1, sticky="NS")
+        scrX.grid(row=1, column=0, sticky="WE")
+        
+        self.gradingTree.configure(yscrollcommand=scrY.set,xscrollcommand=scrX.set)
+        
+
+        ########################################################
         # Help Guidness
         self.si_help_button_left = customtkinter.CTkLabel(master=self.frame_left,
                                               text="Help",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.si_help_button_left.grid(row=6, column=0, pady=(20, 10), padx=20, sticky="s")
-
+        self.si_help_button_left.grid(row=10, column=0, pady=(5, 5), padx=5, sticky="s")
+        
         self.si_label_info_left = customtkinter.CTkLabel(master=self.frame_left,
                                                 text="Please, press on Academic Progress:\n"+
                                                     "1- Fill up the forme \n" +
                                                     "2- Choose the passed courses\n" +
                                                     "3- Add the grads\n" +
                                                     "4- Press save", 
-                                                height=200,
+                                                height=100,
                                                 corner_radius=6,  # <- custom corner radius
                                                 fg_color=("white", "gray38"),  # <- custom tuple-color
                                                 justify=tkinter.LEFT)
-        self.si_label_info_left.grid(row=7, column=0, pady=10, padx=20, sticky="n")
+        self.si_label_info_left.grid(row=11, column=0, pady=5, padx=5, sticky="s")
         
         
         
         self.si_Reset_label_left = customtkinter.CTkButton(master=self.frame_left,
                                                 text="Reset",
-                                                border_width=2,  #  <- custom border_width
-                                                fg_color=None,   #  <- no fg_color
                                                 command=self.reset_event)
-        self.si_Reset_label_left.grid(row=8, column=0, pady=10, padx=20, sticky="we")
+        self.si_Reset_label_left.grid(row=12, column=0, pady=5, padx=5, sticky="s")
         
         self.label_mode = customtkinter.CTkLabel(master=self.frame_left, text="Appearance Mode:")
-        self.label_mode.grid(row=9, column=0, pady=10, padx=20, sticky="w")
+        self.label_mode.grid(row=13, column=0, pady=5, padx=5, sticky="s")
 
         self.si_lds_label_left = customtkinter.CTkOptionMenu(master=self.frame_left,
                                                         values=["Light", "Dark", "System"],
                                                         command=self.change_appearance_mode)
-        self.si_lds_label_left.grid(row=10, column=0, pady=10, padx=20, sticky="w")
+        self.si_lds_label_left.grid(row=14, column=0, pady=5, padx=5, sticky="s")
 
         # set default values
         self.si_lds_label_left.set("Dark")
@@ -144,21 +218,12 @@ class App(customtkinter.CTk):
         self.frame_progress.grid_columnconfigure(0, weight=1)
         self.frame_progress.grid_rowconfigure(1, weight=1)
 
-
-
-        self.frame_Tree = customtkinter.CTkFrame(master=self.frame_progress)
-        self.frame_Tree.grid(row=1, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_Tree.grid_columnconfigure(0, weight=1)
-        self.frame_Tree.grid_rowconfigure(0, weight=1)
-        self.frame_Tree.rowconfigure(1, minsize=100)
-        
-
         self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
         self.frame_explanation.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
         self.frame_right.rowconfigure(3, weight=1) # set weight of fourth row to be 1 
         self.frame_explanation.columnconfigure(0, weight=1)
         self.frame_explanation.rowconfigure(1, weight=1)
-        
+
         
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Widgets 
         
@@ -181,95 +246,7 @@ class App(customtkinter.CTk):
                                               text="Student's Progress",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
         self.pr_YourProgress_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
-        
     
-        # # --------- frame_Tree in frame_Prograss ---------
-        # # create the tree and scrollbars
-        # self.columnsCourses = ('Course', 'Grades')        
-        # self.tree = ttk.Treeview(columns=self.columnsCourses, show = 'headings')
-    
-        # self.tree.heading('Course', text='Course')
-        # self.tree.heading('Grades', text='Grades')
-                                 
-        # ysb = ttk.Scrollbar(orient=VERTICAL, command= self.tree.yview)
-        # xsb = ttk.Scrollbar(orient=HORIZONTAL, command= self.tree.xview)
-        # self.tree['yscroll'] = ysb.set
-        # self.tree['xscroll'] = xsb.set
-        
-        # # add tree and scrollbars to frame
-        # self.tree.grid(in_=self.frame_Tree, row=0, column=0, sticky=NSEW)
-        # ysb.grid(in_=self.frame_Tree, row=0, column=1, sticky='NS')
-        # xsb.grid(in_=self.frame_Tree, row=1, column=0, sticky='EW')
-        
-        # # set frame resize priorities
-
-        # # configure the columns for the tree
-        # self.tree.column('Course', width=300, minwidth=100, anchor='center')
-        # self.tree.column('Grades', width=50, minwidth=50, anchor='center')
-        
-        
-                # --------- frame_Tree in frame_Prograss ---------
-        # create the tree and scrollbars
-        self.columnsCourses = ('Course', 'Grades')        
-        self.tree = ttk.Treeview(columns=self.columnsCourses, show = 'headings')
-        self.frame_canvas = tkinter.Canvas(master=self.frame_Tree)
-        self.frame_canvas.grid(row=0, column=0, sticky='NSWE')
-
-        self.tree.heading('Course', text='Course')
-        self.tree.heading('Grades', text='Grades')
-                                 
-        ysb = ttk.Scrollbar(orient=VERTICAL, command= self.tree.yview)
-        xsb = ttk.Scrollbar(orient=HORIZONTAL, command= self.tree.xview)
-        self.tree['yscroll'] = ysb.set
-        self.tree['xscroll'] = xsb.set
-        
-        # add tree and scrollbars to frame
-        self.frame_canvas.create_window((0, 0), window=self.tree, anchor='nw')
-        self.frame_canvas.configure(yscrollcommand=ysb.set, xscrollcommand=xsb.set)
-        self.frame_canvas.update()
-        ysb.grid(in_=self.frame_Tree, row=0, column=1, sticky='NS')
-        xsb.grid(in_=self.frame_Tree, row=1, column=0, sticky='EW')
-        
-        self.tree.column('Course', width=300, minwidth=100, anchor='center')
-        self.tree.column('Grades', width=50, minwidth=50, anchor='center')
-
-
-
-        
-    
-        # ~~~~~~~~~~~~ Student Info 
-        self.pr_studentInfo_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                              text="student Info",
-                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.pr_studentInfo_label_left.grid(row=8, column=0, pady=5, padx=10, sticky="EW")
-        
-        # Name
-        self.pr_SInfoName_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                              text= "",
-                                              font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.pr_SInfoName_label_left.grid(row=9, column=0, pady=10, padx=20, sticky="SE")
-        
-        # Number
-        self.pr_SInfoNumber_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                                                text="",
-                                                                font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.pr_SInfoNumber_label_left.grid(row=9, column=1, pady=10, padx=20, sticky="SW")
-        # Year
-        self.pr_SInfoYear_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                                              text="",
-                                                              font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.pr_SInfoYear_label_left.grid(row=10, column=0, pady=10, padx=20, sticky="SE")      
-        # Block
-        self.pr_SInfoBlock_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                                               text="",
-                                                               font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.pr_SInfoBlock_label_left.grid(row=10, column=1, pady=10, padx=20, sticky="SW")       
-        # Average Grade
-        self.pr_SInfoAverageGrade_label_left = customtkinter.CTkLabel(master=self.frame_progress,
-                                                                        text="",
-                                                                        font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.pr_SInfoAverageGrade_label_left.grid(row=11, column=0, pady=10, padx=20, sticky="SE")
-                
 
         # ============ frame Advise explanation  ============   
         
@@ -635,7 +612,7 @@ class App(customtkinter.CTk):
         raww = 1
         for idxCourse, course in enumerate(course_list): 
             print(course.title)
-            if not (idxCourse ==0) and idxCourse %2 ==0:
+            if not (idxCourse ==0) and idxCourse %3 ==0:
                 raww +=1
                 col =0
             check2 = customtkinter.CTkLabel(frame, text= course.title, 
@@ -652,7 +629,6 @@ class App(customtkinter.CTk):
             
     # ====================== Frame Choose the courses ====================== 
     def chooseCoursesTab(self, frame):
-        # ----------------- A tab View sitructure for fail courses
         # Create another tab structure to display the years in each parents tab 
         yearTab = customtkinter.CTkTabview(master=frame)
         yearTab.grid(row=0, column=0, columnspan=3, pady=10, padx=20, sticky="NSEW")
@@ -846,7 +822,7 @@ class App(customtkinter.CTk):
     # related to the tree panel    
     def courseGrade_inserting_event(self):
         for course in self.kb.st.passedCourses:
-            self.tree.insert("", "end", values=(course.title, course.grade))
+            self.gradingTree.insert("", "end", values=(course.title, course.grade))
         
     def infoBoxName_event(self):
         self.pr_SInfoName_label_left.configure(text= "Name: " + self.kb.st.studentName)
