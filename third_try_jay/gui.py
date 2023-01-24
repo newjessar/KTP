@@ -67,9 +67,6 @@ class App(customtkinter.CTk):
         # ============ frame_left ============
         # configure grid layout (1x11)
         self.frame_left.grid_rowconfigure(0, minsize=0)   # empty row with minsize as spacing
-        # self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
-        # self.frame_left.grid_rowconfigure(8, minsize=1)    # empty row with minsize as spacing
-        # self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure((0,1,2,4,5,6,7), weight=0)
         self.frame_left.grid_rowconfigure((4,5,6,7,8), weight=0)
         self.frame_left.grid_rowconfigure((2), weight=1)
@@ -79,7 +76,7 @@ class App(customtkinter.CTk):
         self.si_StudentINFO_label_left = customtkinter.CTkLabel(master=self.frame_left,
                                               text="Student INFO",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.si_StudentINFO_label_left.grid(row=0, column=0, pady=(20, 10), padx=10, sticky="n") # pady=(20, 10)
+        self.si_StudentINFO_label_left.grid(row=0, column=0, pady=(20, 10), padx=10, sticky="n") 
 
         self.si_Academic_Progress_button_left = customtkinter.CTkButton(master=self.frame_left,
                                                 text="Academic Progress",
@@ -124,35 +121,20 @@ class App(customtkinter.CTk):
         
         self.gradingTree.heading("c1", text="Course")
         self.gradingTree.heading("c2", text="Grade")
-        self.gradingTree.column("c1", width=200, anchor="center")
-        self.gradingTree.column("c2", width=25, anchor="center")
+        self.gradingTree.column("c1", width=150, anchor="center")
+        self.gradingTree.column("c2", width=50, anchor="center")
         self.gradingTree.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
-        
-        # Inserting data into the treeview
-        # gradingTree.insert("", "end", values=("Calculus", "7.5"))
-        # gradingTree.insert("", "end", values=("Programming", "8.5"))
-        # gradingTree.insert("", "end", values=("English", "9.5"))
-        # gradingTree.insert("", "end", values=("Physics", "6.5"))
-        # gradingTree.insert("", "end", values=("Chemistry", "7.5"))
-        # gradingTree.insert("", "end", values=("Biology", "8.5"))
-        # gradingTree.insert("", "end", values=("History", "9.5"))
-        # gradingTree.insert("", "end", values=("Geography", "6.5"))
-        # gradingTree.insert("", "end", values=("Math", "7.5"))
-        # gradingTree.insert("", "end", values=("Art", "8.5"))
-        # gradingTree.insert("", "end", values=("Music", "9.5"))
+    
         
         # add a vertical scrollbar to the treeview
         scrY = ttk.Scrollbar(self.treeView, orient="vertical", command=self.gradingTree.yview)
         self.gradingTree.configure(yscrollcommand=scrY.set)
-        
-        scrX = ttk.Scrollbar(self.treeView, orient="horizontal", command=self.gradingTree.xview)
-        self.gradingTree.configure(xscrollcommand=scrX.set)
+    
         
         self.treeView.grid(row=9, column=0, pady=0, padx=0, sticky="NSWE")
         scrY.grid(row=0, column=1, sticky="NS")
-        scrX.grid(row=1, column=0, sticky="WE")
         
-        self.gradingTree.configure(yscrollcommand=scrY.set,xscrollcommand=scrX.set)
+        self.gradingTree.configure(yscrollcommand=scrY.set)
         
 
         ########################################################
@@ -213,9 +195,6 @@ class App(customtkinter.CTk):
         self.frame_advise.grid_columnconfigure(1, weight=1)
 
 
-        
-
-
         self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
         self.frame_explanation.grid(row=4, column=0, pady=5, padx=5, sticky="NSWE")
         self.frame_right.rowconfigure(1, weight=1) # set weight of fourth row to be 1 
@@ -245,10 +224,12 @@ class App(customtkinter.CTk):
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
         self.pr_adviceExplanation_label_down.grid(row=0, column=0, pady=5, padx=15, sticky="NSEW")
         
-        self.pr_textExplanation_textBox_down = customtkinter.CTkTextbox(master=self.frame_explanation, wrap=tkinter.WORD)
+        self.pr_textExplanation_textBox_down = customtkinter.CTkTextbox(master=self.frame_explanation, 
+                                                                        wrap=tkinter.WORD,
+                                                                        font=customtkinter.CTkFont(size=25))
         self.pr_textExplanation_textBox_down.grid(row=1, column=0, pady=10, padx=10, sticky="NSEW")
         
-        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for honers or motivated, but no other reasons \n")
+        
 
 
         # columnconfiguration of the text_explanation
@@ -915,7 +896,6 @@ class App(customtkinter.CTk):
         frame1 = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
         frame1.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
         self.showCourses(frame1,self.kb.ap.recommended_courses)
-        
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
         # --------- frame_Prograss in frame_right ---------
@@ -927,17 +907,21 @@ class App(customtkinter.CTk):
                                               text="Elective courses",
                                               font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
             self.frame_elective_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
-            self.frame_right.rowconfigure(2, weight=7) # set weight of third row to be 5
+            self.frame_right.rowconfigure(2, weight=5) # set weight of third row to be 5
             self.frame_elective.grid_columnconfigure(0, weight=1)
             self.frame_elective.grid_rowconfigure(1, weight=1)
-            self.showCourses(self.frame_elective,self.kb.ap.recommended_electives)
+        
+            frame2 = customtkinter.CTkFrame(master=self.frame_elective, width=240, corner_radius=10)
+            frame2.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+             
+            self.showCourses(frame2 ,self.kb.ap.recommended_electives)
             
         # third the electives with a different orientation if there are not enough electives with the same orientation
         if self.kb.ap.showOtherCourses:
             # --------- frame_OtherCourses in frame_right ---------
             self.frame_OtherCourses = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
             self.frame_OtherCourses.grid(row=3, column=0, pady=5, padx=5, sticky="NSWE")
-            self.frame_right.rowconfigure(3, weight=7) # set weight of third row to be 5
+            self.frame_right.rowconfigure(3, weight=5) # set weight of third row to be 5
             self.frame_OtherCourses.grid_columnconfigure(0, weight=1)
             self.frame_OtherCourses.grid_rowconfigure(1, weight=1)
             
@@ -946,9 +930,13 @@ class App(customtkinter.CTk):
                                                 text="Other courses",
                                                 font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
             self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")   
-
-            self.showCourses(self.frame_OtherCourses, self.kb.ap.other_available_electives)
             
+            frame3 = customtkinter.CTkFrame(master=self.frame_OtherCourses, width=240, corner_radius=10)
+            frame3.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+
+            self.showCourses(frame3, self.kb.ap.other_available_electives)
+            
+        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for honers or motivated, but no other reasons \n")
             
         self.courseGrade_inserting_event()
         self.infoBoxName_event()
