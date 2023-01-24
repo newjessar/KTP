@@ -32,7 +32,7 @@ class App(customtkinter.CTk):
         self.geometry(self.get_centered_geometry(self))
         self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
         self.seButtons = []
-        self.change_appearance_mode("Dark")
+        self.change_appearance_mode("System")
         self.check_varsCourses= []
         self.gradeEentries = {}
 
@@ -131,7 +131,7 @@ class App(customtkinter.CTk):
         self.gradingTree.configure(yscrollcommand=scrY.set)
     
         
-        self.treeView.grid(row=9, column=0, pady=0, padx=0, sticky="NSWE")
+        self.treeView.grid(row=9, column=0, pady=2, padx=2, sticky="NSWE")
         scrY.grid(row=0, column=1, sticky="NS")
         
         self.gradingTree.configure(yscrollcommand=scrY.set)
@@ -572,6 +572,7 @@ class App(customtkinter.CTk):
 
             entryCheck = customtkinter.CTkEntry(master=frame,
                                                 border_width=2,
+                                                width=40,
                                                 corner_radius=10)
             entryCheck.grid(row=idxCourse//3, column=2*(idxCourse%3)+1, padx=10, pady=10)
             entries.append(entryCheck)
