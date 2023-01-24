@@ -172,7 +172,7 @@ class App(customtkinter.CTk):
         self.si_lds_label_left.grid(row=14, column=0, pady=5, padx=5, sticky="s")
 
         # set default values
-        self.si_lds_label_left.set("Dark")
+        self.si_lds_label_left.set("System")
         
         
         # ============ frame_right Layout ============
@@ -441,7 +441,7 @@ class App(customtkinter.CTk):
         self.ap_5ecReason_label_down.grid(row=2, column=0, pady=10, padx=20, sticky="w")
         
         self.ap_5ecReason_Option_down = customtkinter.CTkOptionMenu(master=self.frame_acwindow_down,
-                                                                values=["Applying honours", "Bored", "Quick Graduation", "Catch up"],
+                                                                values=["Applying Honors", "Bored", "Quick Graduation", "Catch up"],
                                                                 corner_radius=10,
                                                                 width=140,
                                                                 # state="disabled",
@@ -695,13 +695,16 @@ class App(customtkinter.CTk):
         
 
     def reset_event(self):
-        self.si_Academic_Progress_button_left.configure(state="normal")
-        self.destroy()
-        st = Student()
-        knowledge_Base = Knowledge_Base(st)
-        self = App(knowledge_Base)
-        self.mainWindow()
-        
+         # check if a window is exist
+        if self.winfo_exists() == 1:
+            print("Reset")
+            self.si_Academic_Progress_button_left.configure(state="normal")
+            self.destroy()
+            st = Student()
+            knowledge_Base = Knowledge_Base(st)
+            self = App(knowledge_Base)
+            # self.mainWindow()
+            
     
     def stName_event(self):
         if self.stname_Var.get() != 'Ex: John Smith, etc...' and self.stname_Var.get() != '':
@@ -937,7 +940,7 @@ class App(customtkinter.CTk):
 
             self.showCourses(frame3, self.kb.ap.other_available_electives)
             
-        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for honers or motivated, but no other reasons \n")
+        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for Honors or motivated, but no other reasons \n")
             
         self.courseGrade_inserting_event()
         self.infoBoxName_event()
