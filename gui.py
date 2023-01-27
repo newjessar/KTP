@@ -71,6 +71,7 @@ class App(customtkinter.CTk):
         self.frame_left.grid_rowconfigure((4,5,6,7,8), weight=0)
         self.frame_left.grid_rowconfigure((2), weight=1)
         self.frame_left.grid_rowconfigure((9), weight=3)
+        # self.frame_left.grid_rowconfigure((11), weight=1)
         self.frame_left.grid_rowconfigure((10,11,12,13,14), weight=0)
 
         self.si_StudentINFO_label_left = customtkinter.CTkLabel(master=self.frame_left,
@@ -146,10 +147,12 @@ class App(customtkinter.CTk):
         
         self.si_label_info_left = customtkinter.CTkLabel(master=self.frame_left,
                                                 text="Please, press on Academic Progress:\n"+
-                                                    "1- Fill up the forme \n" +
-                                                    "2- Choose the passed courses\n" +
-                                                    "3- Add the grads\n" +
-                                                    "4- Press save", 
+                                                    "1- Click on Academic Progress \n" +
+                                                    "2- Fill up student info forme\n" +
+                                                    "3- choose the year and th block to plan\n" +
+                                                    "4- Choose your passed courses\n" +
+                                                    "5- Add the grads\n" +
+                                                    "6- Press save", 
                                                 height=100,
                                                 corner_radius=6,  # <- custom corner radius
                                                 fg_color=("white", "gray38"),  # <- custom tuple-color
