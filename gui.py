@@ -586,7 +586,6 @@ class App(customtkinter.CTk):
         col  = 0
         raww = 1
         for idxCourse, course in enumerate(course_list): 
-            print(course.title)
             if not (idxCourse ==0) and idxCourse %3 ==0:
                 raww +=1
                 col =0
@@ -646,21 +645,7 @@ class App(customtkinter.CTk):
     ###############################################################################
     ############################# Utility Functions ############################## 
     ###############################################################################   
-    
-    
-    def se_button_event(self, second_window, row):        
-        for course in self.kb.yearOneC:
-            second_window.button_course = customtkinter.CTkButton(master=second_window.se_frame_right,
-                                                        text=course.getTitle(),
-                                                        command= print(1))        
-            second_window.button_course.grid(row=row, column=0, pady=10, padx=20)
-            row += 1
-        
-    def button_print_event(self, idx):   
-        print(idx)   
-        print(self.kb.yearOneC[idx].getTitle())
-    
-           
+
     def get_centered_geometry(self, window):
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
@@ -678,10 +663,6 @@ class App(customtkinter.CTk):
         self.ap_window.deiconify()    
         
         
-    def button_print_event(self, idx):   
-        print(idx)   
-        print(self.kb.yearOneC[idx].getTitle())
-        
     def change_appearance_mode(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
         
@@ -692,15 +673,11 @@ class App(customtkinter.CTk):
     ###############################################################################
     #################################  Events  ####################################
     ###############################################################################    
-    
-    def passed_event(self):
-        print("Passed")
-        
+            
 
     def reset_event(self):
          # check if a window is exist
         if self.winfo_exists() == 1:
-            print("Reset")
             self.si_Academic_Progress_button_left.configure(state="normal")
             self.destroy()
             st = Student()
@@ -713,13 +690,13 @@ class App(customtkinter.CTk):
         if self.stname_Var.get() != 'Ex: John Smith, etc...' and self.stname_Var.get() != '':
             stname = self.stname_Var.get()
             self.kb.st.studentName = stname
-            print("Student Name", stname)
+
         
     def stID_event(self):
         if self.stNo_Var.get() != 'Ex: s1234567, etc...' and self.stname_Var.get() != '':
             stid = self.stNo_Var.get()
             self.kb.st.studentNumber = stid
-            print("Student Number", stid)
+
         
     def on_focus_in(self, entry):
         if entry.cget('state') == 'disabled':
@@ -732,17 +709,14 @@ class App(customtkinter.CTk):
             entry.configure(state='disabled')
             
     def leftClick(self, event):
-        print ("Left")
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
         
     def middleClick(self, event):
-        print ("Middle")
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
         
     def rightClick(self, event):
-        print ("Right")
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
         
@@ -757,8 +731,6 @@ class App(customtkinter.CTk):
             self.kb.st.currentYear = 3
         elif choice == "3ed plus":
             self.kb.st.currentYear = 4
-            
-        print(self.kb.st.currentYear)
         
     def academicBlock_event(self, choice):
         if choice == "1st Block":
@@ -769,18 +741,15 @@ class App(customtkinter.CTk):
             self.kb.st.currentBlock = 3
         elif choice == "4th Block":
             self.kb.st.currentBlock = 4
-        print(self.kb.st.currentBlock)
     
     def doUWant5ectsVar_event(self):
         if self.doWant5ectsVar.get() == 'on':
             self.kb.st.want5ECTS = True
         else:
             self.kb.st.want5ECTS = False
-        print("5EC: ", self.kb.st.want5ECTS)
     
     def ap_5ecReason_Option_down_event(self, choice):
         self.kb.st.reason5ECTS = choice
-        print("optionmenu dropdown clicked:", self.kb.st.reason5ECTS)
         
     def languageRadio_event(self):
         if self.languageRadio_var.get() == 'English':
@@ -788,14 +757,11 @@ class App(customtkinter.CTk):
         else:
             self.kb.st.language = False
         
-        print("Language", self.kb.st.language)
-        
     def followBScProject_event(self):
         if self.followBScProject_var.get() == 'on':
             self.kb.st.startedBachelorProject = True
         else:
             self.kb.st.startedBachelorProject = False
-        print("Followed first half of the BSc Project", self.followBScProject_var.get())
     
     # related to the tree panel    
     def courseGrade_inserting_event(self):
@@ -818,7 +784,6 @@ class App(customtkinter.CTk):
         self.pr_SInfoAverageGrade_label_left.configure(text=  "Averege: "+ str(round(self.kb.st.averageGrade, 2)))
     
     def grade_save_button_event(self):
-        print("Grade saved")
         self.ap_save_button_right.configure(state='normal')
         self.unhide_grading_event()       
 
@@ -867,7 +832,6 @@ class App(customtkinter.CTk):
         self.kb.doInference()
     
     def grade_save_button_event(self):
-        print("Grade saved")
         self.ap_save_button_right.configure(state="normal")
         self.unhide_grading_event()
         
@@ -902,6 +866,10 @@ class App(customtkinter.CTk):
         # first the recommended courses
         frame1 = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
         frame1.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+        for course in self.kb.ap.recommended_courses:
+            if course in self.kb.st.passedCourses:
+                self.kb.ap.recommended_courses.remove(course)
+
         self.showCourses(frame1,self.kb.ap.recommended_courses)
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
@@ -952,7 +920,7 @@ class App(customtkinter.CTk):
         self.infoBoxBlock_event()
         #self.show_checked_event()
 
-        print("this button corresponds")
+
         self.infoBoxAverage_event()
         self.unhide_academic_progress_Window_event()
         

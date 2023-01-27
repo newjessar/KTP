@@ -83,12 +83,9 @@ class Courses(object):
         for idx in range(len(self.allcourses)):   
             if self.allcourses[idx].getYear() == 1:
                 self.yearOneCour.append(self.allcourses[idx])
-                # print("one", self.allcourses[idx].getTitle())
             elif self.allcourses[idx].getYear() == 2:
                 self.yearTwoCour.append(self.allcourses[idx])
-                # print("Two")
             else:
                 self.yearThreeCour.append(self.allcourses[idx])
-                # print("Three")
 
     

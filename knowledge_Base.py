@@ -120,7 +120,6 @@ class Knowledge_Base():
     def year1rule1_MandatoryRecomendation(self):
         infer = False
         if self.ap.planYear == 1 and self.ap.recommended_courses == []:
-            print([course.title for course in self.yearOneC])
             for course in self.yearOneC:
                 if course.mandatory and course.block == self.ap.planBlock:
                     self.ap.recommended_courses.append(course)
@@ -553,6 +552,5 @@ class Knowledge_Base():
             infer = False
             for f in fList:
                 if f():
-                    print(f)
                     infer = True
         return
