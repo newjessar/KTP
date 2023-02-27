@@ -35,6 +35,7 @@ class App(customtkinter.CTk):
         self.change_appearance_mode("System")
         self.check_varsCourses= []
         self.gradeEentries = {}
+        self.adviced_courses_titel = []
 
         
         # -----------------------------------  String variables  -----------------------------------
@@ -582,7 +583,7 @@ class App(customtkinter.CTk):
             entryCheck.bind("<KeyRelease>", lambda event, entries=entries: self.checkEntry(entries, self.grade_save_button))
             self.gradeEentries[course.getTitle()] = entryCheck
     # ============ Frame Show the courses that the user has chosen ============   
-    def showCourses(self, frame,course_list):            
+    def showCourses(self, frame, course_list):            
         col  = 0
         raww = 1
         for idxCourse, course in enumerate(course_list): 
@@ -598,6 +599,8 @@ class App(customtkinter.CTk):
                                         )
             check2.grid(row = raww, column = col, padx=10, pady=10, sticky = "NSEW")
             col +=1
+
+            self.adviced_courses_titel.append(course.title)
  
             
             
@@ -673,18 +676,116 @@ class App(customtkinter.CTk):
     ###############################################################################
     #################################  Events  ####################################
     ###############################################################################    
+    def instanceCheck(self, widget):
+        if isinstance(widget, customtkinter.CTkTextbox): 
+            widget.delete('1.0','end') # Delete from position 0 till end
+            print("Textbox")
+        elif isinstance(widget, customtkinter.CTkEntry): 
+            widget.delete(0,'end')
+            print("Entry")
+        elif isinstance(widget, customtkinter.CTkCheckBox):
+            widget.deselect()
+            print("Checkbox")
+        elif isinstance(widget, customtkinter.CTkRadioButton):
+            widget.deselect()
+            #     self.languageRadio_var.set(None)
+            print("Radio")
+        elif isinstance(widget, customtkinter.CTkSwitch):
+            widget.deselect()
+            print("Switch")
+        elif isinstance(widget, customtkinter.CTkOptionMenu):
+            # widget.deselect()
+            print("OptionMenu")
+        elif isinstance(widget, ttk.Treeview):
+            widget.delete(*widget.get_children())
+        elif isinstance(widget, customtkinter.CTkLabel):
+            if widget.cget("text") == "Name: " + self.kb.st.studentName:
+                widget.configure(text='')
+            elif widget.cget("text") == "Number: " + self.kb.st.studentNumber:
+                widget.configure(text='')
+            elif widget.cget("text") == "Year: " + self.academicYear_var.get():
+                widget.configure(text='')
+            elif widget.cget("text") == "Block: " + self.academicBlock_var.get():
+                widget.configure(text='')
+            elif widget.cget("text") == "Averege: " + str(round(self.kb.st.averageGrade, 2)):
+                widget.configure(text='')
             
+            # loop through the list of courses and remove the courses from the list
+            elif widget.cget("text") in self.adviced_courses_titel:
+                widget.destroy()
+            
+            else:
+                print("Other Label :", widget.cget("text"))
+                
+                
+        else:
+            print("Then: ", widget)
+
+ 
+    def reset_widget(self, widget):
+        if isinstance(widget, customtkinter.CTkFrame):
+            for child in widget.winfo_children():
+                self.reset_widget(child)
+        else:
+            self.instanceCheck(widget)
+
+        
+    def reset_Windows(self, window):    
+        for child in window.winfo_children():
+            if isinstance(child, customtkinter.CTkButton):
+                continue
+            self.reset_widget(child)
+        
+         # Resetting the advises   
+        if self.kb.ap.recommended_courses:   
+            if self.frame_recommended_Courses.winfo_exists() == 1:
+                self.frame_recommended_Courses.destroy()
+        
+        if self.kb.ap.recommended_electives != []:
+            if self.frame_elective_courses.winfo_exists() == 1:
+                self.frame_elective_courses.destroy()
+        
+        if self.kb.ap.showOtherCourses:    
+            if self.frame_other_courses.winfo_exists() == 1:
+                self.frame_other_courses.destroy()
+                
+        self.stname_Var = customtkinter.StringVar(0, "Ex: John Smith, etc...")
+        self.stNo_Var = customtkinter.StringVar(0, "Ex: s1234567, etc...")
+        self.academicBlock_var = customtkinter.StringVar(value="1st Block")
+        self.academicYear_var = customtkinter.StringVar(value="1st Year")
+        self.doWant5ectsVar = customtkinter.StringVar(value="off")    
+        self.languageRadio_var = customtkinter.StringVar(value="on")
+        self.reason5ects_var = customtkinter.StringVar(value="Choose a reason")
+        self.followBScProject_var = customtkinter.StringVar(value="off")   
+        self.howManyFailedCourses_var = customtkinter.StringVar(0, value="0")
+            
+        # reetting the classes:
+        self.kb.st = None
+        self.kb.st = Student()
+        
+        self.kb = None
+        self.kb = Knowledge_Base(self.st)
+        
+        
+         
+        if self.ap_window.winfo_exists() == 1:
+            print("----------------AP window exists")
+            self.ap_window.destroy()
 
     def reset_event(self):
-         # check if a window is exist
         if self.winfo_exists() == 1:
             self.si_Academic_Progress_button_left.configure(state="normal")
-            self.destroy()
-            st = Student()
-            knowledge_Base = Knowledge_Base(st)
-            self = App(knowledge_Base)
-            # self.mainWindow()
-            
+
+        
+        self.reset_Windows(self)
+        # self.reset_Windows(self.ap_window)
+        # self.reset_Windows(self.grade_window)
+
+        
+        
+       
+               
+       
     
     def stName_event(self):
         if self.stname_Var.get() != 'Ex: John Smith, etc...' and self.stname_Var.get() != '':
@@ -847,6 +948,7 @@ class App(customtkinter.CTk):
         button_widget.configure(state="normal")
         
     def saveButton_event(self, frame):
+
         # if you did not select the dropdown menu it stays at none so set it one because its the default value.
         if (self.kb.st.currentYear==None):
             self.kb.st.currentYear = 1
@@ -864,13 +966,13 @@ class App(customtkinter.CTk):
         
         ### Make three frames. One for each output list from the inference in the knowledge base
         # first the recommended courses
-        frame1 = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
-        frame1.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+        self.frame_recommended_Courses = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
+        self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
         for course in self.kb.ap.recommended_courses:
             if course in self.kb.st.passedCourses:
                 self.kb.ap.recommended_courses.remove(course)
 
-        self.showCourses(frame1,self.kb.ap.recommended_courses)
+        self.showCourses(self.frame_recommended_Courses,self.kb.ap.recommended_courses)
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
         # --------- frame_Prograss in frame_right ---------
@@ -886,10 +988,10 @@ class App(customtkinter.CTk):
             self.frame_elective.grid_columnconfigure(0, weight=1)
             self.frame_elective.grid_rowconfigure(1, weight=1)
         
-            frame2 = customtkinter.CTkFrame(master=self.frame_elective, width=240, corner_radius=10)
-            frame2.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+            self.frame_elective_courses = customtkinter.CTkFrame(master=self.frame_elective, width=240, corner_radius=10)
+            self.frame_elective_courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
              
-            self.showCourses(frame2 ,self.kb.ap.recommended_electives)
+            self.showCourses(self.frame_elective_courses ,self.kb.ap.recommended_electives)
             
         # third the electives with a different orientation if there are not enough electives with the same orientation
         if self.kb.ap.showOtherCourses:
@@ -906,10 +1008,10 @@ class App(customtkinter.CTk):
                                                 font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
             self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")   
             
-            frame3 = customtkinter.CTkFrame(master=self.frame_OtherCourses, width=240, corner_radius=10)
-            frame3.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+            self.frame_other_courses = customtkinter.CTkFrame(master=self.frame_OtherCourses, width=240, corner_radius=10)
+            self.frame_other_courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
 
-            self.showCourses(frame3, self.kb.ap.other_available_electives)
+            self.showCourses(self.frame_other_courses, self.kb.ap.other_available_electives)
             
         self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for Honors or motivated, but no other reasons \n")
             
