@@ -14,9 +14,8 @@ customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "gre
 # Run the main.py file to start the program
 def main():
     
-    student = Student()
-    knowledge_Base = Knowledge_Base(student)
-    app = App(knowledge_Base)
+   
+    app = App()
     app.mainloop()
 
 if __name__ == "__main__":

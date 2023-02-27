@@ -9,6 +9,7 @@ from student import Student
 from academic_planning import Academic_planning
 from knowledge_Base import Knowledge_Base
 
+
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
@@ -17,11 +18,10 @@ class App(customtkinter.CTk):
     WIDTH = 1280
     HEIGHT = 1020
     
-    def __init__(self, knowledge_Base : Knowledge_Base):
+    def __init__(self):
         super().__init__()
-        
         self.ac = Academic_planning()
-        self.kb = knowledge_Base
+        self.kb = Knowledge_Base(Student())
         self.st = self.kb.st
         self.mainWindow()
         
@@ -269,12 +269,13 @@ class App(customtkinter.CTk):
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Danial's work ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+        
         for course in self.kb.st.passedCourses:
             if course.title in self.gradeEentries.keys():
                 entry = self.gradeEentries[course.title]
                 for course2_index in range(len(self.kb.st.passedCourses)):
                     if course.title == self.kb.st.passedCourses[course2_index]:
-                        self.kb.st.passedCourses[course2_index].grade = int(entry.get())
+                        self.kb.st.passedCourses[course2_index].grade = float(entry.get())
                         
         #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
         
@@ -287,7 +288,7 @@ class App(customtkinter.CTk):
         # Create a cancle button next to the save one
         self.grade_cancel_button = customtkinter.CTkButton(master=self.grade_windowFrameDown,
                                                                 text="Cancel",
-                                                                command=self.unhide_grading_event)
+                                                                command=self.grade_cancel_button_event)
         self.grade_cancel_button.grid(row=10, column=1, pady=10, padx=5, sticky="sw")
         
         
@@ -415,7 +416,10 @@ class App(customtkinter.CTk):
                                                                 variable=self.academicBlock_var)
         self.ap_acadiBlock_Option_left.grid(row=4, column=1, pady=10, padx=20, sticky="w")
 
-        
+        self.ap_acadiSave_button_left = customtkinter.CTkButton(master=self.frame_acWindow_left,
+                                                                text="Save",
+                                                                command=self.ap_acadiSave_button_left_event)
+        self.ap_acadiSave_button_left.grid(row=5, column=0, columnspan=2, pady=10, padx=20, sticky="EW")
         # ----------------- Frame down -----------------
         # Create the frame label
         self.ap_Courses_preferences_label_down = customtkinter.CTkLabel(master=self.frame_acwindow_down,
@@ -507,7 +511,8 @@ class App(customtkinter.CTk):
 
         self.grades_button = customtkinter.CTkButton(master=self.frame_acWindow_right,
                                                 text="Add the grads",
-                                                command= self.grading_Window)
+                                                command= self.grading_Window,
+                                                state="disabled")
         self.grades_button.grid(row=8, column=0, pady=10, padx=20, sticky="ws")
         
         self.howManyFailedCoursesLabel = customtkinter.CTkLabel(master=self.frame_acWindow_right, text= "How many courses did you fail?", 
@@ -527,7 +532,7 @@ class App(customtkinter.CTk):
         # ----------------- Frame end buttons -----------------       
         # create a button to save the user's choices
         self.ap_save_button_right = customtkinter.CTkButton(master=self.frame_endButtons_last,
-                                                            text="Save",
+                                                            text="Advice",
                                                             command=lambda: self.saveButton_event(self.frame_advise),
                                                             state="disabled")
         self.ap_save_button_right.grid(row=0, column=0, pady=10, padx=0, sticky="NW")
@@ -558,11 +563,14 @@ class App(customtkinter.CTk):
             if var.get() == 1:
                 if course.title not in [checkCourse.title for checkCourse in self.kb.st.passedCourses]:
                     self.kb.st.passedCourses.append(course)
-            if var.get() == 0:
+            else:
                 for course2 in self.kb.st.passedCourses:
                     if course2.title==course.title:
                         self.kb.st.passedCourses.remove(course2)
                         break
+        
+        
+        
         entries = []            
         for idxCourse, course in enumerate(self.kb.st.passedCourses): 
             labelsCheck = customtkinter.CTkLabel(frame, text= course.getTitle(), 
@@ -579,9 +587,21 @@ class App(customtkinter.CTk):
                                                 width=40,
                                                 corner_radius=10)
             entryCheck.grid(row=idxCourse//3, column=2*(idxCourse%3)+1, padx=10, pady=10)
-            entries.append(entryCheck)
             entryCheck.bind("<KeyRelease>", lambda event, entries=entries: self.checkEntry(entries, self.grade_save_button))
             self.gradeEentries[course.getTitle()] = entryCheck
+            
+            # Check if a grade was previously entered for this course title and pre-populate the entry
+            for passed_course in self.kb.st.passedCourses:
+                if passed_course.title == course.title and passed_course.grade != -1:
+                    entryCheck.insert(0, str(passed_course.grade))
+                    break
+       
+
+        
+            
+            
+            
+
     # ============ Frame Show the courses that the user has chosen ============   
     def showCourses(self, frame, course_list):            
         col  = 0
@@ -673,55 +693,39 @@ class App(customtkinter.CTk):
         self.destroy()
         
         
-    ###############################################################################
-    #################################  Events  ####################################
-    ###############################################################################    
     def instanceCheck(self, widget):
         if isinstance(widget, customtkinter.CTkTextbox): 
             widget.delete('1.0','end') # Delete from position 0 till end
-            print("Textbox")
         elif isinstance(widget, customtkinter.CTkEntry): 
             widget.delete(0,'end')
-            print("Entry")
         elif isinstance(widget, customtkinter.CTkCheckBox):
             widget.deselect()
-            print("Checkbox")
         elif isinstance(widget, customtkinter.CTkRadioButton):
             widget.deselect()
-            #     self.languageRadio_var.set(None)
-            print("Radio")
         elif isinstance(widget, customtkinter.CTkSwitch):
             widget.deselect()
-            print("Switch")
-        elif isinstance(widget, customtkinter.CTkOptionMenu):
-            # widget.deselect()
-            print("OptionMenu")
         elif isinstance(widget, ttk.Treeview):
             widget.delete(*widget.get_children())
         elif isinstance(widget, customtkinter.CTkLabel):
-            if widget.cget("text") == "Name: " + self.kb.st.studentName:
-                widget.configure(text='')
-            elif widget.cget("text") == "Number: " + self.kb.st.studentNumber:
-                widget.configure(text='')
-            elif widget.cget("text") == "Year: " + self.academicYear_var.get():
-                widget.configure(text='')
-            elif widget.cget("text") == "Block: " + self.academicBlock_var.get():
-                widget.configure(text='')
-            elif widget.cget("text") == "Averege: " + str(round(self.kb.st.averageGrade, 2)):
-                widget.configure(text='')
-            
-            # loop through the list of courses and remove the courses from the list
-            elif widget.cget("text") in self.adviced_courses_titel:
-                widget.destroy()
-            
-            else:
-                print("Other Label :", widget.cget("text"))
-                
-                
+            text = widget.cget("text")
+            if text is not None:
+                if text == "Name: " + self.kb.st.studentName:
+                    widget.configure(text='')
+                elif text == "Number: " + str(self.kb.st.studentNumber):
+                    widget.configure(text='')
+                elif text == "Year: " + self.academicYear_var.get():
+                    widget.configure(text='')
+                elif text == "Block: " + self.academicBlock_var.get():
+                    widget.configure(text='')
+                elif text == "Averege: " + str(round(self.kb.st.averageGrade, 2)):
+                    widget.configure(text='')
+                elif text in self.adviced_courses_titel:
+                    widget.destroy()
+                else:
+                    pass 
         else:
-            print("Then: ", widget)
-
- 
+            pass
+        
     def reset_widget(self, widget):
         if isinstance(widget, customtkinter.CTkFrame):
             for child in widget.winfo_children():
@@ -758,68 +762,84 @@ class App(customtkinter.CTk):
         self.reason5ects_var = customtkinter.StringVar(value="Choose a reason")
         self.followBScProject_var = customtkinter.StringVar(value="off")   
         self.howManyFailedCourses_var = customtkinter.StringVar(0, value="0")
-            
-        # reetting the classes:
-        self.kb.st = None
-        self.kb.st = Student()
+        self.gradeEentries.clear()
+        self.check_varsCourses= []    
         
-        self.kb = None
-        self.kb = Knowledge_Base(self.st)
-        
-        
-         
-        if self.ap_window.winfo_exists() == 1:
-            print("----------------AP window exists")
-            self.ap_window.destroy()
 
+        
+    ###############################################################################
+    #################################  Events  ####################################
+    ###############################################################################    
+        
     def reset_event(self):
         if self.winfo_exists() == 1:
             self.si_Academic_Progress_button_left.configure(state="normal")
 
         
         self.reset_Windows(self)
-        # self.reset_Windows(self.ap_window)
-        # self.reset_Windows(self.grade_window)
 
+        if self.ap_window.winfo_exists() == 1:
+            self.ap_window.destroy()
         
+        if self.grade_window.winfo_exists() == 1:
+            self.grade_window.destroy()
+        
+        # reetting the classes:
+        self.ac = Academic_planning()
+        self.kb = Knowledge_Base(Student())
+        self.st = self.kb.st
         
        
-               
+
+
+                      
        
-    
     def stName_event(self):
-        if self.stname_Var.get() != 'Ex: John Smith, etc...' and self.stname_Var.get() != '':
-            stname = self.stname_Var.get()
-            self.kb.st.studentName = stname
+        if self.stname_Var.get().strip() and self.stNo_Var.get().strip():
+            self.kb.st.studentName = self.stname_Var.get()
+            self.kb.st.studentNumber = self.stNo_Var.get()
 
-        
     def stID_event(self):
-        if self.stNo_Var.get() != 'Ex: s1234567, etc...' and self.stname_Var.get() != '':
-            stid = self.stNo_Var.get()
-            self.kb.st.studentNumber = stid
-
+        if self.stNo_Var.get().strip() and self.stname_Var.get().strip():
+            self.kb.st.studentNumber = self.stNo_Var.get()
+            self.kb.st.studentName = self.stname_Var.get()
         
+
+    def ap_acadiSave_button_left_event(self):
+        stname = self.stname_Var.get()
+        stid = self.stNo_Var.get()
+        if stname != 'Ex: John Smith, etc...' and stname != '' and stid != 'Ex: s1234567, etc...' and stid != '':
+            self.grades_button.configure(state="normal")
+        else:
+            self.grades_button.configure(state="disabled")
+
+
     def on_focus_in(self, entry):
         if entry.cget('state') == 'disabled':
             entry.configure(state='normal')
             entry.delete(0, 'end')
 
+
     def on_focus_out(self, entry, placeholder):
         if entry.get() == "":
             entry.insert(0, placeholder)
             entry.configure(state='disabled')
+
             
     def leftClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+
         
     def middleClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+
         
     def rightClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+
         
             
     
@@ -886,17 +906,24 @@ class App(customtkinter.CTk):
     
     def grade_save_button_event(self):
         self.ap_save_button_right.configure(state='normal')
-        self.unhide_grading_event()       
+        for course in self.kb.st.passedCourses:
+            if course.title in self.gradeEentries.keys():
+                entry = self.gradeEentries[course.title]
+                course.grade = float(entry.get())
+
+                # Update the value in the gradeEentries dictionary
+                self.gradeEentries[course.title].delete(0, 'end')
+                self.gradeEentries[course.title].insert(0, str(course.grade))        
+        self.unhide_grading_event()   
+    
+    def grade_cancel_button_event(self):
+        self.grade_window.withdraw()
+        self.ap_window.deiconify()
+                   
+            
 
     # this function goes through the list again to check that the courses are all in passed courses with a grade
     def makePassedList(self):
-        # add all courses that were selected as passed to passedCourses
-        for var, course in self.check_varsCourses:
-            if var.get() == 1:
-                if course.title not in [checkCourse.title for checkCourse in self.kb.st.passedCourses]:
-                    self.kb.st.passedCourses.append(course)
-                    
-        # we have to set the grade as what it was set as
         for course in self.kb.st.passedCourses:
             if course.title in self.gradeEentries.keys():
                 entry = self.gradeEentries[course.title]
@@ -932,9 +959,9 @@ class App(customtkinter.CTk):
         # actuall do the inference
         self.kb.doInference()
     
-    def grade_save_button_event(self):
-        self.ap_save_button_right.configure(state="normal")
-        self.unhide_grading_event()
+    # def grade_save_button_event(self):
+    #     self.ap_save_button_right.configure(state="normal")
+    #     self.unhide_grading_event()
         
     def checkEntry(self, entries, button_widget):
         # if entry_widget.get() == "":
@@ -968,9 +995,12 @@ class App(customtkinter.CTk):
         # first the recommended courses
         self.frame_recommended_Courses = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
         self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+
         for course in self.kb.ap.recommended_courses:
             if course in self.kb.st.passedCourses:
                 self.kb.ap.recommended_courses.remove(course)
+
+                        
 
         self.showCourses(self.frame_recommended_Courses,self.kb.ap.recommended_courses)
         # second if its not empty the recommended electives with the same orientation and practicals
