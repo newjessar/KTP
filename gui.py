@@ -543,16 +543,20 @@ class App(customtkinter.CTk):
                                                               command=self.unhide_academic_progress_Window_event)
         self.ap_cancel_button_right.grid(row=0, column=1, pady=10, padx=5, sticky="NW")
         
-        
-        
+    
         # creste a motion of trigging the event based on clicking aroun the canvas
-        self.frame_acWindow_left.bind("<Button-1>", self.leftClick)
-        self.frame_acWindow_left.bind("<Button-2>", self.middleClick)
-        self.frame_acWindow_left.bind("<Button-3>", self.rightClick)
-
-
+        self.bind_frame_children(self.ap_window)
         
         self.ap_window.mainloop()
+        
+    def bind_frame_children(self, frame):
+        for child in frame.winfo_children():
+            if isinstance(child, customtkinter.CTkFrame):
+                child.bind("<Button-1>", self.leftClick)
+                child.bind("<Button-2>", self.middleClick)
+                child.bind("<Button-3>", self.rightClick)
+                self.bind_frame_children(child)
+                
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Danial's work ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
@@ -597,16 +601,12 @@ class App(customtkinter.CTk):
                     break
        
 
-        
-            
-            
-            
-
     # ============ Frame Show the courses that the user has chosen ============   
     def showCourses(self, frame, course_list):            
         col  = 0
         raww = 1
         for idxCourse, course in enumerate(course_list): 
+            # print(idxCourse, course.title)
             if not (idxCourse ==0) and idxCourse %3 ==0:
                 raww +=1
                 col =0
@@ -798,11 +798,13 @@ class App(customtkinter.CTk):
         if self.stname_Var.get().strip() and self.stNo_Var.get().strip():
             self.kb.st.studentName = self.stname_Var.get()
             self.kb.st.studentNumber = self.stNo_Var.get()
+            self.ap_acadiSave_button_left_event()
 
     def stID_event(self):
         if self.stNo_Var.get().strip() and self.stname_Var.get().strip():
             self.kb.st.studentNumber = self.stNo_Var.get()
             self.kb.st.studentName = self.stname_Var.get()
+            self.ap_acadiSave_button_left_event()
         
 
     def ap_acadiSave_button_left_event(self):
@@ -818,27 +820,32 @@ class App(customtkinter.CTk):
         if entry.cget('state') == 'disabled':
             entry.configure(state='normal')
             entry.delete(0, 'end')
+            self.ap_acadiSave_button_left_event()
 
 
     def on_focus_out(self, entry, placeholder):
         if entry.get() == "":
             entry.insert(0, placeholder)
             entry.configure(state='disabled')
+            self.ap_acadiSave_button_left_event()
 
             
     def leftClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
     def middleClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
     def rightClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
             
@@ -996,13 +1003,14 @@ class App(customtkinter.CTk):
         self.frame_recommended_Courses = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
         self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
 
+        recommended_courses = []
         for course in self.kb.ap.recommended_courses:
-            if course in self.kb.st.passedCourses:
-                self.kb.ap.recommended_courses.remove(course)
+            if course not in self.kb.st.passedCourses:
+                recommended_courses.append(course)
 
-                        
+        self.kb.ap.recommended_courses = recommended_courses           
 
-        self.showCourses(self.frame_recommended_Courses,self.kb.ap.recommended_courses)
+        self.showCourses(self.frame_recommended_Courses, self.kb.ap.recommended_courses)
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
         # --------- frame_Prograss in frame_right ---------
