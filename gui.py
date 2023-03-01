@@ -1052,6 +1052,7 @@ class App(customtkinter.CTk):
             self.showCourses(self.frame_other_courses, self.kb.ap.other_available_electives)
             
         self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for Honors or motivated, but no other reasons \n")
+         
             
         self.courseGrade_inserting_event()
         self.infoBoxName_event()
