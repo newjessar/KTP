@@ -1,3 +1,4 @@
+
 # from courses import Courses
 from tkinter import *
 from tkinter import ttk 
@@ -14,7 +15,7 @@ customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "gre
 
 
 class App(customtkinter.CTk):
-    WIDTH = 933
+    WIDTH = 1300
     HEIGHT = 720
     
     def __init__(self):
@@ -114,7 +115,7 @@ class App(customtkinter.CTk):
         self.treeView.grid_rowconfigure(0, weight=1)
         self.treeView.grid_rowconfigure(0, weight=0) # Added to allow the frame to shrink if necessary
                     
-        self.gradingTree = ttk.Treeview(self.treeView, columns=("c1", "c2"), show="headings", height=15)
+        self.gradingTree = ttk.Treeview(self.treeView, columns=("c1", "c2"), show="headings", height=10)
         self.gradingTree.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
                     
         # add a vertical scrollbar to the treeview
@@ -161,22 +162,16 @@ class App(customtkinter.CTk):
         self.frame_right.grid(row=0, column=1, padx=20, pady=20, sticky="NSWE")
         self.frame_right.grid_columnconfigure(0, weight=1)
         self.frame_right.grid_rowconfigure(0, weight=1) 
-         
+        self.frame_right.rowconfigure(0, weight=0) # set weight of third row to be 5
+        self.frame_right.rowconfigure(1, weight=1) # set weight of third row to be 1
+        
+
         self.frame_dash_Titel = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
         self.frame_dash_Titel.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_right.rowconfigure(0, weight=0) # set weight of third row to be 5
         self.frame_dash_Titel.grid_columnconfigure(1, weight=1)
         self.frame_dash_Titel.rowconfigure(0, weight=1) # set weight of third row to be 1
-        self.frame_right = customtkinter.CTkFrame(master=self)
-        self.frame_right.grid(row=0, column=1, padx=20, pady=20, sticky="NSWE")
-        self.frame_right.columnconfigure(0, weight=1)
-        self.frame_right.rowconfigure(0, weight=1)
-
-        self.frame_dash_Titel = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
-        self.frame_dash_Titel.grid(row=0, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_dash_Titel.columnconfigure(1, weight=1)
-        self.frame_dash_Titel.rowconfigure(0, weight=1)
-
+       
+       
         self.sd_StudentDashboard_label_right = customtkinter.CTkLabel(master=self.frame_dash_Titel,
                                                                       text="Student's Advisor",
                                                                       font=customtkinter.CTkFont(size=30, weight="bold"))  # font name and size in px
@@ -277,11 +272,12 @@ class App(customtkinter.CTk):
         popup.bind('<Escape>', lambda event: close_popup())
         popup.protocol("WM_DELETE_WINDOW", close_popup)  # handle closing with the window's close button
         
-       
 
-    ############################################################################################################
-    # ===================================== create Academic Prograss frame =====================================
-    ############################################################################################################
+        
+        ############################################################################################################
+        # ===================================== create Academic Prograss frame =====================================
+        ############################################################################################################
+    
     def academic_progress_Window(self, btn):
         btn.configure(state="disabled")
         self.ap_window = customtkinter.CTkToplevel(self)
@@ -294,195 +290,188 @@ class App(customtkinter.CTk):
         self.ap_window.title("Academic Progress")
         self.ap_window.resizable(True, True)
 
+        # ----------------- Title -----------------
         self.ap_titel_label_base = customtkinter.CTkLabel(master=self.ap_window,
-                                            text="Academic Progress",
-                                            font=customtkinter.CTkFont(size=30, weight="bold"))  # font name and size in px
+                                              text="Academic Progress",
+                                              font=customtkinter.CTkFont(size=30, weight="bold"))  # font name and size in px
         self.ap_titel_label_base.grid(row=0, column=0, columnspan=5, pady=5, padx=5, sticky="EW")
 
-        # ----------------- Frame Left -----------------
-        self.rame_acWindow_left_Up = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
-        self.rame_acWindow_left_Up.grid(row=1, column=0, columnspan=2, pady=10, padx=10, sticky="NSEW")
-        self.rame_acWindow_left_Up.columnconfigure((0,1,2), weight=1)
-        self.rame_acWindow_left_Up.rowconfigure((0,1,2,3,4,5,6), weight=1)
 
 
-
-        # Create the frame label
-        self.ap_Studnet_Information_label_left = customtkinter.CTkLabel(master=self.rame_acWindow_left_Up,
-                                                text="Studnet Information",
-                                                font=customtkinter.CTkFont(size=18, weight="bold"))
-        self.ap_Studnet_Information_label_left.grid(row=0, column=0, columnspan=5, pady=5, padx=5, sticky="EW")
-
-        # Create the name label
-        self.ap_StudentName_label_left = customtkinter.CTkLabel(master=self.rame_acWindow_left_Up,
-                                                text="St. Name: ",
-                                                font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.ap_StudentName_label_left.grid(row=1, column=0, columnspan=1, pady=10, padx=20, sticky="w")
-
-        # Create the student name entery
-        self.ap_stName_entry_left = customtkinter.CTkEntry(master=self.rame_acWindow_left_Up,
-                                                        width=100,
-                                                        border_width=2,
-                                                        corner_radius=10)
-        self.ap_stName_entry_left.grid(row=1, column=2, pady=10, padx=10, sticky="EW")
-
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Frame Left-A ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        self.frame_acWindow_left_A = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
+        self.frame_acWindow_left_A.grid(row=1, column=0, columnspan=2, padx=(5, 5),pady=(5, 5), sticky="NSEW")
+        self.frame_acWindow_left_A.columnconfigure((0,1), weight=0)
+        self.frame_acWindow_left_A.rowconfigure(1, weight=1)
         
+        # Create the frame label
+        self.ap_Studnet_Information_label_left = customtkinter.CTkLabel(master=self.frame_acWindow_left_A,
+                                              text="Studnet Information",
+                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
+        self.ap_Studnet_Information_label_left.grid(row=0, column=0, columnspan=2, pady=5, padx=5, sticky="EW")
+        
+        # Create the name label
+        self.ap_StudentName_label_left = customtkinter.CTkLabel(master=self.frame_acWindow_left_A,
+                                                   text="Student Name: ",
+                                                   font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_StudentName_label_left.grid(row=1, column=0, pady=10, padx=20, sticky="w")
+        
+        # Create the student name entery
+        self.ap_stName_entry_left = customtkinter.CTkEntry(master=self.frame_acWindow_left_A,
+                                                        border_width=2,
+                                                        corner_radius=10,
+                                                        width=140)
+        self.ap_stName_entry_left.grid(row=1, column=1, pady=10, padx=20, sticky="w")
         self.ap_stName_entry_left.insert(0, "Ex: John Smith, etc...")
         self.ap_stName_entry_left.configure(state="disabled")
         self.ap_stName_entry_left.configure(textvariable = self.stname_Var)
         self.stNameFocus_in = self.ap_stName_entry_left.bind("<Button-1>", lambda x: self.on_focus_in(self.ap_stName_entry_left))
         self.stNameFocus_out = self.ap_stName_entry_left.bind("<FocusOut>", lambda x: self.on_focus_out(self.ap_stName_entry_left, "Ex: John Smith, etc..."))
-
+        
         # Create the student number label
-        self.ap_stNo_label_left = customtkinter.CTkLabel(master=self.rame_acWindow_left_Up,
-                                                text="St. No. : ",
-                                                font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.ap_stNo_label_left.grid(row=2, column=0, columnspan=1, pady=10, padx=20, sticky="w")
+        self.ap_stNo_label_left = customtkinter.CTkLabel(master=self.frame_acWindow_left_A,
+                                                 text="Student Number: ",
+                                                 font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_stNo_label_left.grid(row=2, column=0, pady=10, padx=20, sticky="w")
 
-
+        
         # Create the student number entery
-        self.ap_stNo_entry_left = customtkinter.CTkEntry(master=self.rame_acWindow_left_Up,
-                                                        width=100,
+        self.ap_stNo_entry_left = customtkinter.CTkEntry(master=self.frame_acWindow_left_A,
                                                         border_width=2,
-                                                        corner_radius=10)
-        self.ap_stNo_entry_left.grid(row=2, column=2, pady=10, padx=10, sticky="EW")
+                                                        corner_radius=10,
+                                                        width=140)
+        self.ap_stNo_entry_left.grid(row=2, column=1, pady=10, padx=20, sticky="w")
         self.ap_stNo_entry_left.insert(0, "Ex: s1234567, etc...")
         self.ap_stNo_entry_left.configure(state='disabled')
         self.ap_stNo_entry_left.configure(textvariable = self.stNo_Var)
         self.stNoFocus_in = self.ap_stNo_entry_left.bind("<Button-1>", lambda x: self.on_focus_in(self.ap_stNo_entry_left))
         self.stNoFocus_out = self.ap_stNo_entry_left.bind("<FocusOut>", lambda x: self.on_focus_out(self.ap_stNo_entry_left, "Ex: s1234567, etc..."))
+        
+        
+        # Create label and entery for the academic year
+        self.ap_acadiYear_label_left = customtkinter.CTkLabel(master=self.frame_acWindow_left_A,
+                                                              text="Academic Year: ",
+                                                              font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_acadiYear_label_left.grid(row=3, column=0, pady=10, padx=20, sticky="w")
+        
+        self.ap_acadiYear_Option_left = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left_A,
+                                                                values=["1st Year", "2ed Year", "3ed Year", "3ed plus"],
+                                                                corner_radius=10,
+                                                                width=140,
+                                                                command=self.academicYear_event,
+                                                                variable=self.academicYear_var)
+        self.ap_acadiYear_Option_left.grid(row=3, column=1, pady=10, padx=20, sticky="w")
+        
+        # Create label and entery for the academic block
+        self.ap_acadiBlock_label_left = customtkinter.CTkLabel(master=self.frame_acWindow_left_A,
+                                                              text="Academic Block: ",
+                                                              font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_acadiBlock_label_left.grid(row=4, column=0, pady=10, padx=20, sticky="w")
+        
+        self.ap_acadiBlock_Option_left = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left_A,
+                                                                values=["1st Block", "2ed Block", "3ed Block", "4th Block"],
+                                                                corner_radius=10,
+                                                                width=140,
+                                                                command=self.academicBlock_event,
+                                                                variable=self.academicBlock_var)
+        self.ap_acadiBlock_Option_left.grid(row=4, column=1, pady=10, padx=20, sticky="w")
 
-
-        # Create label and entry for the academic year
-        self.ap_acadiYear_label_left = customtkinter.CTkLabel(master=self.rame_acWindow_left_Up,
-                                                            text="St. Year: ",
-                                                            font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.ap_acadiYear_label_left.grid(row=3, column=0, columnspan=1, pady=10, padx=20, sticky="w")
-
-        self.ap_acadiYear_Option_left = customtkinter.CTkOptionMenu(master=self.rame_acWindow_left_Up,
-                                                                    values=["1st Year", "2nd Year", "3rd Year", "3rd plus"],
-                                                                    corner_radius=10,
-                                                                    width=140,
-                                                                    command=self.academicYear_event,
-                                                                    variable=self.academicYear_var)
-        self.ap_acadiYear_Option_left.grid(row=3, column=2, pady=10, padx=20, sticky="EW")
-
-        # Create label and entry for the academic block
-        self.ap_acadiBlock_label_left = customtkinter.CTkLabel(master=self.rame_acWindow_left_Up,
-                                                            text="St. Block: ",
-                                                            font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.ap_acadiBlock_label_left.grid(row=4, column=0, columnspan=1, pady=10, padx=20, sticky="w")
-
-        self.ap_acadiBlock_Option_left = customtkinter.CTkOptionMenu(master=self.rame_acWindow_left_Up,
-                                                                    values=["1st Block", "2nd Block", "3rd Block", "4th Block"],
-                                                                    corner_radius=10,
-                                                                    width=140,
-                                                                    command=self.academicBlock_event,
-                                                                    variable=self.academicBlock_var)
-        self.ap_acadiBlock_Option_left.grid(row=4, column=2, pady=10, padx=20, sticky="EW")
-
-        # Create save button for academic progress window
-        self.ap_acadiSave_button_left = customtkinter.CTkButton(master=self.rame_acWindow_left_Up,
-                                                                text="Save",
+        self.ap_acadiSave_button_left = customtkinter.CTkButton(master=self.frame_acWindow_left_A,
+                                                                text="Process",
                                                                 command=self.ap_acadiSave_button_left_event)
-        self.ap_acadiSave_button_left.grid(row=5, column=0, columnspan=3, pady=10, padx=20, sticky="EW")
-
+        self.ap_acadiSave_button_left.grid(row=5, column=0, columnspan=2, pady=10, padx=20, sticky="EW")
         
-        # ----------------- Frame down -----------------
-        self.frame_acWindow_left_down = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
-        self.frame_acWindow_left_down.grid(row=2, column=0, columnspan=2, padx=(10, 10), pady=(10, 10), sticky="NSEW")
-        self.frame_acWindow_left_down.columnconfigure((0,1), weight=1)
-        self.frame_acWindow_left_down.rowconfigure((0,1,2,3,4,5), weight=1)
-
         
-        self.ap_Courses_preferences_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_down,
+        
+       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Frame Left-B ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        self.frame_acWindow_left_B = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
+        self.frame_acWindow_left_B.grid(row=2, column=0, columnspan=2, padx=(5, 5), pady=(5, 5), sticky="NSEW")
+        self.frame_acWindow_left_B.columnconfigure((0,1), weight=0)
+        self.frame_acWindow_left_B.rowconfigure((0,1,2,3,4), weight=1)
+        # Create the frame label
+        self.ap_Courses_preferences_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_B,
                                               text="Courses preferences",
-                                              font=customtkinter.CTkFont(size=18, weight="bold"))  # font name and size in px
-        self.ap_Courses_preferences_label_down.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="EW")
+                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
+        self.ap_Courses_preferences_label_down.grid(row=0, column=0, columnspan=2, pady=5, padx=5, sticky="EW")
         
-        # Create label and entery for the 5ec switch
-        self.ap_want_5ec_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_down,
-                                                              text="Do you want\n extra 5EC: ",
-                                                              font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_want_5ec_label_down.grid(row=1, column=0, pady=10, padx=10, sticky="w")
+        # Faild courses
+        self.howManyFailedCoursesLabel = customtkinter.CTkLabel(master=self.frame_acWindow_left_B, 
+                                                        text= "No. of \nFailed Courses: ", 
+                                                        font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.howManyFailedCoursesLabel.grid(row=1, column=0, padx=10, pady=10, sticky = "WE")
+
+        self.howManyFailedCoursesEntry = customtkinter.CTkEntry(master=self.frame_acWindow_left_B, 
+                                                                    width=40,
+                                                                    border_width=2,
+                                                                    corner_radius=10, 
+                                                                    textvariable=self.howManyFailedCourses_var)
+        self.howManyFailedCoursesEntry.grid(row=1, column=1, padx=(50,10), pady=10, sticky = "W")
         
-        # create a Switch button to choose if you want 5 EC
-        self.ap_want_5ec_switch_down = customtkinter.CTkSwitch(master=self.frame_acWindow_left_down,
-                                                            text="",
-                                                            command=self.doUWant5ectsVar_event,
-                                                            onvalue="on", 
-                                                            offvalue="off",
-                                                            variable=self.doWant5ectsVar) 
-        self.ap_want_5ec_switch_down.grid(row=1, column=1, pady=10, padx=10, sticky="w")
+        
+        # Create label & switch and entery for the 5ec switch
+        self.ap_want_5ec_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_B,
+                                                                    text="Wish for extra 5EC: ",
+                                                                    font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_want_5ec_label_down.grid(row=2, column=0, padx=10, pady=10, sticky = "WE")
+
+        self.ap_want_5ec_switch_down = customtkinter.CTkSwitch(master=self.frame_acWindow_left_B,
+                                                                    text="",
+                                                                    command=self.doUWant5ectsVar_event,
+                                                                    onvalue="on", 
+                                                                    offvalue="off",
+                                                                    variable=self.doWant5ectsVar) 
+        self.ap_want_5ec_switch_down.grid(row=2, column=1, padx=(50,10), pady=10, sticky = "W")
+                                   
                                                           
         # Create a optioMenu button to choose a reason of that 5 EC
-        self.ap_5ecReason_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_down,
-                                                              text="What is the\n reason for\n the 5EC: ",
-                                                              font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_5ecReason_label_down.grid(row=2, column=0, pady=10, padx=10, sticky="w")
+        self.ap_5ecReason_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_B,
+                                                              text="Reason for a 5EC: ",
+                                                              font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_5ecReason_label_down.grid(row=3, column=0, padx=10, pady=10, sticky = "WE")
         
-        self.ap_5ecReason_Option_down = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left_down,
+        self.ap_5ecReason_Option_down = customtkinter.CTkOptionMenu(master=self.frame_acWindow_left_B,
                                                                 values=["Applying Honors", "Bored", "Quick Graduation", "Catch up"],
                                                                 corner_radius=10,
-                                                                width=100,
-                                                                # state="disabled",
+                                                                width=140,
+                                                                state="disabled",
                                                                 command=self.ap_5ecReason_Option_down_event,
                                                                 variable=self.reason5ects_var)
-        self.ap_5ecReason_Option_down.grid(row=2, column=1, pady=10, padx=10, sticky="w")       
+        self.ap_5ecReason_Option_down.grid(row=3, column=1, padx=(10,10), pady=10, sticky = "W")      
         
-        # Create a radio button to choose if you prefer Englihs or Dutch course
-        self.ap_language_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_down,
-                                                             text="Do you speak Dutch: ",
-                                                             font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_language_label_down.grid(row=3, column=0, columnspan=2, pady=10, padx=10, sticky="w")
         
-        self.ap_english_radio_down = customtkinter.CTkRadioButton(master=self.frame_acWindow_left_down,
-                                                                   text="No",
-                                                                   command=self.languageRadio_event,
-                                                                   variable=self.languageRadio_var,
-                                                                   value="English",
-                                                                   font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_english_radio_down.grid(row=4, column=0, pady=10, padx=10, sticky="e")
+        # Create a label and a switch button to choose if you prefer Englihs or Dutch course
+        self.ap_language_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_B,
+                                                             text="Speaks Dutch: ",
+                                                             font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_language_label_down.grid(row=4, column=0, padx=10, pady=10, sticky = "WE")
+
         
-        self.ap_dutch_radio_down = customtkinter.CTkRadioButton(master=self.frame_acWindow_left_down,
-                                                                   text="Yes",
-                                                                   value="Dutch",
-                                                                   command=self.languageRadio_event,
-                                                                   variable=self.languageRadio_var,
-                                                                   font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_dutch_radio_down.grid(row=4, column=1, pady=10, padx=10, sticky="e")
-        
+        self.ap_Dutch_switch_down = customtkinter.CTkSwitch(master=self.frame_acWindow_left_B,
+                                                            text="",
+                                                            font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_Dutch_switch_down.grid(row=4, column=1, padx=(50,10), pady=10, sticky = "W")    
                                                                    
         # Create a check box to choose if you took the BSc project's courses already (In case you choose the BSc course)
-        self.ap_bscCourses_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_down,
-                                                             text="Did you already\nfollow the first\nhalf of the\nBSc project:",
-                                                             font=customtkinter.CTkFont(size=12, weight="bold"))
-        self.ap_bscCourses_label_down.grid(row=5, column=0, pady=10, padx=10, sticky="w")
+        self.ap_bscCourses_label_down = customtkinter.CTkLabel(master=self.frame_acWindow_left_B,
+                                                             text="First half of the BSc \nproject is compleated:",
+                                                             font=customtkinter.CTkFont(size=14, weight="bold"))
+        self.ap_bscCourses_label_down.grid(row=5, column=0, padx=10, pady=10, sticky = "WE")
         
-        self.ap_bscCourses_switch_down = customtkinter.CTkSwitch(master=self.frame_acWindow_left_down,
+        self.ap_bscCourses_switch_down = customtkinter.CTkSwitch(master=self.frame_acWindow_left_B,
                                                             text="",
                                                             command=self.followBScProject_event,
                                                             onvalue="on", 
                                                             offvalue="off",
                                                             variable=self.followBScProject_var) 
-        self.ap_bscCourses_switch_down.grid(row=5, column=1, pady=10, padx=10, sticky="w")    
-
+        self.ap_bscCourses_switch_down.grid(row=5, column=1, padx=(50,10), pady=10, sticky = "W")  
         
-        # ----------------- Frame Right -----------------
-        self.frame_acWindow_right = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
-        self.frame_acWindow_right.grid(row=1, column=2, padx=(10, 10), columnspan=3, rowspan=2, pady=(10, 10), sticky="NSEW")
-        self.frame_acWindow_right.columnconfigure((1,2), weight=0)
-        # self.frame_acWindow_right.rowconfigure((1,2), weight=1)
-        # Create the frame label
-        self.ap_title_label_right = customtkinter.CTkLabel(master=self.frame_acWindow_right,
-                                              text="Artificial intelligence curriculum",
-                                              font=customtkinter.CTkFont(size=20, weight="bold"))  # font name and size in px
-        self.ap_title_label_right.grid(row=0, column=0, columnspan=3, pady=5, padx=5, sticky="EW")
         
-        # ++++++++++++++++ A tab View sitructure for pass and fail courses
-        # Create a tab structure to display the passed in one tab and the faild in other tab
-        # self.ap_pass_tabview_right = customtkinter.CTkFrame(master=self.frame_acWindow_right, corner_radius=5)
-        # self.ap_pass_tabview_right.grid(row=1, column=0, columnspan=3, pady=10, padx=20, sticky="W")
+        
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Frame Right ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        self.frame_acWindow_right = customtkinter.CTkFrame(master=self.ap_window, width= 700, height=850,corner_radius=5)
+        self.frame_acWindow_right.grid(row=1, column=2, columnspan=3, rowspan=2, padx=(5, 5), pady=(5, 5), sticky="NSEW")
+        self.frame_acWindow_right.columnconfigure((0,1,2), weight=0)
+        self.frame_acWindow_right.rowconfigure((0,1), weight=1)
 
         self.chooseCoursesTab(self.frame_acWindow_right)
 
@@ -490,52 +479,48 @@ class App(customtkinter.CTk):
                                                 text="Add the grads",
                                                 command= self.grading_Window,
                                                 state="disabled")
-        self.grades_button.grid(row=8, column=0, pady=10, padx=20, sticky="ws")
+        self.grades_button.grid(row=1, column=0, padx=10, pady=10, sticky = "ws")
         
-        self.howManyFailedCoursesLabel = customtkinter.CTkLabel(master=self.frame_acWindow_right, text= "How many courses did you fail?", 
-                                                        font=customtkinter.CTkFont(size=12, weight="bold"),
-                                                        height=30,
-                                                        width=240,
-                                                        corner_radius=6,  # <- custom corner radius
-                                                        fg_color=("white", "gray38")  # <- custom tuple-color
-                                                        )
-        self.howManyFailedCoursesLabel.grid(row=8, column=1, padx=10, pady=10, sticky = "E")
 
-        self.howManyFailedCoursesEntry = customtkinter.CTkEntry(master=self.frame_acWindow_right, border_width=2,corner_radius=10, textvariable=self.howManyFailedCourses_var)
-        self.howManyFailedCoursesEntry.grid(row=8, column=2, padx=10, pady=10, sticky = "w")
         
         
         
-        # ----------------- Frame end buttons -----------------       
-        self.frame_endButtons_last = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
-        self.frame_endButtons_last.grid(row=3, column=0, padx=(10, 10), columnspan=5, pady=(10, 10), sticky="NSEW")
-        # self.frame_endButtons_last.columnconfigure((0,1,2), weight=1)
-        # self.frame_endButtons_last.rowconfigure((0,1,2), weight=1)
-               
+        
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Frame Buttom ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        self.frame_endButtons_Buttom = customtkinter.CTkFrame(master=self.ap_window, corner_radius=5)
+        self.frame_endButtons_Buttom.grid(row=3, column=0, columnspan=5, padx=(5, 5), pady=(5, 5), sticky="NSEW")
+        self.frame_endButtons_Buttom.columnconfigure((0,1,2), weight=1)
+        self.frame_endButtons_Buttom.rowconfigure((0,1,2), weight=1)    
         # create a button to save the user's choices
-        self.ap_save_button_right = customtkinter.CTkButton(master=self.frame_endButtons_last,
+        self.ap_save_button_right = customtkinter.CTkButton(master=self.frame_endButtons_Buttom,
                                                             text="Advice",
                                                             command=lambda: self.saveButton_event(self.frame_advise),
                                                             state="disabled")
         self.ap_save_button_right.grid(row=0, column=0, pady=10, padx=0, sticky="NW")
         
         # Create a cancle button next to the save one
-        self.ap_cancel_button_right = customtkinter.CTkButton(master=self.frame_endButtons_last,
+        self.ap_cancel_button_right = customtkinter.CTkButton(master=self.frame_endButtons_Buttom,
                                                               text="Cancel",
                                                               command=self.unhide_academic_progress_Window_event)
-        self.ap_cancel_button_right.grid(row=0, column=1, pady=10, padx=5, sticky="NW")
+        self.ap_cancel_button_right.grid(row=0, column=0, pady=10, padx=150, sticky="NW")
         
-        
-        
+    
         # creste a motion of trigging the event based on clicking aroun the canvas
-        self.rame_acWindow_left_Up.bind("<Button-1>", self.leftClick)
-        self.rame_acWindow_left_Up.bind("<Button-2>", self.middleClick)
-        self.rame_acWindow_left_Up.bind("<Button-3>", self.rightClick)
-
-
+        self.bind_frame_children(self.ap_window)
         
         self.ap_window.mainloop()
         
+        
+        
+        
+    def bind_frame_children(self, frame):
+        for child in frame.winfo_children():
+            if isinstance(child, customtkinter.CTkFrame):
+                child.bind("<Button-1>", self.leftClick)
+                child.bind("<Button-2>", self.middleClick)
+                child.bind("<Button-3>", self.rightClick)
+                self.bind_frame_children(child)
+    
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Grading window ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
@@ -574,12 +559,11 @@ class App(customtkinter.CTk):
                                                                 text="Save",
                                                                 command=self.grade_save_button_event,
                                                                 state="disabled")
-        self.grade_save_button.grid(row=10, column=0, pady=10, padx=20, sticky="sw")
+        self.grade_save_button.grid(row=10, column=0, pady=10, padx=20, sticky="sw")            
+    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Danial's work ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Presentin the results after the inference ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
-
     # ============ Frame Show the courses that the user has chosen ============   
     def grade_chosen_courses(self, frame):
         for var, course in self.check_varsCourses:
@@ -591,6 +575,8 @@ class App(customtkinter.CTk):
                     if course2.title==course.title:
                         self.kb.st.passedCourses.remove(course2)
                         break
+        
+        
         
         entries = []            
         for idxCourse, course in enumerate(self.kb.st.passedCourses): 
@@ -616,12 +602,14 @@ class App(customtkinter.CTk):
                 if passed_course.title == course.title and passed_course.grade != -1:
                     entryCheck.insert(0, str(passed_course.grade))
                     break
+       
 
     # ============ Frame Show the courses that the user has chosen ============   
     def showCourses(self, frame, course_list):            
         col  = 0
         raww = 1
         for idxCourse, course in enumerate(course_list): 
+            # print(idxCourse, course.title)
             if not (idxCourse ==0) and idxCourse %3 ==0:
                 raww +=1
                 col =0
@@ -636,7 +624,9 @@ class App(customtkinter.CTk):
             col +=1
 
             self.adviced_courses_titel.append(course.title)
-  
+ 
+            
+            
     # ====================== Frame Choose the courses ====================== 
     def chooseCoursesTab(self, frame):
         # Create another tab structure to display the years in each parents tab 
@@ -669,15 +659,12 @@ class App(customtkinter.CTk):
                                                 variable=var,
                                                 onvalue=1,
                                                 offvalue=0)
-            check2.grid(row=row, column=col, padx=10, pady=10, sticky="NSEW")
-            
-            # distribute courses in two columns
-            if idxCourse % 2 == 0:
-                col = 1
-            else:
-                col = 0
+            check2.grid(row = row, column = col, padx=10, pady=10, sticky = "NSEW")
+            if (idxCourse + 1) % 3 == 0: 
                 row += 1
-
+                col = 0
+            else:
+                col += 1
 
 
     
@@ -803,17 +790,19 @@ class App(customtkinter.CTk):
         self.ac = Academic_planning()
         self.kb = Knowledge_Base(Student())
         self.st = self.kb.st
-
+        
 
     def stName_event(self):
         if self.stname_Var.get().strip() and self.stNo_Var.get().strip():
             self.kb.st.studentName = self.stname_Var.get()
             self.kb.st.studentNumber = self.stNo_Var.get()
+            self.ap_acadiSave_button_left_event()
 
     def stID_event(self):
         if self.stNo_Var.get().strip() and self.stname_Var.get().strip():
             self.kb.st.studentNumber = self.stNo_Var.get()
             self.kb.st.studentName = self.stname_Var.get()
+            self.ap_acadiSave_button_left_event()
         
 
     def ap_acadiSave_button_left_event(self):
@@ -829,27 +818,32 @@ class App(customtkinter.CTk):
         if entry.cget('state') == 'disabled':
             entry.configure(state='normal')
             entry.delete(0, 'end')
+            self.ap_acadiSave_button_left_event()
 
 
     def on_focus_out(self, entry, placeholder):
         if entry.get() == "":
             entry.insert(0, placeholder)
             entry.configure(state='disabled')
+            self.ap_acadiSave_button_left_event()
 
             
     def leftClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
     def middleClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
     def rightClick(self, event):
         self.on_focus_out(self.ap_stName_entry_left, 'Ex: John Smith, etc...')
         self.on_focus_out(self.ap_stNo_entry_left, 'Ex: s1234567, etc...')
+        self.ap_acadiSave_button_left_event()
 
         
             
@@ -877,12 +871,15 @@ class App(customtkinter.CTk):
     def doUWant5ectsVar_event(self):
         if self.doWant5ectsVar.get() == 'on':
             self.kb.st.want5ECTS = True
+            self.ap_5ecReason_Option_down.configure(state="normal")
         else:
             self.kb.st.want5ECTS = False
+            self.ap_5ecReason_Option_down.configure(state="disabled")
     
     def ap_5ecReason_Option_down_event(self, choice):
         self.kb.st.reason5ECTS = choice
         
+
     def languageRadio_event(self):
         if self.languageRadio_var.get() == 'English':
             self.kb.st.language = True
@@ -1007,13 +1004,14 @@ class App(customtkinter.CTk):
         self.frame_recommended_Courses = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
         self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
 
+        recommended_courses = []
         for course in self.kb.ap.recommended_courses:
-            if course in self.kb.st.passedCourses:
-                self.kb.ap.recommended_courses.remove(course)
+            if course not in self.kb.st.passedCourses:
+                recommended_courses.append(course)
 
-                        
+        self.kb.ap.recommended_courses = recommended_courses           
 
-        self.showCourses(self.frame_recommended_Courses,self.kb.ap.recommended_courses)
+        self.showCourses(self.frame_recommended_Courses, self.kb.ap.recommended_courses)
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
         # --------- frame_Prograss in frame_right ---------
@@ -1053,9 +1051,11 @@ class App(customtkinter.CTk):
             self.frame_other_courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
 
             self.showCourses(self.frame_other_courses, self.kb.ap.other_available_electives)
-            
-        self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for Honors or motivated, but no other reasons \n")
-            
+        
+        if self.kb.st.reason5ECTS == "Applying Honors" or self.kb.st.reason5ECTS == "Bored":
+            self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "This is a valid reason to presue an extra 5EC. Therefore you get extre recomendation to choose.\n Furtehr enquaries, we encorage you to contact the student advisor for a legitimet advice\n")
+        else:
+            self.pr_textExplanation_textBox_down.insert(tkinter.END, text = "A valid reason would be that Applying for Honors or motivated. Hence this is not a valid reason.\n Therefore you get extre recomendation to choose. Furtehr enquaries, we encorage you to contact the student advisor for a legitimet advice\n")
         self.courseGrade_inserting_event()
         self.infoBoxName_event()
         self.infoBoxNumber_event()
