@@ -3,7 +3,7 @@ import numpy as np
 class CoursesDB:
     # ID, 
     # title, 
-    # orientation, = Alpha(Non-CS): 1 -- Bet(CS): 2
+    # orientation, = Alpha(Non-CS): 1 -- Beta(CS): 2
     # pre-requisite-Courses, []
     # advised, []
     # year, 
@@ -84,7 +84,7 @@ class CoursesDB:
                             [56, "Human Factors" , 1, [], [], 3, 4, 5, False, True, False, True, False, 0],
                             [57, "Languages and Machines" , 2, [], ["Introduction to Logic (AI)"], 3, 4, 5, False, True, False, True, False, 0],
                             [58, "Parallel Computing" , 2, [], ["Imperative Programming (for AI)","Algorithms and Data Structures (AI)"], 3, 4, 5, False, True, False, True, False, 0],
-                            [59, "Uncetainty in Machine Learning" , 2, [], ["Statistics"], 3, 4, 5, False, True, False, True, False, 0],
+                            [59, "Uncertainty in Machine Learning" , 2, [], ["Statistics"], 3, 4, 5, False, True, False, True, False, 0],
                             [60, "Language Technology Practical", 2, ["Language and Speech Technology"], [], 3, 4, 5, False, False, True, True, True, 0],
                             [61, "Robotics Practical 2" , 2, ["Calculus for Artificial Intelligence","Linear Algebra and Multivariable Calculus"],  ["Statistics","Imperative Programming (for AI)","Autonomous Systems","Signals and Systems (for AI)","Neural Networks","Robotics Practical 1"], 3, 4, 5, False, False, True, True, True, 0],
 
