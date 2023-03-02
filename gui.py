@@ -63,6 +63,7 @@ class App(customtkinter.CTk):
         self.frame_left.grid_rowconfigure(8, weight=3)
         self.frame_left.grid_propagate(False)
 
+
         self.si_StudentINFO_label_left = customtkinter.CTkLabel(master=self.frame_left,
                                                                 text="Student INFO",
                                                                 font=customtkinter.CTkFont(size=20, weight="bold"))
@@ -165,20 +166,11 @@ class App(customtkinter.CTk):
                                                                                                  weight="bold"))  # font name and size in px
         self.sd_StudentDashboard_label_right.grid(row=0, column=1, columnspan=2, pady=10, padx=10, sticky="NWE")
 
-        # --------- frame_advise in frame_right ---------
-        self.frame_advise = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
-        self.frame_advise.grid(row=1, column=0, pady=5, padx=5, sticky="NSWE")
-        self.frame_advise.columnconfigure(1, weight=1)
-        self.frame_advise.rowconfigure(1, weight=5)
-
-        self.ad_advise_label_right = customtkinter.CTkLabel(master=self.frame_advise,
-                                                            text="Advise",
-                                                            font=customtkinter.CTkFont(size=20,
-                                                                                       weight="bold"))  # font name and size in px
-        self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NWE")
 
         # ============ frame Advise explanation  ============
-        self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+        self.frame_explanation = customtkinter.CTkFrame(master=self.frame_right, 
+                                                        height=50,
+                                                        corner_radius=10)
         self.frame_explanation.grid(row=4, column=0, pady=5, padx=5, sticky="NWE")
         self.frame_explanation.columnconfigure(0, weight=1)
         self.frame_explanation.rowconfigure(1, weight=1)
@@ -191,37 +183,10 @@ class App(customtkinter.CTk):
 
         self.pr_textExplanation_textBox_down = customtkinter.CTkTextbox(master=self.frame_explanation,
                                                                         wrap=tkinter.WORD,
-                                                                        font=customtkinter.CTkFont(size=25))
+                                                                        height=50,
+                                                                        font=customtkinter.CTkFont(size=15))
         self.pr_textExplanation_textBox_down.grid(row=1, column=0, pady=10, padx=10, sticky="NSEW")
 
-    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
-    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Help window ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
-    #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
-    # def show_help_popup(self):
-    #         # create popup window
-    #         popup = customtkinter.CTkToplevel(self)
-    #         popup.title("Help")
-    #         popup.geometry("400x230")
-    #         popup.geometry(self.get_centered_geometry(popup, 230,  400))
-
-    #         # create label with help text
-    #         help_text = "Guideness:\n" + \
-    #                     "--------------------------- \n" + \
-    #                     " 1- Click on Academic Progress \n" + \
-    #                     " 2- Fill up student info forme\n" + \
-    #                     " 3- choose the year and th block to plan\n" + \
-    #                     " 4- Choose your passed courses\n" + \
-    #                     " 5- Add the grads\n" + \
-    #                     " 6- Press save"
-    #         help_label = customtkinter.CTkLabel(master=popup,
-    #                                             text=help_text,
-    #                                             corner_radius=6,
-    #                                             fg_color=("white", "gray38"),
-    #                                             font=customtkinter.CTkFont(size=20),
-    #                                             justify=tkinter.LEFT,
-    #                                             padx=10,
-    #                                             pady=10)
-    #         help_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="NSEW")
             
             
     def show_help_popup(self):
@@ -455,7 +420,6 @@ class App(customtkinter.CTk):
                                                                  variable=self.followBScProject_var)
         self.ap_bscCourses_switch_down.grid(row=5, column=1, padx=(50, 10), pady=10, sticky="W")
 
-        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Frame Right ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         self.frame_acWindow_right = customtkinter.CTkFrame(master=self.ap_window, width=700, height=850,
                                                            corner_radius=5)
         self.frame_acWindow_right.grid(row=1, column=2, columnspan=3, rowspan=2, padx=(5, 5), pady=(5, 5),
@@ -478,8 +442,8 @@ class App(customtkinter.CTk):
         self.frame_endButtons_Buttom.rowconfigure((0, 1, 2), weight=1)
         # create a button to save the user's choices
         self.ap_save_button_right = customtkinter.CTkButton(master=self.frame_endButtons_Buttom,
-                                                            text="Advice",
-                                                            command=lambda: self.saveButton_event(self.frame_advise),
+                                                            text="Advise",
+                                                            command=lambda: self.saveButton_event(),
                                                             state="disabled")
         self.ap_save_button_right.grid(row=0, column=0, pady=10, padx=0, sticky="NW")
 
@@ -539,7 +503,6 @@ class App(customtkinter.CTk):
                                                          command=self.grade_save_button_event,
                                                          state="disabled")
         self.grade_save_button.grid(row=10, column=0, pady=10, padx=20, sticky="sw")
-        # ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
 
     # ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Danial's work ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     # ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
@@ -593,8 +556,8 @@ class App(customtkinter.CTk):
                 col = 0
             check2 = customtkinter.CTkLabel(frame, text=course.title,
                                             font=customtkinter.CTkFont(size=12, weight="bold"),
-                                            height=30,
-                                            width=240,
+                                            # height=30,
+                                            # width=240,
                                             corner_radius=6,  # <- custom corner radius
                                             fg_color=("white", "gray38")  # <- custom tuple-color
                                             )
@@ -939,7 +902,7 @@ class App(customtkinter.CTk):
                 return
         button_widget.configure(state="normal")
 
-    def saveButton_event(self, frame):
+    def saveButton_event(self):
 
         # if you did not select the dropdown menu it stays at none so set it one because its the default value.
         if (self.kb.st.currentYear == None):
@@ -956,19 +919,31 @@ class App(customtkinter.CTk):
         self.stName_event()
         self.stID_event()
 
+        if self.kb.ap.recommended_courses != []:
+                # --------- frame_advise in frame_right ---------
+            self.frame_advise = customtkinter.CTkFrame(master=self.frame_right, corner_radius=10)
+            self.frame_advise.grid(row=1, column=0, pady=5, padx=5, sticky="NSWE")
+            self.frame_advise.columnconfigure(1, weight=1)
+            self.frame_advise.rowconfigure(1, weight=5)
+
+            self.ad_advise_label_right = customtkinter.CTkLabel(master=self.frame_advise,
+                                                                text="Advise",
+                                                                font=customtkinter.CTkFont(size=20,
+                                                                                        weight="bold"))  # font name and size in px
+            self.ad_advise_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="WE")
         ### Make three frames. One for each output list from the inference in the knowledge base
         # first the recommended courses
-        self.frame_recommended_Courses = customtkinter.CTkFrame(master=frame, width=240, corner_radius=10)
-        self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
+            self.frame_recommended_Courses = customtkinter.CTkFrame(master=self.frame_advise, width=240, corner_radius=10)
+            self.frame_recommended_Courses.grid(row=1, column=0, columnspan=2, rowspan=10, pady=20, padx=20, sticky="NSWE")
 
-        recommended_courses = []
-        for course in self.kb.ap.recommended_courses:
-            if course not in self.kb.st.passedCourses:
-                recommended_courses.append(course)
+            recommended_courses = []
+            for course in self.kb.ap.recommended_courses:
+                if course not in self.kb.st.passedCourses:
+                    recommended_courses.append(course)
 
-        self.kb.ap.recommended_courses = recommended_courses
-
-        self.showCourses(self.frame_recommended_Courses, self.kb.ap.recommended_courses)
+            self.kb.ap.recommended_courses = recommended_courses
+            self.showCourses(self.frame_recommended_Courses, self.kb.ap.recommended_courses)
+            
         # second if its not empty the recommended electives with the same orientation and practicals
         if self.kb.ap.recommended_electives != []:
             # --------- frame_Prograss in frame_right ---------
@@ -980,7 +955,7 @@ class App(customtkinter.CTk):
                                                                      text="Elective courses",
                                                                      font=customtkinter.CTkFont(size=20,
                                                                                                 weight="bold"))  # font name and size in px
-            self.frame_elective_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
+            self.frame_elective_label_right.grid(row=0, column=0, columnspan=2, pady=5, padx=10, sticky="WE")
             self.frame_right.rowconfigure(2, weight=5)  # set weight of third row to be 5
             self.frame_elective.grid_columnconfigure(0, weight=1)
             self.frame_elective.grid_rowconfigure(1, weight=1)
@@ -1004,7 +979,7 @@ class App(customtkinter.CTk):
                                                                       text="Other courses",
                                                                       font=customtkinter.CTkFont(size=20,
                                                                                                  weight="bold"))  # font name and size in px
-            self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="NSWE")
+            self.pr_otherCourses_label_right.grid(row=0, column=0, columnspan=2, pady=5, padx=10, sticky="WE")
 
             self.frame_other_courses = customtkinter.CTkFrame(master=self.frame_OtherCourses, width=240,
                                                               corner_radius=10)
@@ -1023,7 +998,6 @@ class App(customtkinter.CTk):
         self.infoBoxNumber_event()
         self.infoBoxYear_event()
         self.infoBoxBlock_event()
-        # self.show_checked_event()
 
         self.infoBoxAverage_event()
         self.unhide_academic_progress_Window_event()
