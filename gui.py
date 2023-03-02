@@ -190,7 +190,7 @@ class App(customtkinter.CTk):
         popup = customtkinter.CTkToplevel(self)
         popup.title("Help")
         # popup.geometry("400x230")
-        popup.geometry(self.get_centered_geometry(popup, 230,  400))
+        popup.geometry(self.get_centered_geometry(popup, 350,  410))
         popup.attributes("-topmost", True) # set the popup window on top of other windows
         
         # grab the mouse and keyboard events for the popup window
@@ -199,12 +199,17 @@ class App(customtkinter.CTk):
         # create label with help text
         help_text = "Guideness:\n" + \
                     "--------------------------- \n" + \
-                    " 1- Click on Academic Progress \n" + \
-                    " 2- Fill up student info forme\n" + \
-                    " 3- choose the year and th block to plan\n" + \
-                    " 4- Choose your passed courses\n" + \
-                    " 5- Add the grads\n" + \
-                    " 6- Press save"
+                    " 1- Click on Academic Progress. \n" + \
+                    " 2- Fill up student information forme.  \n" + \
+                    " 3- By filling the name and S-Number   \n" + \
+                    "    the Process button will be active,   \n" + \
+                    "    click it to activate Add the Grades. \n" + \
+                    " 4- Choose the courses that you passed, \n" + \
+                    "    navigating between the year's tab  \n" + \
+                    "    will reveal you all the courses.\n" + \
+                    " 5- Add the grades.\n" + \
+                    " 6- Fill the courses preferences.\n" + \
+                    " 6- Press save."
         help_label = customtkinter.CTkLabel(master=popup,
                                             text=help_text,
                                             corner_radius=6,
