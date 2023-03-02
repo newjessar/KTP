@@ -23,9 +23,9 @@ class Student:
             return True
         else:
             return False
-
+        
     def calculateAverageGrade(self):
-        return statistics.mean([course.grade for course in self.passedCourses]+[course.grade for course in self.failedCourses])
+        return statistics.mean([course.grade for course in self.passedCourses])
 
     def calculateCurrentECTS(self):
         total = 0

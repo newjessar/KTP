@@ -56,11 +56,7 @@ class App(customtkinter.CTk):
         self.frame_left = customtkinter.CTkFrame(master=self, corner_radius=5)
         self.frame_left.grid(row=0, column=0, sticky="nswe")
         self.frame_left.grid_columnconfigure(0, weight=1)
-        self.frame_left.grid_rowconfigure(0, weight=0)
-        self.frame_left.grid_rowconfigure(1, weight=0)
-        self.frame_left.grid_rowconfigure((2, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14), weight=0)
-        self.frame_left.grid_rowconfigure(3, weight=1)
-        self.frame_left.grid_rowconfigure(8, weight=3)
+        self.frame_left.grid_rowconfigure((0, 1, 2, 4, 5, 6, 7, 9, 10, 11, 12), weight=0)
         self.frame_left.grid_propagate(False)
 
 
@@ -987,7 +983,7 @@ class App(customtkinter.CTk):
 
             self.showCourses(self.frame_other_courses, self.kb.ap.other_available_electives)
 
-        if self.kb.st.reason5ECTS == "Applying Honours" or self.kb.st.reason5ECTS == "Bored":
+        if self.kb.st.reason5ECTS == "Applying Honours" or self.kb.st.reason5ECTS == "Bored" or self.kb.st.reason5ECTS == "Quick Graduation":
             self.pr_textExplanation_textBox_down.insert(tkinter.END,
                                                         text="This is a valid reason to pursue an extra 5EC. Therefore, you get extra recommendations to choose from.\n For further inquiries, we encourage you to contact the student advisor for a legitimate advice.\n")
         else:
