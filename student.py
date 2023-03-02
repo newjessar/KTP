@@ -34,7 +34,7 @@ class Student:
         return total
 
     def validReason(self):
-        if self.reason5ECTS == "Bored" or self.reason5ECTS == "Applying honours":
+        if self.reason5ECTS == "Bored" or self.reason5ECTS == "Applying Honours" or self.reason5ECTS == "Quick Graduation":
             return True
         else:
             return False
