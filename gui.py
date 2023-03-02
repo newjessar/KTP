@@ -15,8 +15,8 @@ customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "gre
 
 
 class App(customtkinter.CTk):
-    WIDTH = 1300
     HEIGHT = 720
+    WIDTH = 1300
     
     def __init__(self):
         super().__init__()
@@ -207,38 +207,38 @@ class App(customtkinter.CTk):
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±± Help window ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
     #±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
-    def show_help_popup(self):
-            # create popup window
-            popup = customtkinter.CTkToplevel(self)
-            popup.title("Help")
-            popup.geometry("400x230")
-            popup.geometry(self.get_centered_geometry(popup, 230,  400))
+    # def show_help_popup(self):
+    #         # create popup window
+    #         popup = customtkinter.CTkToplevel(self)
+    #         popup.title("Help")
+    #         popup.geometry("400x230")
+    #         popup.geometry(self.get_centered_geometry(popup, 230,  400))
 
-            # create label with help text
-            help_text = "Guideness:\n" + \
-                        "--------------------------- \n" + \
-                        " 1- Click on Academic Progress \n" + \
-                        " 2- Fill up student info forme\n" + \
-                        " 3- choose the year and th block to plan\n" + \
-                        " 4- Choose your passed courses\n" + \
-                        " 5- Add the grads\n" + \
-                        " 6- Press save"
-            help_label = customtkinter.CTkLabel(master=popup,
-                                                text=help_text,
-                                                corner_radius=6,
-                                                fg_color=("white", "gray38"),
-                                                font=customtkinter.CTkFont(size=20),
-                                                justify=tkinter.LEFT,
-                                                padx=10,
-                                                pady=10)
-            help_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="NSEW")
+    #         # create label with help text
+    #         help_text = "Guideness:\n" + \
+    #                     "--------------------------- \n" + \
+    #                     " 1- Click on Academic Progress \n" + \
+    #                     " 2- Fill up student info forme\n" + \
+    #                     " 3- choose the year and th block to plan\n" + \
+    #                     " 4- Choose your passed courses\n" + \
+    #                     " 5- Add the grads\n" + \
+    #                     " 6- Press save"
+    #         help_label = customtkinter.CTkLabel(master=popup,
+    #                                             text=help_text,
+    #                                             corner_radius=6,
+    #                                             fg_color=("white", "gray38"),
+    #                                             font=customtkinter.CTkFont(size=20),
+    #                                             justify=tkinter.LEFT,
+    #                                             padx=10,
+    #                                             pady=10)
+    #         help_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="NSEW")
             
             
     def show_help_popup(self):
         # create popup window
         popup = customtkinter.CTkToplevel(self)
         popup.title("Help")
-        popup.geometry("400x230")
+        # popup.geometry("400x230")
         popup.geometry(self.get_centered_geometry(popup, 230,  400))
         popup.attributes("-topmost", True) # set the popup window on top of other windows
         
@@ -672,12 +672,12 @@ class App(customtkinter.CTk):
     ############################# Utility Functions ############################## 
     ###############################################################################   
 
-    def get_centered_geometry(self, window, width, height):
+    def get_centered_geometry(self, window, height, width):
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         x_coordinate = (screen_width/2) - (width/2)
         y_coordinate = (screen_height/2) - (height/2)
-        return f'{height}x{width}+{int(x_coordinate)}+{int(y_coordinate)}'       
+        return f'{width}x{height}+{int(x_coordinate)}+{int(y_coordinate)}'
 
        
     def unhide_academic_progress_Window_event(self):
